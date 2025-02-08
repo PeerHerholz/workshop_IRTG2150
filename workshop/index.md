@@ -167,7 +167,7 @@ might have (via [issues](https://github.com/PeerHerholz/workshop_IRTG2150) or [h
 
 <div style="text-align: justify;">
 
-This workshop was organized by the [IRTG 2150](https://www.irtg2150.rwth-aachen.de/), specifically Dr. Rosa Hülpen.
+This workshop was organized by the [IRTG 2150](https://www.irtg2150.rwth-aachen.de/), specifically Dr. Philippa Hülpen.
 
 ![Local Image](static/Logo3.png)
 ![Local Image](static/DFG_Logo.png)
