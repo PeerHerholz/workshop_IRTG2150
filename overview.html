@@ -394,6 +394,12 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-framework-and-setup">The framework and setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-in-data-handling">Basics in data handling</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-and-specialized-analyses">Advanced and specialized analyses</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gimme-the-details">Gimme the details</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instructors">Instructors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-reach-the-instructors">How to reach the instructors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-and-where">When and where</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -407,25 +413,80 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="workshop-overview">
 <h1>Workshop overview<a class="headerlink" href="#workshop-overview" title="Link to this heading">#</a></h1>
+<div style="text-align: justify;">
 <p>As mentioned on the <a class="reference external" href="https://peerherholz.github.io/workshop_IRTG2150/index.html">Welcome page</a>, this workshop will be focused on how to utilize <code class="docutils literal notranslate"><span class="pre">python</span></code> to conduct <code class="docutils literal notranslate"><span class="pre">neuroimaging</span> <span class="pre">analyses</span></code>. In general, the idea is to do a split between first, basics in <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">handling</span></code> via <code class="docutils literal notranslate"><span class="pre">nibabel</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">nilearn</span></code> and second, more advanced and specialized analyses (e.g. functional connectivity &amp; statistical analyses via <code class="docutils literal notranslate"><span class="pre">nilearn</span></code>). Regarding the first, we will try to provide folks with a brief overview of central aspects and important issues and concerning the second, evaluate a versatile set of <code class="docutils literal notranslate"><span class="pre">analysis</span> <span class="pre">approaches</span></code>.  We will further explain both aspects, as well as the <code class="docutils literal notranslate"><span class="pre">setup</span></code>, etc. below. For a precise outline of this workshop, please consult the respective <a class="reference external" href="https://peerherholz.github.io/workshop_IRTG2150/outline.html">page</a>.</p>
-<iframe src="" frameborder="0" width="700" height="430" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+</div>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTlqd4SHE-bSRCwqG7y0i9MxxhOaBj6KYbUVS1GWw4DOxe7cJn5VjSbxTYfKvQRnsYGmT4ptCBZ6lP6/embed?start=false&loop=false&delayms=30000" frameborder="0" width="700" height="430" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 <section id="the-framework-and-setup">
 <h2>The framework and setup<a class="headerlink" href="#the-framework-and-setup" title="Link to this heading">#</a></h2>
+<div style="text-align: justify;">
 <p>The entire workshop will be conducted via the <a class="reference external" href="https://jupyter.org/">Jupyter ecosystem</a>, utilizing the <a class="reference external" href="https://www.python.org/">python programming language</a> for all examples in both sessions. All materials will be provided within the <a class="reference external" href="https://jupyterbook.org/intro.html">Jupyter Book</a> format you’re currently look, free for everyone to check and try out, as well as utilize further. To help folks that don’t have any experience with these resources, we compiled a set of tutorials that participants can go through within the <a class="reference external" href="https://peerherholz.github.io/workshop_IRTG2150/prerequisites.html">prerequisite section</a>. While this won’t be enough to go past basic skills, we still hope it will be useful to familiarize yourself with core aspects that will help during the workshop. Each of these tutorials, as well as “main” materials will be in <a class="reference external" href="https://jupyter.org/">jupyter notebooks</a> and contain a mixture of explanations and code and presented as a “slide show” during the workshop. They can be just viewed, or either run interactively via cloud instances (via <a class="reference external" href="https://mybinder.org/">mybinder</a>) or locally. Depending on a given participant’s computational resources and infrastructure, we provide multiple ways to participate in the workshop as outlined in the <a class="reference external" href="https://peerherholz.github.io/workshop_IRTG2150/setup.html">Setup for the workshop</a> section.</p>
+</div>
 </section>
 <section id="basics-in-data-handling">
 <h2>Basics in data handling<a class="headerlink" href="#basics-in-data-handling" title="Link to this heading">#</a></h2>
+<div style="text-align: justify;">
 <p>Within the first session of the workshop we will focus on the basics concerning working with <code class="docutils literal notranslate"><span class="pre">neuroimaging</span> <span class="pre">data</span></code> in <code class="docutils literal notranslate"><span class="pre">python</span></code>. In more detail, we will have a look at how <code class="docutils literal notranslate"><span class="pre">neuroimaging</span> <span class="pre">data</span></code> can be <code class="docutils literal notranslate"><span class="pre">loaded</span></code>, <code class="docutils literal notranslate"><span class="pre">processed</span></code> and <code class="docutils literal notranslate"><span class="pre">saved</span></code> via the <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">packages</span></code> <a class="reference external" href="https://nipy.org/nibabel/">Nibabel</a> and <a class="reference external" href="https://nilearn.github.io/stable/index.html">Nilearn</a>.</p>
+</div>
 <p><img alt="logo" src="https://media3.giphy.com/media/2nt2dX21yO0NAaP7BS/giphy.gif?cid=ecf05e47thh4b9tjde2kf9e84ag7i6m3rbbvo1tilt6fjpll&amp;rid=giphy.gif&amp;ct=g" /><br />
 <sub><sup><sub><sup><a class="reference external" href="https://media3.giphy.com/media/2nt2dX21yO0NAaP7BS/giphy.gif?cid=ecf05e47thh4b9tjde2kf9e84ag7i6m3rbbvo1tilt6fjpll&amp;amp;rid=giphy.gif&amp;amp;ct=g">https://media3.giphy.com/media/2nt2dX21yO0NAaP7BS/giphy.gif?cid=ecf05e47thh4b9tjde2kf9e84ag7i6m3rbbvo1tilt6fjpll&amp;rid=giphy.gif&amp;ct=g</a>
 </sup></sub></sup></sub></p>
 </section>
 <section id="advanced-and-specialized-analyses">
 <h2>Advanced and specialized analyses<a class="headerlink" href="#advanced-and-specialized-analyses" title="Link to this heading">#</a></h2>
+<div style="text-align: justify;">
 <p>The second session will build upon the things learned during the first and will introduce the workshop participants to the larger <code class="docutils literal notranslate"><span class="pre">python-neuroimaging</span> <span class="pre">ecosystem</span></code>. Specifically, we will explore different more advanced and specialized analyses including <code class="docutils literal notranslate"><span class="pre">statistical</span> <span class="pre">analyses</span></code> (<code class="docutils literal notranslate"><span class="pre">uni</span></code>- and <code class="docutils literal notranslate"><span class="pre">multivariate</span></code>), <code class="docutils literal notranslate"><span class="pre">functional</span> <span class="pre">connectivity</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">machine/deep</span> <span class="pre">learning</span></code>. The aim is to show attendees the wide range of of <code class="docutils literal notranslate"><span class="pre">neuroimaging</span> <span class="pre">analyses</span></code> one can run via <code class="docutils literal notranslate"><span class="pre">python</span></code>. Based on the time constraints we will also go through a short presentation that provides further examples of <code class="docutils literal notranslate"><span class="pre">software</span> <span class="pre">packages</span></code> attendees can check out subsequently.</p>
+</div>
 <p><img alt="logo" src="https://media4.giphy.com/media/3orif0rjs49gsPWg1y/giphy.gif?cid=ecf05e47driaof19nl7irhimygzitnzv7ce6vkl6hua50hg5&amp;rid=giphy.gif&amp;ct=g" /><br />
 <sub><sup><sub><sup><a class="reference external" href="https://media4.giphy.com/media/3orif0rjs49gsPWg1y/giphy.gif?cid=ecf05e47driaof19nl7irhimygzitnzv7ce6vkl6hua50hg5&amp;amp;rid=giphy.gif&amp;amp;ct=g">https://media4.giphy.com/media/3orif0rjs49gsPWg1y/giphy.gif?cid=ecf05e47driaof19nl7irhimygzitnzv7ce6vkl6hua50hg5&amp;rid=giphy.gif&amp;ct=g</a>
 </sup></sub></sup></sub></p>
+</section>
+<section id="gimme-the-details">
+<h2>Gimme the details<a class="headerlink" href="#gimme-the-details" title="Link to this heading">#</a></h2>
+<div style="text-align: justify;">
+Below you will find important details regarding the workshop summarized in a compact form. Please consult and familiarize yourself with the information presented there prior to the workshop. 
+</div>
+<section id="instructors">
+<h3>Instructors<a class="headerlink" href="#instructors" title="Link to this heading">#</a></h3>
+<div style="text-align: justify;">
+<p>To provide a holistic introduction into the topic of <code class="docutils literal notranslate"><span class="pre">neuroimaging</span> <span class="pre">analyses</span> <span class="pre">in</span> <span class="pre">python</span></code> and its subcomponents, we assembled a stellar team of instructors. You can find the team below and get further information via clicking on the respective names.</p>
+</div>
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/">
+        <img src="https://avatars.githubusercontent.com/u/" width="100px;" alt=""/>
+        <br /><sub><b>instructor_1</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/PeerHerholz">
+        <img src="https://avatars.githubusercontent.com/u/20129524?s=96&v=4" width="100px;" alt=""/>
+        <br /><sub><b>Peer Herholz (he/him)</b></sub>
+      </a>
+    </td>
+  </tr>
+</table>
+<div class="dropdown admonition">
+<p class="admonition-title">How to address one another?</p>
+<p>When contacting us, please refrain from using titles when addressing us and super formal language, using our first names is fine and it’s way more important that the content is respectful, fair and constructive (We aim for the same when we reply). However, please let us know if you have a preferred way of interacting with other folks, including how you would liked to be addressed, your pronouns and the level of formality.</p>
+</div>
+</section>
+<section id="how-to-reach-the-instructors">
+<h3>How to reach the instructors<a class="headerlink" href="#how-to-reach-the-instructors" title="Link to this heading">#</a></h3>
+<p>The contact information of the instructors are as follows:</p>
+<ul class="simple">
+<li><p>General support: <a class="reference external" href="https://peerherholz.github.io/contact/">by arrangement via this webpage</a></p></li>
+<li><p>E-mail: please follow the links above</p></li>
+<li><p>preferred mode of contact: usually online to save time and effort for everyone</p></li>
+</ul>
+<p align="center"><iframe src="https://giphy.com/embed/U6GunJi6B1o7ecMfKc" width="240" height="136" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><p align="center"><a href="https://giphy.com/gifs/justviralnet-funny-mistake-spelling-U6GunJi6B1o7ecMfKc">via GIPHY</a></p></p>
+</section>
+<section id="when-and-where">
+<h3>When and where<a class="headerlink" href="#when-and-where" title="Link to this heading">#</a></h3>
+<div style="text-align: justify;">
+</div>
+</section>
 </section>
 </section>
 
@@ -497,6 +558,12 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-framework-and-setup">The framework and setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-in-data-handling">Basics in data handling</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-and-specialized-analyses">Advanced and specialized analyses</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gimme-the-details">Gimme the details</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instructors">Instructors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-reach-the-instructors">How to reach the instructors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-and-where">When and where</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

@@ -7,6 +7,8 @@ There are four ways how you can follow this workshop:
 3. Via `Mybinder`: Full workshop experience, interactive and online, with restricted computational power.
 4. Via `Jupyter NBViewer`: Only visual exploration of the workshop content, no interactive aspect.
 
+<div style="text-align: justify;">
+
 While option 3. is nice and easy to follow in an interactive manner and option 4. might work for a quick overview, we don't recommended either of them as getting `Docker` and `Python` to work
 reliably on your machine is going to be very beneficial. This holds true for the workshop and especially beyond. Via installing these tools, you will be equipped to basically continue right
 away and start using them and thus ML/DL on your everyday research workflow. Having that in mind and integrating other tools/resources focusing open and reproducible (neuro-/data) science, we
@@ -15,19 +17,43 @@ are especially useful/needed if we have to hold the workshop virtually due to th
 
 Don't worry, you got this!
 
+</div>
+
 ![logo](https://media1.tenor.com/images/f72cb542d6b3e3c3421889e0a3d9628d/tenor.gif?itemid=4533805)\
 <sub><sup><sub><sup>https://media1.tenor.com/images/f72cb542d6b3e3c3421889e0a3d9628d/tenor.gif?itemid=4533805</sup></sub></sup></sub>
 
 
 ## General things
 
+<div style="text-align: justify;">
+
 There are a few computing requirements for the course that are absolutely necessary (beyond the few software packages we would like you to install, described below):
+
+</div>
 
 1. You must have administrator access to your computer (i.e., you must be able to install things yourself without requesting IT approval).
 1. You must have at least 20 GB of free disk space on your computer (but we would recommend more, to be safe).
 1. If you are using Windows you must be using Windows 10; Windows 7 and 8 will not be sufficient for this course.
 
-If you foresee any of these being a problem please reach out to one of the instructors for what steps you can take to ensure you are ready for the course start.
+<div style="text-align: justify;">
+
+If you foresee any of these being a problem please reach out to one of the instructors for what steps you can take to ensure you are ready for the workshop start.
+
+</div>
+
+## Installation office hours
+
+<div style="text-align: justify;">
+
+If you are having trouble installing the software, we will be holding virtual installation office hours on the following dates:
+
+</div>
+
+<div style="text-align: justify;">
+If you would like to attend one of these office hours, please reach out to Peer Herholz (herholz dot peer at gmail dot com) to get an invite for the `zoom` meeting.
+
+</div>
+
 
 ## Required software
 
@@ -40,8 +66,12 @@ To get the most out of our course, we ask that you arrive with the following sof
 - A virtualization system: `Docker`
 - A modern browser
 
+<div style="text-align: justify;">
+
 If you already have all of the above software tools/packages installed, or are confident you’ll be able to install them by the time the course starts, you can jump straight to [checking your install](#checking-your-install).
 The rest of this page provides more detail on installation procedures for each of the above elements, with separate instructions for each of the three major operating systems (Windows, Mac OS, and Linux).
+
+</div>
 
 ### Some quick general notes on instructions
 
@@ -54,9 +84,10 @@ The rest of this page provides more detail on installation procedures for each o
 
 ### OS-specific installation instructions
 
-Select the tab that corresponds to your operating system and follow the instructions therein.
+Please select the tab that corresponds to your operating system and follow the instructions therein.
 
-```{tabbed} Windows
+````{tab-set} 
+```{tab-item} Windows
 **Windows Subsystem for Linux (WSL)**
 
 1. Search for `Windows Powershell` in your applications; right click and select `Run as administrator`.
@@ -231,7 +262,7 @@ If you are having problems running `docker` commands in the terminal, try re-ope
 If you have questions during the installation procedure please check those links for potential answers!)
 ```
 
-```{tabbed} Linux
+```{tab-item} Linux
 **Bash shell**
 
 You already have it!
@@ -306,7 +337,7 @@ Open a terminal and type the following commands:
    A brief introductory message should be printed to the screen.
 ```
 
-```{tabbed} MacOs
+```{tab-item} MacOs
 **Bash shell**
 
 You already have it!
@@ -394,10 +425,9 @@ Open a terminal and type the following commands:
 (The above step-by-step Docker instructions are distilled from [here](https://docs.docker.com/docker-for-mac/install/).
 If you have questions during the installation procedure please check that link for potential answers!)
 ```
+````
 
-**Note**: If the instructions aren't working and you have spent more than 15-20 minutes troubleshooting on your own, reach out on the #help-installation channel on the Discord channel with the exact problems you're having.
-One of the instructors will try and get back to you quickly to help resolve the situation.
-If they're unable to help via Discord, you may be directed to attend one of the installation office hours.
+**Note**: If the instructions aren't working and you have spent more than 15-20 minutes troubleshooting on your own, please reach out to the workshop instructor (herholz dot peer at gmail dot com) with the exact problems you're having. He will try and get back to you quickly to help resolve the situation.
 
 
 ### Modern web browser
@@ -427,10 +457,11 @@ Yeah, you did! Great job!
 Now that you have installed the required software (or not) to follow the workshop, it's time to gather the respective
 materials. Please use the `tab` matching your setup.
 
-```{tabbed} Docker
+````{tab-set} 
+```{tab-item} Docker
 
-<img src="https://www.docker.com/sites/default/files/d8/2019-07/horizontal-logo-monochromatic-white.png" alt="docker logo" width="300"/>\
-<sub><sup><sub><sup>https://www.docker.com/sites/default/files/d8/2019-07/horizontal-logo-monochromatic-white.png</sup></sub></sup></sub>
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/79/Docker_%28container_engine%29_logo.png" alt="docker logo" width="300"/>\
+<sub><sup><sub><sup>https://upload.wikimedia.org/wikipedia/commons/7/79/Docker_%28container_engine%29_logo.png</sup></sub></sup></sub>
 
 Once Docker Desktop is set up, open a (docker) terminal and run the following command to verify if everything is good to go:
 
@@ -513,8 +544,8 @@ And should you chose to remove the `--rm` string in the `docker run ...` command
     # Remove a container
     docker rm $CONTAINER_ID
 ```
-
-```{tabbed} Conda
+ 
+```{tab-item} Conda
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Conda_logo.svg" alt="conda logo" width="300"/>\
 <sub><sup><sub><sup>https://upload.wikimedia.org/wikipedia/commons/e/ea/Conda_logo.svg</sup></sub></sup></sub>
@@ -533,7 +564,7 @@ To get things up and running, please follow these steps:
 6. Finally, via the `terminal`, move to the folder where you've put all the unzipped content of this workshop, e.g. with the command `cd ~/Desktop/workshop_IRTG2150` and run the command `jupyter notebook` from the folder that contains the `workshop_IRTG2150_overview.ipynb` notebook.
 ```
 
-```{tabbed} Mybinder
+```{tab-item} Mybinder
 
 <img src="https://mybinder.org/static/logo.svg?v=fe52c40adc69454ba7536393f76ebd715e5fb75f5feafe16a27c47483eabf3311c14ed9fda905c49915d6dbf369ae68fb855a40dd05489a7b9542a9ee532e92b" alt="binder logo" width="300"/>\
 <sub><sup><sub><sup>https://mybinder.org/static/logo.svg?v=fe52c40adc69454ba7536393f76ebd715e5fb75f5feafe16a27c47483eabf3311c14ed9fda905c49915d6dbf369ae68fb855a40dd05489a7b9542a9ee532e92b</sup></sub></sup></sub>
@@ -546,13 +577,14 @@ To get things up and running, please follow these steps:
 You can use this approach to run and test most of the notebooks and to explore the slides. To access the MyBinder instance, use [this link](https://mybinder.org/v2/gh/peerherholz/mybinder_workshop_IRTG2150/HEAD).
 ```
 
-```{tabbed} Jupyter NBViewer
+```{tab-item} Jupyter NBViewer
 <img src="https://nbviewer.jupyter.org/static/img/nav_logo.svg" alt="conda logo" width="300"/>\
 <sub><sup><sub><sup>https://nbviewer.jupyter.org/static/img/nav_logo.svg</sup></sub></sup></sub>
 
 
 If you want to go through the content of this workshop without installing anything on your machine, you should chose this approach. To see all the notebooks and slides from this workshop, please use this [Jupyter NBviewer link](https://nbviewer.jupyter.org/github/peerherholz/workshop_IRTG2150/blob/main/workshop/workshop_IRTG2150_overview.ipynb).
 ```
+````
 
 ## Enter the matrix
 

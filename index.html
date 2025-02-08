@@ -414,13 +414,17 @@
 </div>
 <img src="https://nipy.org/img/nipy.svg" alt="workshop logo" width="300" style="margin:0 0 0 0"/>
 <p><a class="reference external" href="https://mybinder.org/v2/gh/peerherholz/mybinder_workshop_IRTG2150/HEAD"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a>
-<a class="reference external" href="https://github.com/peerherholz/workshop_IRTG2150/archive/main.zip"><img alt="GitHub size" src="https://github-size-badge.herokuapp.com/peerherholz/workshop_IRTG2150.svg" /></a>
+<a class="reference external" href="https://github.com/peerherholz/workshop_IRTG2150/archive/main.zip"><img alt="GitHub size" src="https://img.shields.io/github/repo-size/peerherholz/workshop_IRTG2150.svg" /></a>
 <a class="reference external" href="https://hub.docker.com/r/peerherholz/workshop_IRTG2150/"><img alt="Docker Hub" src="https://img.shields.io/docker/pulls/peerherholz/workshop_IRTG2150" /></a>
 <a class="reference external" href="https://github.com/PeerHerholz/workshop_IRTG2150"><img alt="License" src="https://img.shields.io/github/license/peerherholz/workshop_IRTG2150" /></a></p>
 <section class="tex2jax_ignore mathjax_ignore" id="welcome">
 <h1>Welcome!<a class="headerlink" href="#welcome" title="Link to this heading">#</a></h1>
-<p>Hello everyone and welcome to the “MRI analysis in Python using Nipype, Nilearn and more” workshop conducted for the <a class="reference external" href="https://www.irtg2150.rwth-aachen.de/">IRTG 2150</a> at the <a class="reference external" href="https://www.rwth-aachen.de/cms/~a/root/?lidx=1">RWTH Aachen</a>, we’re glad to see you here!</p>
+<div style="text-align: justify;">
+Hello everyone and welcome to the "MRI analysis in Python using Nipype, Nilearn and more" workshop conducted for the <a href="https://www.irtg2150.rwth-aachen.de/">IRTG 2150</a> at the <a href="https://www.rwth-aachen.de/cms/~a/root/?lidx=1">RWTH Aachen</a>, we're glad to see you here!
+<br>
+<br>
 <p>Within these pages, we provide information on how to follow the workshop, as well as respective materials. This <a class="reference external" href="https://jupyterbook.org/intro.html">jupyter book</a> will include the used slides and code in a way that they can be explored in an interactive manner. You can navigate through the respective sections via the TOC on the left side and within sections via the TOC on the right side. The three symbols in the top allow to enable full screen mode, link to the underlying <a class="reference external" href="https://github.com/PeerHerholz/workshop_IRTG2150">Github repository</a> and allow you to download the contents as a pdf or jupyter notebook respectively. Some sections will additionally have a little rocket in that row which will allow you to interactively rerun certain analyses via cloud computing. Additionally, we support public reviews and comments through an <a class="reference external" href="https://web.hypothes.is/">hypothes.is plugin</a> with which you can interact on the right side. All of this awesomeness (talking about the infrastructure and resource) is possible through the dedicated and second to none work of the <a class="reference external" href="https://jupyter.org/community">Jupyter community</a>, specifically, the <a class="reference external" href="https://executablebooks.org/en/latest/">Executable/Jupyter Book</a> and <a class="reference external" href="https://mybinder.org/">mybinder project</a>.</p>
+</div>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
 <div class="admonition warning">
@@ -432,45 +436,101 @@ Please visit this page again in the next few weeks for further information.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="python-neuroimaging">
 <h1>Python &amp; neuroimaging<a class="headerlink" href="#python-neuroimaging" title="Link to this heading">#</a></h1>
-<p>You can checkout the respective sections:</p>
-<ul>
-<li><p><a class="reference internal" href="#"><span class="xref myst">An overview</span></a></p>
-<p>What’s this workshop about and how is it organized?</p>
-</li>
-<li><p><a class="reference internal" href="#"><span class="xref myst">Setup</span></a></p>
-<p>How are things implemented and supposed to work?</p>
-</li>
-<li><p><a class="reference internal" href="#"><span class="xref myst">General outline</span></a></p>
-<p>What are the specific topics and aspects taught?</p>
-</li>
-<li><p><a class="reference internal" href="#"><span class="xref myst">Prerequisites</span></a></p>
-<p>All things gotta start somewhere and neuroimaging analyses in <code class="docutils literal notranslate"><span class="pre">python</span></code> are of course no exceptions to that, especially since a certain amount of digital literacy, programming, etc. is required.
-Here, we gathered some resources folks can check out in preparation for the course or just for fun.</p>
-</li>
-<li><p><a class="reference internal" href="#"><span class="xref myst">Neuroimaging data handling</span></a></p>
-<p>Within the first part of the workshop, we will focus on the basics and will talk about neuroimaging data handling in <code class="docutils literal notranslate"><span class="pre">python</span></code>: what are important aspects folks should know about?</p>
-</li>
-<li><p><a class="reference internal" href="#"><span class="xref myst">Advanced and specialized topics</span></a></p>
-<p>After going through the basics, we will focus on specific analysis types and how they can be conducted using <code class="docutils literal notranslate"><span class="pre">python</span></code>, including <a class="reference internal" href="#"><span class="xref myst">statistical modelling</span></a>, <a class="reference internal" href="#"><span class="xref myst">connectivity analysis</span></a> and <a class="reference internal" href="#"><span class="xref myst">machine learning</span></a>.</p>
-</li>
-<li><p><a class="reference internal" href="#"><span class="xref myst">Code of Conduct</span></a></p>
-<p>Necessities for creating an open, fair, safe and inclusive learning
-experience.</p>
-</li>
-</ul>
+<div style="text-align: justify;">
+<p>As you can see in the <code class="docutils literal notranslate"><span class="pre">TOC</span></code> on the left sidebar, there’s quite a bunch going on here. You may ask: “Oh my, is all of this really necessary?”. Well, it might depend on who you ask but this workshop and the people conducting it think so and here’s why: working with neuroimaging data is incredibly complex and creating a structured and holistic way to empirically train folks needs time, effort, details, and dedication. Additionally, to increase openness and sustainability, and thus ultimately the success rate of the materials at hand, these things need to be prepared and supplied in a way that is findable, accessible, interoperable and re-usable (FAIR) for as many people as possible. This workshop is therefore designed to provide only <code class="docutils literal notranslate"><span class="pre">FAIR</span></code> content and materials.</p>
+<p>You can use the following sections to navigate through the content of the workshop:</p>
+</div>
+<div class="sd-sphinx-override sd-cards-carousel sd-card-cols-2 docutils">
+<div class="sd-card sd-sphinx-override sd-m-3 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-header bg-light text-center docutils">
+<p class="sd-card-text"><strong>A short introduction</strong></p>
+</div>
+<div class="sd-card-body text-center docutils">
+<p class="sd-card-text">What’s this workshop about and how is it organized?</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text">Explore this section <span class="fas fa-arrow-right"></span></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference external" href="https://peerherholz.github.io/workshop_IRTG2150/overview.html"><span>https://peerherholz.github.io/workshop_IRTG2150/overview.html</span></a></div>
+<div class="sd-card sd-sphinx-override sd-m-3 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-header bg-light text-center docutils">
+<p class="sd-card-text"><strong>Setup</strong></p>
+</div>
+<div class="sd-card-body text-center docutils">
+<p class="sd-card-text">How are things implemented and supposed to work?</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text">Explore this section <span class="fas fa-arrow-right"></span></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference external" href="https://peerherholz.github.io/workshop_IRTG2150/setup.html"><span>https://peerherholz.github.io/workshop_IRTG2150/setup.html</span></a></div>
+</div>
+<div class="sd-sphinx-override sd-cards-carousel sd-card-cols-2 docutils">
+<div class="sd-card sd-sphinx-override sd-m-3 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-header bg-light text-center docutils">
+<p class="sd-card-text"><strong>Outline</strong></p>
+</div>
+<div class="sd-card-body text-center docutils">
+<p class="sd-card-text">What are the specific topics and aspects taught?</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text">Explore this section <span class="fas fa-arrow-right"></span></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference external" href="https://peerherholz.github.io/workshop_IRTG2150/outline.html"><span>https://peerherholz.github.io/workshop_IRTG2150/outline.html</span></a></div>
+<div class="sd-card sd-sphinx-override sd-m-3 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-header bg-light text-center docutils">
+<p class="sd-card-text"><strong>Prerequisites</strong></p>
+</div>
+<div class="sd-card-body text-center docutils">
+<p class="sd-card-text">What are the prerequisites for the workshop?</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text">Explore this section <span class="fas fa-arrow-right"></span></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference external" href="https://peerherholz.github.io/workshop_IRTG2150/prerequisites.html"><span>https://peerherholz.github.io/workshop_IRTG2150/prerequisites.html</span></a></div>
+</div>
+<div class="sd-sphinx-override sd-cards-carousel sd-card-cols-2 docutils">
+<div class="sd-card sd-sphinx-override sd-m-3 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-header bg-light text-center docutils">
+<p class="sd-card-text"><strong>Neuroimaging data basics</strong></p>
+</div>
+<div class="sd-card-body text-center docutils">
+<p class="sd-card-text">Basics of neuroimaging data handling in <code class="docutils literal notranslate"><span class="pre">python</span></code>.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text">Explore this section <span class="fas fa-arrow-right"></span></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference external" href="https://peerherholz.github.io/workshop_IRTG2150/data.html"><span>https://peerherholz.github.io/workshop_IRTG2150/data.html</span></a></div>
+<div class="sd-card sd-sphinx-override sd-m-3 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-header bg-light text-center docutils">
+<p class="sd-card-text"><strong>Advanced topics</strong></p>
+</div>
+<div class="sd-card-body text-center docutils">
+<p class="sd-card-text">Specific neuroimaging analyses in <code class="docutils literal notranslate"><span class="pre">python</span></code>.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text">Explore this section <span class="fas fa-arrow-right"></span></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference external" href="https://peerherholz.github.io/workshop_IRTG2150/advanced.html"><span>https://peerherholz.github.io/workshop_IRTG2150/advanced.html</span></a></div>
+</div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="i-ve-got-a-question">
 <h1>I’ve got a question!<a class="headerlink" href="#i-ve-got-a-question" title="Link to this heading">#</a></h1>
+<div style="text-align: justify;">
 <p>In case you have any questions or difficulties going through the workshop, please don’t hesitate a single second to get in touch with
 us. A great way to do this is to
 <a class="reference external" href="https://github.com/PeerHerholz/workshop_IRTG2150/issue">open an issue</a> on the
 <a class="reference external" href="https://github.com/PeerHerholz/workshop_IRTG2150">GitHub site of the Workshop</a> (also possible via the GitHub button at the top of the pages).
 We would also highly appreciate and value every feedback or idea or you
 might have (via <a class="reference external" href="https://github.com/PeerHerholz/workshop_IRTG2150">issues</a> or <a class="reference external" href="https://web.hypothes.is/">hypothes.is annotation feature</a> on the right).</p>
+</div>
 <section id="acknowledgements">
 <h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Link to this heading">#</a></h2>
+<div style="text-align: justify;">
 <p>This workshop was organized by the <a class="reference external" href="https://www.irtg2150.rwth-aachen.de/">IRTG 2150</a>, specifically Dr. Rosa Hülpen.</p>
+<p><img alt="Local Image" src="_images/Logo3.png" />
+<img alt="Local Image" src="_images/DFG_Logo.png" /></p>
 <p>Peer Herholz’ work on and ability to compile this workshop was enabled through training received at the <a class="reference external" href="https://www.mcgill.ca/neuro/">Montreal Neurological Institute</a>, specifically the <a class="reference external" href="https://neurodatascience.github.io/">NeuroDataScience - ORIGAMI lab</a> supported by funding from the Canada First Research Excellence Fund, awarded to McGill University for the <a class="reference external" href="https://www.mcgill.ca/hbhl/">Healthy Brains for Healthy Lives initiative</a>, the <a class="reference external" href="https://www.nih.gov/">National Institutes of Health (NIH)</a> <a class="reference external" href="https://www.repronim.org/">NIH-NIBIB P41 EB019936 (ReproNim)</a>, the <a class="reference external" href="https://www.nimh.nih.gov/">National Institute Of Mental Health</a> of the NIH under Award  Number <a class="reference external" href="https://www.neurosynth.org/">R01MH096906 (Neurosynth)</a>, a <a class="reference external" href="https://conp.ca/">research scholar award from Brain Canada, in partnership with Health Canada, for the Canadian Open Neuroscience Platform initiative</a>, as well as an <a class="reference external" href="https://sites.google.com/view/unique-neuro-ai">Excellence Scholarship from Unifying Neuroscience and Artificial Intelligence - Québec</a>.</p>
+</div>
 </section>
 <div class="toctree-wrapper compound">
 </div>
