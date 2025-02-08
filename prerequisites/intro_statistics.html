@@ -1,0 +1,2956 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Introduction to Statistics in python &#8212; MRI analysis in Python using Nipype, Nilearn and more</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"TeX": {"Macros": {"N": "\\mathbb{N}", "floor": ["\\lfloor#1\\rfloor", 1], "bmat": ["\\left[\\begin{array}"], "emat": ["\\end{array}\\right]"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'prerequisites/intro_statistics';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Introduction to scikit-learn &amp; scikit-image" href="python_scikit.html" />
+    <link rel="prev" title="Introduction to Visualization in python" href="python_visualization.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nipy_logo.png" class="logo__image only-light" alt="MRI analysis in Python using Nipype, Nilearn and more - Home"/>
+    <img src="../_static/nipy_logo.png" class="logo__image only-dark pst-js-only" alt="MRI analysis in Python using Nipype, Nilearn and more - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome!
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../dei.html">Diversity, Equity and Inclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Workshop overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup for the workshop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../outline.html">Outline</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../prerequisites.html">Course prerequisites</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro_to_shell.html">Introduction to the (unix) command line: bash</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="intro_to_git_and_github.html">Introduction to Git and GitHub</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="intro_jupyter.html">Introduction to the jupyter ecosystem &amp; notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_python.html">Introduction to Python</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="python_numpy.html">Introduction to NumPy</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="python_scipy.html">Introduction to SciPy</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="python_visualization.html">Introduction to Visualization in python</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Introduction to Statistics in python</a></li>
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="python_scikit.html">Introduction to scikit-learn &amp; scikit-image</a></li>
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../advanced.html">Advanced and specialized analyses</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../break.html">Yoga and/or dance break</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CoC.html">Code of Conduct</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/PeerHerholz/workshop_IRTG2150/main?urlpath=tree/workshop/prerequisites/intro_statistics.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/PeerHerholz/workshop_IRTG2150" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/PeerHerholz/workshop_IRTG2150/edit/main/workshop/prerequisites/intro_statistics.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/PeerHerholz/workshop_IRTG2150/issues/new?title=Issue%20on%20page%20%2Fprerequisites/intro_statistics.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/prerequisites/intro_statistics.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to Statistics in python</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to Statistics in python</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-representation-and-interaction">Data representation and interaction</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-as-a-table">Data as a table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-pandas-data-frame">The pandas data-frame</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-dataframes-reading-data-files-or-converting-arrays">Creating dataframes: reading data files or converting arrays</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-from-a-csv-file">Reading from a CSV file</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-from-arrays">Creating from arrays</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#manipulating-data">Manipulating data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-split-apply-combine-pattern">The split-apply-combine pattern</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-data">Plotting data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter-matrices">Scatter matrices</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-content-of-a-dataset">Plot content of a dataset</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pingouin-is-an-open-source-statistical-package-written-in-python-3-and-based-mostly-on-pandas-and-numpy"><em>Pingouin is an open-source statistical package written in Python 3 and based mostly on Pandas and NumPy.</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#material-scavenged-from-10-minutes-to-pingouin-and-the-pingouin-docs">**material scavenged from 10 minutes to Pingouin and the pingouin docs</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-summary">Test summary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#before-we-calculate-testing-statistical-premises">Before we calculate:  <code class="docutils literal notranslate"><span class="pre">Testing</span> <span class="pre">statistical</span> <span class="pre">premises</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shapiro-wilk-normality-test">Shapiro Wilk normality  test</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#henze-zirkler-multivariate-normality-test">Henze-Zirkler multivariate normality test</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mauchly-test-for-sphericity">Mauchly test for sphericity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-for-homoscedasticity">Testing for homoscedasticity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-tests">Parametric tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#student-s-t-test-the-simplest-statistical-test">Student’s t-test: the simplest statistical test</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-t-test-testing-the-value-of-a-population-mean">1-sample t-test: testing the value of a population mean</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-t-test-testing-for-difference-across-populations">2-sample t-test: testing for difference across populations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-achieved-power-of-a-paired-t-test">Plot achieved power of a paired T-test</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-parametric-tests">Non parametric tests:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scipy-stats-hypothesis-testing-comparing-two-groups"><code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> - Hypothesis testing: comparing two groups</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1-sample t-test: testing the value of a population mean</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2-sample t-test: testing for difference across populations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#paired-tests-repeated-measurements-on-the-same-indivuals">Paired tests: repeated measurements on the same indivuals</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#statsmodels-use-formulas-to-specify-statistical-models-in-python"><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> - use “formulas” to specify statistical models in Python</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-simple-linear-regression">A simple linear regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology">Terminology</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#categorical-variables-comparing-groups-or-multiple-categories">Categorical variables: comparing groups or multiple categories</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-on-specifying-model">Tips on specifying model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#link-to-t-tests-between-different-mfq-and-shaps">Link to t-tests between different MFQ and SHAPS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-regression-including-multiple-factors">Multiple Regression: including multiple factors</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-the-iris-dataset">Example: the iris dataset</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#post-hoc-hypothesis-testing-analysis-of-variance-anova">Post-hoc hypothesis testing: analysis of variance (ANOVA)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#seaborn-use-visualization-for-statistical-exploration"><code class="docutils literal notranslate"><span class="pre">seaborn</span></code> - use visualization for statistical exploration</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pairplot-scatter-matrices">Pairplot: scatter matrices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lmplot-plotting-a-univariate-regression">lmplot: plotting a univariate regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robust-regression">Robust regression</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-for-interactions">Testing for interactions</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-statistics-in-python">
+<h1>Introduction to Statistics in python<a class="headerlink" href="#introduction-to-statistics-in-python" title="Link to this heading">#</a></h1>
+<p>In this section, we will cover how you can use Python to do some statistics. There are many packages to do so, but we will focus on four:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pandas.pydata.org/">pandas</a></p></li>
+<li><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/stats.html">scipy’s stats module</a></p></li>
+<li><p><a class="reference external" href="http://www.statsmodels.org/stable/index.html">statsmodels</a></p></li>
+<li><p><a class="reference external" href="https://seaborn.pydata.org/index.html">seaborn</a></p></li>
+</ul>
+<p>This notebook is strongly based on the <a class="reference external" href="http://www.scipy-lectures.org/packages/statistics/index.html">scipy-lectures.org</a> section about statistics.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="data-representation-and-interaction">
+<h1>Data representation and interaction<a class="headerlink" href="#data-representation-and-interaction" title="Link to this heading">#</a></h1>
+<section id="data-as-a-table">
+<h2>Data as a table<a class="headerlink" href="#data-as-a-table" title="Link to this heading">#</a></h2>
+<p>The setting that we consider for statistical analysis is that of multiple <em>observations</em> or <em>samples</em> described by a set of different <em>attributes</em> or <em>features</em>. The data can than be seen as a <code class="docutils literal notranslate"><span class="pre">2D</span> <span class="pre">table</span></code>, or <code class="docutils literal notranslate"><span class="pre">matrix</span></code>, with columns giving the different attributes of the data, and rows the observations. For example purposes, we will make use of phenotypic information within a dataset from <a class="reference external" href="https://openneuro.org/datasets/ds003709/versions/1.0.0">OpenNeuro</a>, provided as part of the following publication:</p>
+<p><a class="reference external" href="https://doi.org/10.7554/eLife.62051">Keren H., Zheng C., Jangraw D.C., Chang K., Vitale A., Rutledge R.B., Pereira F., Nielson D.M., Stringaris A. (2021). The temporal representation of experience in subjective mood. eLife, 2021;10:e62051</a>.</p>
+<p>It contains sex, age, handedness, group id, Mood and Feelings Questionnaire total scores and Snaith-Hamilton Pleasure Scale total scores for a fair amount of participants.</p>
+<p>We will use <code class="docutils literal notranslate"><span class="pre">urllib.request</span></code> to gather the respective file:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">urllib.request</span>
+<span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="s2">&quot;https://openneuro.org/crn/datasets/ds003709/snapshots/1.0.0/files/participants.tsv&quot;</span><span class="p">,</span> 
+                           <span class="s2">&quot;participants.tsv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;participants.tsv&#39;, &lt;http.client.HTTPMessage at 0x110b57d50&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>head<span class="w"> </span>participants.tsv
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>participant_id	sex	age	handedness	group	MFQ	SHAPS
+sub-20900	M	17	RIGHT	HV	0.0	1.0
+sub-22686	M	16	RIGHT	HV	2.0	10.0
+sub-23017	F	17	RIGHT	MDD	15.0	6.0
+sub-23108	F	16	RIGHT	HV	0.0	7.0
+sub-23303	F	16	RIGHT	HV	0.0	0.0
+sub-23399	F	17	RIGHT	MDD	1.0	14.0
+sub-23520	F	17	RIGHT	MDD	7.0	22.0
+sub-23540	F	16	RIGHT	MDD	5.0	21.0
+sub-23546	F	17	RIGHT	MDD	1.0	0.0
+</pre></div>
+</div>
+</div>
+</div>
+<center><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Pandas_logo.svg/512px-Pandas_logo.svg.png" width="45%"></center>
+</section>
+<section id="the-pandas-data-frame">
+<h2>The pandas data-frame<a class="headerlink" href="#the-pandas-data-frame" title="Link to this heading">#</a></h2>
+<section id="creating-dataframes-reading-data-files-or-converting-arrays">
+<h3>Creating dataframes: reading data files or converting arrays<a class="headerlink" href="#creating-dataframes-reading-data-files-or-converting-arrays" title="Link to this heading">#</a></h3>
+<section id="reading-from-a-csv-file">
+<h4>Reading from a CSV file<a class="headerlink" href="#reading-from-a-csv-file" title="Link to this heading">#</a></h4>
+<p>Using the above CSV file that gives observations of brain size and weight and IQ (Willerman et al. 1991), the data are a mixture of numerical and categorical values::</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;participants.tsv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>participant_id</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>handedness</th>
+      <th>group</th>
+      <th>MFQ</th>
+      <th>SHAPS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>sub-20900</td>
+      <td>M</td>
+      <td>17</td>
+      <td>RIGHT</td>
+      <td>HV</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>sub-22686</td>
+      <td>M</td>
+      <td>16</td>
+      <td>RIGHT</td>
+      <td>HV</td>
+      <td>2.0</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>sub-23017</td>
+      <td>F</td>
+      <td>17</td>
+      <td>RIGHT</td>
+      <td>MDD</td>
+      <td>15.0</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>sub-23108</td>
+      <td>F</td>
+      <td>16</td>
+      <td>RIGHT</td>
+      <td>HV</td>
+      <td>0.0</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>sub-23303</td>
+      <td>F</td>
+      <td>16</td>
+      <td>RIGHT</td>
+      <td>HV</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>sub-23399</td>
+      <td>F</td>
+      <td>17</td>
+      <td>RIGHT</td>
+      <td>MDD</td>
+      <td>1.0</td>
+      <td>14.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>sub-23520</td>
+      <td>F</td>
+      <td>17</td>
+      <td>RIGHT</td>
+      <td>MDD</td>
+      <td>7.0</td>
+      <td>22.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>sub-23540</td>
+      <td>F</td>
+      <td>16</td>
+      <td>RIGHT</td>
+      <td>MDD</td>
+      <td>5.0</td>
+      <td>21.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>sub-23546</td>
+      <td>F</td>
+      <td>17</td>
+      <td>RIGHT</td>
+      <td>MDD</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>sub-23549</td>
+      <td>M</td>
+      <td>16</td>
+      <td>RIGHT</td>
+      <td>MDD</td>
+      <td>4.0</td>
+      <td>20.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>sub-23564</td>
+      <td>F</td>
+      <td>16</td>
+      <td>RIGHT</td>
+      <td>MDD</td>
+      <td>2.0</td>
+      <td>15.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>sub-23576</td>
+      <td>F</td>
+      <td>15</td>
+      <td>RIGHT</td>
+      <td>MDD</td>
+      <td>9.0</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>sub-23593</td>
+      <td>F</td>
+      <td>15</td>
+      <td>RIGHT</td>
+      <td>MDD</td>
+      <td>16.0</td>
+      <td>18.0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>sub-23607</td>
+      <td>F</td>
+      <td>17</td>
+      <td>RIGHT</td>
+      <td>MDD</td>
+      <td>6.0</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>sub-23613</td>
+      <td>F</td>
+      <td>14</td>
+      <td>RIGHT</td>
+      <td>HV</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>sub-23625</td>
+      <td>F</td>
+      <td>14</td>
+      <td>RIGHT</td>
+      <td>MDD</td>
+      <td>8.0</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>sub-23639</td>
+      <td>F</td>
+      <td>17</td>
+      <td>RIGHT</td>
+      <td>HV</td>
+      <td>4.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>sub-23643</td>
+      <td>F</td>
+      <td>17</td>
+      <td>RIGHT</td>
+      <td>MDD</td>
+      <td>13.0</td>
+      <td>17.0</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>sub-23649</td>
+      <td>F</td>
+      <td>15</td>
+      <td>RIGHT</td>
+      <td>MDD</td>
+      <td>15.0</td>
+      <td>16.0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>sub-23652</td>
+      <td>M</td>
+      <td>16</td>
+      <td>RIGHT</td>
+      <td>MDD</td>
+      <td>8.0</td>
+      <td>17.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="creating-from-arrays">
+<h4>Creating from arrays<a class="headerlink" href="#creating-from-arrays" title="Link to this heading">#</a></h4>
+<p>A <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> can also be seen as a dictionary of 1D ‘series’, eg arrays or lists. If we have 3 <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">sin_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="n">cos_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can expose them as a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span> <span class="s1">&#39;sin&#39;</span><span class="p">:</span> <span class="n">sin_t</span><span class="p">,</span> <span class="s1">&#39;cos&#39;</span><span class="p">:</span> <span class="n">cos_t</span><span class="p">})</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>t</th>
+      <th>sin</th>
+      <th>cos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-6.000000</td>
+      <td>0.279415</td>
+      <td>0.960170</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-5.368421</td>
+      <td>0.792419</td>
+      <td>0.609977</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-4.736842</td>
+      <td>0.999701</td>
+      <td>0.024451</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-4.105263</td>
+      <td>0.821291</td>
+      <td>-0.570509</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-3.473684</td>
+      <td>0.326021</td>
+      <td>-0.945363</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Other inputs</strong>: <a class="reference external" href="http://pandas.pydata.org">pandas</a> can input data from SQL, excel files, or other formats. See the <a class="reference external" href="http://pandas.pydata.org">pandas documentation</a>.</p>
+</section>
+</section>
+<section id="manipulating-data">
+<h3>Manipulating data<a class="headerlink" href="#manipulating-data" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">data</span></code> is a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>, that resembles R’s dataframe:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>    <span class="c1"># 51 rows and 7 columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(51, 7)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">columns</span>  <span class="c1"># It has columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;participant_id&#39;, &#39;sex&#39;, &#39;age&#39;, &#39;handedness&#39;, &#39;group&#39;, &#39;MFQ&#39;, &#39;SHAPS&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>  <span class="c1"># Columns can be addressed by name</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     HV
+1     HV
+2    MDD
+3     HV
+4     HV
+Name: group, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simpler selector</span>
+<span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HV&#39;</span><span class="p">][</span><span class="s1">&#39;MFQ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.5294117647058822
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note:</strong> For a quick view on a large dataframe, use its <code class="docutils literal notranslate"><span class="pre">describe</span></code> <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame.describe</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>MFQ</th>
+      <th>SHAPS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>51.000000</td>
+      <td>46.000000</td>
+      <td>46.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>15.568627</td>
+      <td>5.739130</td>
+      <td>9.195652</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.360219</td>
+      <td>5.511341</td>
+      <td>7.759208</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>12.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>15.000000</td>
+      <td>1.000000</td>
+      <td>2.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>16.000000</td>
+      <td>5.000000</td>
+      <td>8.500000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>17.000000</td>
+      <td>8.000000</td>
+      <td>15.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>18.000000</td>
+      <td>20.000000</td>
+      <td>26.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Frequency count for a given column</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>age
+16    15
+17    12
+15    11
+14     7
+13     3
+18     2
+12     1
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dummy-code # of group (i.e., get N-binary columns)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">])[:</span><span class="mi">15</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>HV</th>
+      <th>MDD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="the-split-apply-combine-pattern">
+<h4>The <a class="reference external" href="https://www.jstatsoft.org/article/view/v040i01/v40i01.pdf">split-apply-combine</a> pattern<a class="headerlink" href="#the-split-apply-combine-pattern" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>A very common data processing strategy is to…</p>
+<ul>
+<li><p>Split the dataset into groups</p></li>
+<li><p>Apply some operation(s) to each group</p></li>
+<li><p>(Optionally) combine back into one dataset</p></li>
+</ul>
+</li>
+</ul>
+<p>Pandas provides powerful and fast tools for this. For example the <code class="docutils literal notranslate"><span class="pre">groupby</span></code> function.</p>
+<p><strong>groupby</strong>: splitting a dataframe on values of categorical variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">groupby_group</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">group</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">groupby_group</span><span class="p">[</span><span class="s1">&#39;MFQ&#39;</span><span class="p">]:</span>
+     <span class="nb">print</span><span class="p">((</span><span class="n">group</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;HV&#39;, 1.5294117647058822)
+(&#39;MDD&#39;, 8.206896551724139)
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">groupby_group</span></code> is a powerful object that exposes many operations on the resulting group of <code class="docutils literal notranslate"><span class="pre">dataframes</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">groupby_group</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>participant_id</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>handedness</th>
+      <th>MFQ</th>
+      <th>SHAPS</th>
+    </tr>
+    <tr>
+      <th>group</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>HV</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+      <td>17</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>MDD</th>
+      <td>31</td>
+      <td>31</td>
+      <td>31</td>
+      <td>31</td>
+      <td>29</td>
+      <td>29</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="plotting-data">
+<h3>Plotting data<a class="headerlink" href="#plotting-data" title="Link to this heading">#</a></h3>
+<p>Pandas comes with some plotting tools (<code class="docutils literal notranslate"><span class="pre">pandas.tools.plotting</span></code>, using
+<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> behind the scene) to display statistics of the data in
+<code class="docutils literal notranslate"><span class="pre">dataframes</span></code>.</p>
+<p>For example, let’s use <code class="docutils literal notranslate"><span class="pre">boxplot</span></code> (in this case even <code class="docutils literal notranslate"><span class="pre">groupby_group.boxplot</span></code>) to better understand the structure of the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">groupby_group</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;MFQ&#39;</span><span class="p">,</span> <span class="s1">&#39;SHAPS&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6c157ec46129684d4b9e382a09417f542baf4eb050f60244c6beb166a3e2faeb.png" src="../_images/6c157ec46129684d4b9e382a09417f542baf4eb050f60244c6beb166a3e2faeb.png" />
+</div>
+</div>
+<section id="scatter-matrices">
+<h4>Scatter matrices<a class="headerlink" href="#scatter-matrices" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;MFQ&#39;</span><span class="p">,</span> <span class="s1">&#39;SHAPS&#39;</span><span class="p">]]);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a0c57b77ecceedcd13d379363567e312ae33efe640da2db623a3140e86c70df2.png" src="../_images/a0c57b77ecceedcd13d379363567e312ae33efe640da2db623a3140e86c70df2.png" />
+</div>
+</div>
+</section>
+<section id="plot-content-of-a-dataset">
+<h4>Plot content of a dataset<a class="headerlink" href="#plot-content-of-a-dataset" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>participant_id</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>handedness</th>
+      <th>group</th>
+      <th>MFQ</th>
+      <th>SHAPS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>sub-20900</td>
+      <td>M</td>
+      <td>17</td>
+      <td>RIGHT</td>
+      <td>HV</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>sub-22686</td>
+      <td>M</td>
+      <td>16</td>
+      <td>RIGHT</td>
+      <td>HV</td>
+      <td>2.0</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>sub-23017</td>
+      <td>F</td>
+      <td>17</td>
+      <td>RIGHT</td>
+      <td>MDD</td>
+      <td>15.0</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>sub-23108</td>
+      <td>F</td>
+      <td>16</td>
+      <td>RIGHT</td>
+      <td>HV</td>
+      <td>0.0</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>sub-23303</td>
+      <td>F</td>
+      <td>16</td>
+      <td>RIGHT</td>
+      <td>HV</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lw</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">subplots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0d138a3046745645474405de4f04b60ed02cbc1114f09dbbee29fb4652b06f92.png" src="../_images/0d138a3046745645474405de4f04b60ed02cbc1114f09dbbee29fb4652b06f92.png" />
+</div>
+</div>
+<img src="https://pingouin-stats.org/build/html/_images/logo_pingouin.png" width="50%"/>
+</section>
+</section>
+<section id="pingouin-is-an-open-source-statistical-package-written-in-python-3-and-based-mostly-on-pandas-and-numpy">
+<h3><em>Pingouin is an open-source statistical package written in Python 3 and based mostly on Pandas and NumPy.</em><a class="headerlink" href="#pingouin-is-an-open-source-statistical-package-written-in-python-3-and-based-mostly-on-pandas-and-numpy" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>ANOVAs: one- and two-ways, repeated measures, mixed, ancova</p></li>
+<li><p>Post-hocs tests and pairwise comparisons</p></li>
+<li><p>Robust correlations</p></li>
+<li><p>Partial correlation, repeated measures correlation and intraclass correlation</p></li>
+<li><p>Linear/logistic regression and mediation analysis</p></li>
+<li><p>Bayesian T-test and Pearson correlation</p></li>
+<li><p>Tests for sphericity, normality and homoscedasticity</p></li>
+<li><p>Effect sizes and power analysis</p></li>
+<li><p>Parametric/bootstrapped confidence intervals around an effect size or a correlation coefficient</p></li>
+<li><p>Circular statistics</p></li>
+<li><p>Plotting: Bland-Altman plot, Q-Q plot, etc…</p></li>
+</ul>
+<p><strong>Pingouin is designed for users who want simple yet exhaustive statistical functions.</strong></p>
+<section id="material-scavenged-from-10-minutes-to-pingouin-and-the-pingouin-docs">
+<h4>**material scavenged from <a class="reference external" href="https://pingouin-stats.org/index.html">10 minutes to Pingouin</a> and <a class="reference external" href="https://pingouin-stats.org/api.html">the pingouin docs</a><a class="headerlink" href="#material-scavenged-from-10-minutes-to-pingouin-and-the-pingouin-docs" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pingouin</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pg</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><a class="reference external" href="https://pingouin-stats.org/generated/pingouin.corr.html#pingouin.corr">Measures of correlation</a></p>
+<p>“In the broadest sense correlation is any statistical association, though in common usage it most often refers to how close two variables are to having a linear relationship with each other” - <a class="reference external" href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient">Wikipedia</a></p>
+<p>When talking about correlation, we commonly mean the Pearson correlation coefficient, also referred to as Pearson’s r</p>
+<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/93185aed3047ef42fa0f1b6e389a4e89a5654afa"/>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pearson_correlation</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;MFQ&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;SHAPS&#39;</span><span class="p">])</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pearson_correlation</span><span class="p">)</span>
+<span class="n">cor_coeeficient</span> <span class="o">=</span> <span class="n">pearson_correlation</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span>
+<span class="n">n</span> <span class="o">=</span>  <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1"># sample size</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>n</th>
+      <th>r</th>
+      <th>CI95%</th>
+      <th>p-val</th>
+      <th>BF10</th>
+      <th>power</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>pearson</th>
+      <td>45</td>
+      <td>0.456981</td>
+      <td>[0.19, 0.66]</td>
+      <td>0.001601</td>
+      <td>23.087</td>
+      <td>0.897757</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="test-summary">
+<h3>Test summary<a class="headerlink" href="#test-summary" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>‘n’ : Sample size (after NaN removal)</p></li>
+<li><p>‘outliers’ : number of outliers (only for ‘shepherd’ or ‘skipped’)</p></li>
+<li><p>‘r’ : Correlation coefficient</p></li>
+<li><p>‘CI95’ : <a class="reference external" href="https://en.wikipedia.org/wiki/Confidence_interval">95% parametric confidence intervals</a></p></li>
+<li><p>‘r2’ : <a class="reference external" href="https://en.wikipedia.org/wiki/Coefficient_of_determination">R-squared</a></p></li>
+<li><p>‘adj_r2’ : <a class="reference external" href="https://en.wikipedia.org/wiki/Coefficient_of_determination#Adjusted_R2">Adjusted R-squared</a></p></li>
+<li><p>‘p-val’ : one or two tailed p-value</p></li>
+<li><p>‘BF10’ : Bayes Factor of the alternative hypothesis (Pearson only)</p></li>
+<li><p>‘power’ : achieved power of the test (= 1 - type II error)</p></li>
+</ul>
+</section>
+<section id="before-we-calculate-testing-statistical-premises">
+<h3>Before we calculate:  <code class="docutils literal notranslate"><span class="pre">Testing</span> <span class="pre">statistical</span> <span class="pre">premises</span></code><a class="headerlink" href="#before-we-calculate-testing-statistical-premises" title="Link to this heading">#</a></h3>
+<p>Statistical procedures can be classfied into either <a class="reference external" href="https://en.wikipedia.org/wiki/Parametric_statistics"><code class="docutils literal notranslate"><span class="pre">parametric</span></code></a> or <code class="docutils literal notranslate"><span class="pre">non</span> <span class="pre">parametric</span></code> prcedures, which require different necessary preconditions to be met in order to show consistent/robust results.
+Generally people assume that their data follows a gaussian distribution, which allows for parametric tests to be run.
+Nevertheless it is essential to first test the distribution of your data to decide if the assumption of normally distributed data holds, if this is not the case we would have to switch to non parametric tests.</p>
+</section>
+<section id="shapiro-wilk-normality-test">
+<h3><a class="reference external" href="https://pingouin-stats.org/generated/pingouin.normality.html#pingouin.normality">Shapiro Wilk normality  test</a><a class="headerlink" href="#shapiro-wilk-normality-test" title="Link to this heading">#</a></h3>
+<p>Standard procedure to test for normal distribution. Tests if the distribution of you data deviates significtanly from a normal distribution.
+returns:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">normal</span></code> : <code class="docutils literal notranslate"><span class="pre">boolean</span></code>
+<code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">x</span></code> comes from a <code class="docutils literal notranslate"><span class="pre">normal</span> <span class="pre">distribution</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code> : <code class="docutils literal notranslate"><span class="pre">float</span></code>
+<code class="docutils literal notranslate"><span class="pre">P-value</span></code>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Return a boolean (true if normal) and the associated p-value</span>
+<span class="n">pg</span><span class="o">.</span><span class="n">normality</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;MFQ&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>W</th>
+      <th>pval</th>
+      <th>normal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>MFQ</th>
+      <td>0.88374</td>
+      <td>0.000264</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="henze-zirkler-multivariate-normality-test">
+<h3><a class="reference external" href="https://pingouin-stats.org/generated/pingouin.multivariate_normality.html#pingouin.multivariate_normality">Henze-Zirkler multivariate normality test</a><a class="headerlink" href="#henze-zirkler-multivariate-normality-test" title="Link to this heading">#</a></h3>
+<p>Same procedure for <a class="reference external" href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">multivariate normal distributions</a></p>
+<p>returns</p>
+<ul class="simple">
+<li><p>normal : boolean
+True if X comes from a multivariate normal distribution.</p></li>
+<li><p>p : float
+P-value.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Return a boolean (true if normal) and the associated p-value</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">mean</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="mi">30</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">pg</span><span class="o">.</span><span class="n">multivariate_normality</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.05</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>HZResults(hz=0.3243965373606267, pval=0.7523511059223037, normal=True)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="mauchly-test-for-sphericity">
+<h3><a class="reference external" href="https://pingouin-stats.org/generated/pingouin.sphericity.html#pingouin.sphericity">Mauchly test for sphericity</a><a class="headerlink" href="#mauchly-test-for-sphericity" title="Link to this heading">#</a></h3>
+<p>“Sphericity is the condition where the variances of the differences between all combinations of related groups (levels) are equal. Violation of sphericity is when the variances of the differences between all combinations of related groups are not equal.” - <a class="reference external" href="https://statistics.laerd.com/statistical-guides/sphericity-statistical-guide.php">https://statistics.laerd.com/statistical-guides/sphericity-statistical-guide.php</a></p>
+<p>returns</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">spher</span></code> : <code class="docutils literal notranslate"><span class="pre">boolean</span></code>
+<code class="docutils literal notranslate"><span class="pre">True</span></code> if data have the <code class="docutils literal notranslate"><span class="pre">sphericity</span></code> property.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">W</span></code> : <code class="docutils literal notranslate"><span class="pre">float</span></code>
+<code class="docutils literal notranslate"><span class="pre">Test</span> <span class="pre">statistic</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">chi_sq</span></code> : <code class="docutils literal notranslate"><span class="pre">float</span></code>
+<code class="docutils literal notranslate"><span class="pre">Chi-square</span> <span class="pre">statistic</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ddof</span></code> : <code class="docutils literal notranslate"><span class="pre">int</span></code>
+<code class="docutils literal notranslate"><span class="pre">Degrees</span> <span class="pre">of</span> <span class="pre">freedom</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code> : <code class="docutils literal notranslate"><span class="pre">float</span></code>
+<code class="docutils literal notranslate"><span class="pre">P-value</span></code>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pg</span><span class="o">.</span><span class="n">sphericity</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpherResults(spher=False, W=0.0017643981395614444, chi2=264.86884024512926, dof=20, pval=2.2093532524528162e-44)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="testing-for-homoscedasticity">
+<h3><a class="reference external" href="https://pingouin-stats.org/generated/pingouin.homoscedasticity.html#pingouin.homoscedasticity">Testing for homoscedasticity</a><a class="headerlink" href="#testing-for-homoscedasticity" title="Link to this heading">#</a></h3>
+<p>“In statistics, a sequence or a vector of random variables is homoscedastic /ˌhoʊmoʊskəˈdæstɪk/ if all random variables in the sequence or vector have the same finite variance.” - <a class="reference external" href="https://en.wikipedia.org/wiki/Homoscedasticity">wikipedia</a></p>
+<p>returns:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">equal_var</span></code> : <code class="docutils literal notranslate"><span class="pre">boolean</span></code>
+<code class="docutils literal notranslate"><span class="pre">True</span></code> if data have equal <code class="docutils literal notranslate"><span class="pre">variance</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code> : <code class="docutils literal notranslate"><span class="pre">float</span></code>
+<code class="docutils literal notranslate"><span class="pre">P-value</span></code>.</p></li>
+</ul>
+<p><em>Note:
+This function first tests if the data are normally distributed using the <strong>Shapiro-Wilk test</strong>. If yes, then the homogeneity of variances is measured using the <strong>Bartlett test</strong>. If the data are not normally distributed, the <strong>Levene test</strong>, which is less sensitive to departure from normality, is used.</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="c1"># Scale = standard deviation of the distribution.</span>
+<span class="n">array_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">array_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">array_1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">array_2</span><span class="p">))</span>
+
+<span class="n">pg</span><span class="o">.</span><span class="n">homoscedasticity</span><span class="p">([</span><span class="n">array_1</span><span class="p">,</span> <span class="n">array_2</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.05</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.2729265592243306 0.6022425373276372
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>W</th>
+      <th>pval</th>
+      <th>equal_var</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>levene</th>
+      <td>21.091584</td>
+      <td>0.000008</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="parametric-tests">
+<h2>Parametric tests<a class="headerlink" href="#parametric-tests" title="Link to this heading">#</a></h2>
+</section>
+<section id="student-s-t-test-the-simplest-statistical-test">
+<h2>Student’s t-test: the simplest statistical test<a class="headerlink" href="#student-s-t-test-the-simplest-statistical-test" title="Link to this heading">#</a></h2>
+<section id="sample-t-test-testing-the-value-of-a-population-mean">
+<h3>1-sample t-test: testing the value of a population mean<a class="headerlink" href="#sample-t-test-testing-the-value-of-a-population-mean" title="Link to this heading">#</a></h3>
+<p>tests if the population mean of data is likely to be equal to a given value (technically if observations are drawn from a Gaussian distributions of given population mean).</p>
+<p><code class="docutils literal notranslate"><span class="pre">pingouin.ttest</span></code> returns the T_statistic, the p-value, the [degrees of freedom](<a class="reference external" href="https://en.wikipedia.org/wiki/Degrees_of_freedom_(statistics)">https://en.wikipedia.org/wiki/Degrees_of_freedom_(statistics)</a>, the <a class="reference external" href="https://en.wikiversity.org/wiki/Cohen%27s_d">Cohen d effect size</a>, the achieved [power](<a class="reference external" href="https://en.wikipedia.org/wiki/Power_(statistics%29)">https://en.wikipedia.org/wiki/Power_(statistics))</a> of the test ( = 1 - type II error (beta) = <a class="reference external" href="https://deliveroo.engineering/2018/12/07/monte-carlo-power-analysis.html">P(Reject H0|H1 is true)</a>), and the <a class="reference external" href="https://en.wikipedia.org/wiki/Bayes_factor">Bayes Factor</a> of the alternative hypothesis</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pg</span><span class="o">.</span><span class="n">ttest</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;MFQ&#39;</span><span class="p">],</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>T</th>
+      <th>dof</th>
+      <th>alternative</th>
+      <th>p-val</th>
+      <th>CI95%</th>
+      <th>cohen-d</th>
+      <th>BF10</th>
+      <th>power</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>T-test</th>
+      <td>7.062651</td>
+      <td>45</td>
+      <td>two-sided</td>
+      <td>8.228161e-09</td>
+      <td>[4.1, 7.38]</td>
+      <td>1.041331</td>
+      <td>1.527e+06</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="sample-t-test-testing-for-difference-across-populations">
+<h3>2-sample t-test: testing for difference across populations<a class="headerlink" href="#sample-t-test-testing-for-difference-across-populations" title="Link to this heading">#</a></h3>
+<p>We have seen above that the mean <code class="docutils literal notranslate"><span class="pre">MFQ</span></code> in the <code class="docutils literal notranslate"><span class="pre">MDD</span></code> and <code class="docutils literal notranslate"><span class="pre">HV</span></code> populations
+were different. To test if this is significant, we do a 2-sample t-test:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MDD_MFQ</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;MDD&#39;</span><span class="p">][</span><span class="s1">&#39;MFQ&#39;</span><span class="p">]</span>
+<span class="n">HV_MFQ</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HV&#39;</span><span class="p">][</span><span class="s1">&#39;MFQ&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pg</span><span class="o">.</span><span class="n">ttest</span><span class="p">(</span><span class="n">MDD_MFQ</span><span class="p">,</span> <span class="n">HV_MFQ</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>T</th>
+      <th>dof</th>
+      <th>alternative</th>
+      <th>p-val</th>
+      <th>CI95%</th>
+      <th>cohen-d</th>
+      <th>BF10</th>
+      <th>power</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>T-test</th>
+      <td>5.865842</td>
+      <td>40.991061</td>
+      <td>two-sided</td>
+      <td>6.718419e-07</td>
+      <td>[4.38, 8.98]</td>
+      <td>1.485559</td>
+      <td>2.226e+04</td>
+      <td>0.997404</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="plot-achieved-power-of-a-paired-t-test">
+<h3>Plot achieved power of a paired T-test<a class="headerlink" href="#plot-achieved-power-of-a-paired-t-test" title="Link to this heading">#</a></h3>
+<p>Plot the <code class="docutils literal notranslate"><span class="pre">curve</span></code> of achieved <code class="docutils literal notranslate"><span class="pre">power</span></code> given the <code class="docutils literal notranslate"><span class="pre">effect</span> <span class="pre">size</span></code> (<code class="docutils literal notranslate"><span class="pre">Cohen</span> <span class="pre">d</span></code>) and the <code class="docutils literal notranslate"><span class="pre">sample</span> <span class="pre">size</span></code> of a <code class="docutils literal notranslate"><span class="pre">paired</span> <span class="pre">T-test</span></code>.
+However, please be aware that <code class="docutils literal notranslate"><span class="pre">post-hoc</span> <span class="pre">power</span> <span class="pre">analyses</span></code> have certain caveats as outlined by <a class="reference external" href="https://lakens.github.io/statistical_inferences/08-samplesizejustification.html#sec-posthocpower">Daniel Lakens</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pingouin</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pg</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;ticks&#39;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s1">&#39;notebook&#39;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># Fixed effect size</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>  <span class="c1"># Incrementing sample size</span>
+
+<span class="c1"># Compute the achieved power</span>
+<span class="n">pwr</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">power_ttest</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">contrast</span><span class="o">=</span><span class="s1">&#39;paired&#39;</span><span class="p">)</span>
+
+<span class="c1"># Start the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">pwr</span><span class="p">,</span> <span class="s1">&#39;ko-.&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sample size&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Power (1 - type II error)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Achieved power of a paired T-test&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0a9192be64358c00b656a43738e3c1c8f16f37ef9ca4c1d0b684e0c0aea98da6.png" src="../_images/0a9192be64358c00b656a43738e3c1c8f16f37ef9ca4c1d0b684e0c0aea98da6.png" />
+</div>
+</div>
+</section>
+<section id="non-parametric-tests">
+<h3>Non parametric tests:<a class="headerlink" href="#non-parametric-tests" title="Link to this heading">#</a></h3>
+<p>Unlike the parametric test these do not require the assumption of normal distributions.</p>
+<p>“<code class="docutils literal notranslate"><span class="pre">Mann-Whitney</span> <span class="pre">U</span> <span class="pre">Test</span></code> (= Wilcoxon rank-sum test). It is the non-parametric version of the independent T-test.
+Mwu tests the hypothesis that data in x and y are samples from continuous distributions with equal medians. The test assumes that x and y are independent. This test corrects for ties and by default uses a continuity correction.” - <a class="reference external" href="https://pingouin-stats.org/generated/pingouin.mwu.html#pingouin.mwu">mwu-function</a></p>
+<p>Test summary</p>
+<ul class="simple">
+<li><p>‘W-val’ : W-value</p></li>
+<li><p>‘p-val’ : p-value</p></li>
+<li><p>‘RBC’   : matched pairs rank-biserial correlation (effect size)</p></li>
+<li><p>‘CLES’  : common language effect size</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pg</span><span class="o">.</span><span class="n">mwu</span><span class="p">(</span><span class="n">MDD_MFQ</span><span class="p">,</span> <span class="n">HV_MFQ</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>U-val</th>
+      <th>alternative</th>
+      <th>p-val</th>
+      <th>RBC</th>
+      <th>CLES</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>MWU</th>
+      <td>442.0</td>
+      <td>two-sided</td>
+      <td>0.000008</td>
+      <td>0.793103</td>
+      <td>0.896552</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>“<code class="docutils literal notranslate"><span class="pre">Wilcoxon</span> <span class="pre">signed-rank</span> <span class="pre">test</span></code> is the non-parametric version of the paired T-test.</p>
+<p>The Wilcoxon signed-rank test tests the null hypothesis that two related paired samples come from the same distribution. A continuity correction is applied by default.” - <a class="reference external" href="https://pingouin-stats.org/generated/pingouin.wilcoxon.html#pingouin.wilcoxon">wilcoxon - func</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># example from the function definition</span>
+<span class="c1"># Wilcoxon test on two related samples.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">38</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">22</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Medians = </span><span class="si">%.2f</span><span class="s2"> - </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span>
+<span class="n">pg</span><span class="o">.</span><span class="n">wilcoxon</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="s1">&#39;two-sided&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Medians = 20.00 - 25.50
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>W-val</th>
+      <th>alternative</th>
+      <th>p-val</th>
+      <th>RBC</th>
+      <th>CLES</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Wilcoxon</th>
+      <td>9.0</td>
+      <td>two-sided</td>
+      <td>0.25</td>
+      <td>-0.5</td>
+      <td>0.351562</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<center><img src="https://docs.scipy.org/doc/numpy-1.5.x/_static/scipyshiny_small.png" width="20%"></center>
+</section>
+<section id="scipy-stats-hypothesis-testing-comparing-two-groups">
+<h3><code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> - Hypothesis testing: comparing two groups<a class="headerlink" href="#scipy-stats-hypothesis-testing-comparing-two-groups" title="Link to this heading">#</a></h3>
+<p>For simple <a class="reference external" href="https://en.wikipedia.org/wiki/Statistical_hypothesis_testing">statistical tests</a>, it is also possible to use the <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> sub-module of <a class="reference external" href="http://docs.scipy.org/doc/"><code class="docutils literal notranslate"><span class="pre">scipy</span></code></a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h3>1-sample t-test: testing the value of a population mean<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">scipy.stats.ttest_1samp</span></code> tests if the population mean of data is likely to be equal to a given value (technically if observations are drawn from a Gaussian distributions of given population mean). It returns the <a class="reference external" href="https://en.wikipedia.org/wiki/Student%27s_t-test">T statistic</a>, and the <a class="reference external" href="https://en.wikipedia.org/wiki/P-value">p-value</a> (see the function’s help):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_1samp</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;MFQ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TtestResult(statistic=7.062650755155121, pvalue=8.228161269771835e-09, df=45)
+</pre></div>
+</div>
+</div>
+</div>
+<p>With a p-value of 8^-09 we can claim that the population mean for the <code class="docutils literal notranslate"><span class="pre">MFQ</span></code> is not <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+</section>
+<section id="id2">
+<h3>2-sample t-test: testing for difference across populations<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>We have seen above that the mean <code class="docutils literal notranslate"><span class="pre">MFQ</span></code> in the <code class="docutils literal notranslate"><span class="pre">MDD</span></code> and <code class="docutils literal notranslate"><span class="pre">HV</span></code> populations
+were different. To test if this is significant, we do a <code class="docutils literal notranslate"><span class="pre">2-sample</span> <span class="pre">t-test</span></code>
+with <code class="docutils literal notranslate"><span class="pre">scipy.stats.ttest_ind</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">MDD_MFQ</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">HV_MFQ</span><span class="o">.</span><span class="n">dropna</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TtestResult(statistic=4.863337342528167, pvalue=1.5121907363581306e-05, df=44.0)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="paired-tests-repeated-measurements-on-the-same-indivuals">
+<h2>Paired tests: repeated measurements on the same indivuals<a class="headerlink" href="#paired-tests-repeated-measurements-on-the-same-indivuals" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">MFQ</span></code> and <code class="docutils literal notranslate"><span class="pre">SHAPS</span></code> are <code class="docutils literal notranslate"><span class="pre">measures</span></code> of interest. Let us test if they are significantly different. We can use a <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">sample</span> <span class="pre">test</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;MFQ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;SHAPS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TtestResult(statistic=-2.4632108396344363, pvalue=0.01567217083007739, df=90.0)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The problem with this approach is that it forgets that there are links
+between observations: <code class="docutils literal notranslate"><span class="pre">MFQ</span></code> and <code class="docutils literal notranslate"><span class="pre">SHAPS</span></code> are measured on the same individuals.</p>
+<p>Thus the variance due to <code class="docutils literal notranslate"><span class="pre">inter-subject</span> <span class="pre">variability</span></code> is confounding, and
+can be removed, using a “paired test”, or <a class="reference external" href="https://en.wikipedia.org/wiki/Repeated_measures_design">“repeated measures test”</a>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_rel</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;MFQ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;SHAPS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TtestResult(statistic=-3.006858621511653, pvalue=0.004308118483154467, df=45)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is equivalent to a 1-sample test on the difference::</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_1samp</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;MFQ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;SHAPS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TtestResult(statistic=nan, pvalue=nan, df=nan)
+</pre></div>
+</div>
+</div>
+</div>
+<p>T-tests assume Gaussian errors. We can use a <a class="reference external" href="https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test">Wilcoxon signed-rank test</a>, that relaxes this assumption:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">wilcoxon</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;MFQ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;SHAPS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WilcoxonResult(statistic=177.0, pvalue=0.004985029827378135)
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note:</strong> The corresponding test in the non paired case is the <a class="reference external" href="https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U">Mann–Whitney U test</a>, <code class="docutils literal notranslate"><span class="pre">scipy.stats.mannwhitneyu</span></code>.</p>
+<center><img src="https://www.statsmodels.org/0.8.0/_static/statsmodels_hybi_banner.png" width="50%"></center>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="statsmodels-use-formulas-to-specify-statistical-models-in-python">
+<h1><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> - use “formulas” to specify statistical models in Python<a class="headerlink" href="#statsmodels-use-formulas-to-specify-statistical-models-in-python" title="Link to this heading">#</a></h1>
+<p>Use <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> to perform linear models, multiple factors or analysis of variance.</p>
+<section id="a-simple-linear-regression">
+<h2>A simple linear regression<a class="headerlink" href="#a-simple-linear-regression" title="Link to this heading">#</a></h2>
+<p>Given two set of observations, <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>, we want to test the hypothesis that <code class="docutils literal notranslate"><span class="pre">y</span></code> is a linear function of <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
+<p>In other terms:</p>
+<p><span class="math notranslate nohighlight">\(y = x * coef + intercept + e\)</span></p>
+<p>where <span class="math notranslate nohighlight">\(e\)</span> is observation noise. We will use the <a class="reference external" href="http://statsmodels.sourceforge.net">statsmodels</a> module to:</p>
+<ol class="arabic simple">
+<li><p>Fit a linear model. We will use the simplest strategy, <a class="reference external" href="https://en.wikipedia.org/wiki/Ordinary_least_squares">ordinary least squares</a> (OLS).</p></li>
+<li><p>Test that <span class="math notranslate nohighlight">\(coef\)</span> is non zero.</p></li>
+</ol>
+<p>First, we generate simulated data according to the model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># normal distributed noise</span>
+<span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Create a data frame containing all the relevant variables</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y</span><span class="p">})</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/acbbf593b44473909f14e458210f6ac1b9b9ab32e4b140377864f8991a54c27d.png" src="../_images/acbbf593b44473909f14e458210f6ac1b9b9ab32e4b140377864f8991a54c27d.png" />
+</div>
+</div>
+<p>Then we specify an OLS model and fit it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">ols</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s2">&quot;y ~ x&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note:</strong> For more about “formulas” for statistics in Python, see the <a class="reference external" href="http://statsmodels.sourceforge.net/stable/example_formulas.html">statsmodels documentation</a>.</p>
+<p>We can inspect the various statistics derived from the fit::</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.804
+Model:                            OLS   Adj. R-squared:                  0.794
+Method:                 Least Squares   F-statistic:                     74.03
+Date:                Sat, 08 Feb 2025   Prob (F-statistic):           8.56e-08
+Time:                        15:16:12   Log-Likelihood:                -57.988
+No. Observations:                  20   AIC:                             120.0
+Df Residuals:                      18   BIC:                             122.0
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     -5.5335      1.036     -5.342      0.000      -7.710      -3.357
+x              2.9369      0.341      8.604      0.000       2.220       3.654
+==============================================================================
+Omnibus:                        0.100   Durbin-Watson:                   2.956
+Prob(Omnibus):                  0.951   Jarque-Bera (JB):                0.322
+Skew:                          -0.058   Prob(JB):                        0.851
+Kurtosis:                       2.390   Cond. No.                         3.03
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</pre></div>
+</div>
+</div>
+</div>
+<section id="terminology">
+<h3>Terminology<a class="headerlink" href="#terminology" title="Link to this heading">#</a></h3>
+<p>Statsmodels uses a statistical terminology: the <code class="docutils literal notranslate"><span class="pre">y</span></code> variable in statsmodels is called <em>endogenous</em> while the <code class="docutils literal notranslate"><span class="pre">x</span></code> variable is called <em>exogenous</em>. This is discussed in more detail <a class="reference external" href="http://statsmodels.sourceforge.net/devel/endog_exog.html">here</a>. To simplify, <code class="docutils literal notranslate"><span class="pre">y</span></code> (endogenous) is the value you are trying to predict, while <code class="docutils literal notranslate"><span class="pre">x</span></code> (exogenous) represents the features you are using to make the prediction.</p>
+</section>
+</section>
+<section id="categorical-variables-comparing-groups-or-multiple-categories">
+<h2>Categorical variables: comparing groups or multiple categories<a class="headerlink" href="#categorical-variables-comparing-groups-or-multiple-categories" title="Link to this heading">#</a></h2>
+<p>Let us go back to our data. We can write a comparison between <code class="docutils literal notranslate"><span class="pre">MFQ</span></code> of <code class="docutils literal notranslate"><span class="pre">MDD</span></code> and <code class="docutils literal notranslate"><span class="pre">HV</span></code> groups using a linear model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;participants.tsv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s2">&quot;MFQ ~ group + 1&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    MFQ   R-squared:                       0.350
+Model:                            OLS   Adj. R-squared:                  0.335
+Method:                 Least Squares   F-statistic:                     23.65
+Date:                Sat, 08 Feb 2025   Prob (F-statistic):           1.51e-05
+Time:                        15:16:28   Log-Likelihood:                -133.38
+No. Observations:                  46   AIC:                             270.8
+Df Residuals:                      44   BIC:                             274.4
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+================================================================================
+                   coef    std err          t      P&gt;|t|      [0.025      0.975]
+--------------------------------------------------------------------------------
+Intercept        1.5294      1.090      1.403      0.168      -0.668       3.727
+group[T.MDD]     6.6775      1.373      4.863      0.000       3.910       9.445
+==============================================================================
+Omnibus:                        2.463   Durbin-Watson:                   1.836
+Prob(Omnibus):                  0.292   Jarque-Bera (JB):                1.930
+Skew:                           0.502   Prob(JB):                        0.381
+Kurtosis:                       3.012   Cond. No.                         3.05
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</pre></div>
+</div>
+</div>
+</div>
+<section id="tips-on-specifying-model">
+<h3>Tips on specifying model<a class="headerlink" href="#tips-on-specifying-model" title="Link to this heading">#</a></h3>
+<p><em><strong>Forcing categorical</strong></em> - the ‘group’ variable is automatically detected as a categorical variable, and thus each of its different values is treated as different entities.</p>
+<p>An integer column can be forced to be treated as categorical using:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s1">&#39;MFQ ~ C(group)&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><em><strong>Intercept</strong></em>: We can remove the intercept using <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">1</span></code> in the formula, or force the use of an intercept using <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">1</span></code>.</p>
+</section>
+<section id="link-to-t-tests-between-different-mfq-and-shaps">
+<h3>Link to t-tests between different MFQ and SHAPS<a class="headerlink" href="#link-to-t-tests-between-different-mfq-and-shaps" title="Link to this heading">#</a></h3>
+<p>To compare different types of our measurements of interest, we need to create a <code class="docutils literal notranslate"><span class="pre">&quot;long-form&quot;</span> <span class="pre">table</span></code>, listing them, where their type is indicated by a <code class="docutils literal notranslate"><span class="pre">categorical</span> <span class="pre">variable</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_mfq</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;MOI&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;MFQ&#39;</span><span class="p">],</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;MFQ&#39;</span><span class="p">})</span>
+<span class="n">data_shaps</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;MOI&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;SHAPS&#39;</span><span class="p">],</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;SHAPS&#39;</span><span class="p">})</span>
+<span class="n">data_long</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">data_mfq</span><span class="p">,</span> <span class="n">data_shaps</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data_long</span><span class="p">[::</span><span class="mi">8</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     MOI   type
+0    0.0    MFQ
+8    1.0    MFQ
+16   4.0    MFQ
+24   NaN    MFQ
+32   0.0    MFQ
+40   0.0    MFQ
+48   8.0    MFQ
+5   14.0  SHAPS
+13   2.0  SHAPS
+21   9.0  SHAPS
+29   8.0  SHAPS
+37  14.0  SHAPS
+45   1.0  SHAPS
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s2">&quot;MOI ~ type&quot;</span><span class="p">,</span> <span class="n">data_long</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    MOI   R-squared:                       0.063
+Model:                            OLS   Adj. R-squared:                  0.053
+Method:                 Least Squares   F-statistic:                     6.067
+Date:                Sat, 08 Feb 2025   Prob (F-statistic):             0.0157
+Time:                        15:16:33   Log-Likelihood:                -304.93
+No. Observations:                  92   AIC:                             613.9
+Df Residuals:                      90   BIC:                             618.9
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+=================================================================================
+                    coef    std err          t      P&gt;|t|      [0.025      0.975]
+---------------------------------------------------------------------------------
+Intercept         5.7391      0.992      5.784      0.000       3.768       7.710
+type[T.SHAPS]     3.4565      1.403      2.463      0.016       0.669       6.244
+==============================================================================
+Omnibus:                        6.740   Durbin-Watson:                   1.892
+Prob(Omnibus):                  0.034   Jarque-Bera (JB):                6.017
+Skew:                           0.548   Prob(JB):                       0.0494
+Kurtosis:                       2.391   Cond. No.                         2.62
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that we retrieve the same values for t-test and corresponding p-values for the effect of the type of MOI than the previous t-test:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;MFQ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;SHAPS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TtestResult(statistic=-2.4632108396344363, pvalue=0.01567217083007739, df=90.0)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="multiple-regression-including-multiple-factors">
+<h2>Multiple Regression: including multiple factors<a class="headerlink" href="#multiple-regression-including-multiple-factors" title="Link to this heading">#</a></h2>
+<p>Consider a linear model explaining a variable <code class="docutils literal notranslate"><span class="pre">z</span></code> (the dependent
+variable) with 2 variables <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>:</p>
+<p><span class="math notranslate nohighlight">\(z = x \, c_1 + y \, c_2 + i + e\)</span></p>
+<p>Such a model can be seen in 3D as fitting a plane to a cloud of (<code class="docutils literal notranslate"><span class="pre">x</span></code>,
+<code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">z</span></code>) points (see the following figure).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+
+<span class="c1"># We generate a 2D grid</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># To get reproducable values, provide a seed value</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Z is the elevation of this 2D grid</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">X</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">Y</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Plot the data</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">surf</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">coolwarm</span><span class="p">,</span>
+                       <span class="n">rstride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">view_init</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mi">120</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;Z&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Z&#39;)
+</pre></div>
+</div>
+<img alt="../_images/655cb7540a15147a296338614b9e4760324e0c04df953489fe0eb6f7f7949cb2.png" src="../_images/655cb7540a15147a296338614b9e4760324e0c04df953489fe0eb6f7f7949cb2.png" />
+</div>
+</div>
+<section id="example-the-iris-dataset">
+<h3>Example: the iris dataset<a class="headerlink" href="#example-the-iris-dataset" title="Link to this heading">#</a></h3>
+<p>Sepal and petal size tend to be related: bigger flowers are bigger! But is there, in addition, a systematic effect of species?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pandas.plotting</span><span class="w"> </span><span class="kn">import</span> <span class="n">scatter_matrix</span>
+
+<span class="c1">#Load the data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;iris&#39;</span><span class="p">)</span>
+
+<span class="c1"># Express the names as categories</span>
+<span class="n">categories</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">])</span>
+
+<span class="c1"># The parameter &#39;c&#39; is passed to plt.scatter and will control the color</span>
+<span class="n">scatter_matrix</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">categories</span><span class="o">.</span><span class="n">codes</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Plot figure</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;blue: setosa, green: versicolor, red: virginica&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/75a6dffc31bf1a60b9055635ad26e67230edbbefff725f10b2974f3babe06e78.png" src="../_images/75a6dffc31bf1a60b9055635ad26e67230edbbefff725f10b2974f3babe06e78.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s1">&#39;sepal_width ~ species + petal_length&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:            sepal_width   R-squared:                       0.486
+Model:                            OLS   Adj. R-squared:                  0.476
+Method:                 Least Squares   F-statistic:                     46.08
+Date:                Sat, 08 Feb 2025   Prob (F-statistic):           5.14e-21
+Time:                        15:17:58   Log-Likelihood:                -37.808
+No. Observations:                 150   AIC:                             83.62
+Df Residuals:                     146   BIC:                             95.66
+Df Model:                           3                                         
+Covariance Type:            nonrobust                                         
+=========================================================================================
+                            coef    std err          t      P&gt;|t|      [0.025      0.975]
+-----------------------------------------------------------------------------------------
+Intercept                 2.9919      0.099     30.206      0.000       2.796       3.188
+species[T.versicolor]    -1.4927      0.181     -8.264      0.000      -1.850      -1.136
+species[T.virginica]     -1.6741      0.255     -6.557      0.000      -2.179      -1.170
+petal_length              0.2983      0.060      4.932      0.000       0.179       0.418
+==============================================================================
+Omnibus:                        3.167   Durbin-Watson:                   1.771
+Prob(Omnibus):                  0.205   Jarque-Bera (JB):                3.214
+Skew:                          -0.121   Prob(JB):                        0.200
+Kurtosis:                       3.675   Cond. No.                         54.0
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="post-hoc-hypothesis-testing-analysis-of-variance-anova">
+<h2>Post-hoc hypothesis testing: analysis of variance (ANOVA)<a class="headerlink" href="#post-hoc-hypothesis-testing-analysis-of-variance-anova" title="Link to this heading">#</a></h2>
+<p>In the above iris example, we wish to test if the petal length is different between versicolor and virginica, after removing the effect of sepal width. This can be formulated as testing the difference between the coefficient associated to versicolor and virginica in the linear model estimated above (it is an Analysis of Variance, <a class="reference external" href="https://en.wikipedia.org/wiki/Analysis_of_variance">ANOVA</a>. For this, we write a <strong>vector of ‘contrast’</strong> on the parameters estimated: we want to test <code class="docutils literal notranslate"><span class="pre">&quot;name[T.versicolor]</span> <span class="pre">-</span> <span class="pre">name[T.virginica]&quot;</span></code>, with an <a class="reference external" href="https://en.wikipedia.org/wiki/F-test">F-test</a>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">f_test</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;F test: F=3.2619146476783207, p=0.07296614041660864, df_denom=146, df_num=1&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Is this difference significant?</p>
+<center><img src="https://raw.githubusercontent.com/mwaskom/seaborn/master/doc/_static/logo-wide-lightbg.png" width="50%"></center>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="seaborn-use-visualization-for-statistical-exploration">
+<h1><code class="docutils literal notranslate"><span class="pre">seaborn</span></code> - use visualization for statistical exploration<a class="headerlink" href="#seaborn-use-visualization-for-statistical-exploration" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="http://stanford.edu/~mwaskom/software/seaborn/">Seaborn</a> combines simple statistical fits with plotting on pandas dataframes.</p>
+<p>Let us consider a data giving wages and many other personal information on 500 individuals (<a class="reference external" href="http://lib.stat.cmu.edu/datasets/CPS_85_Wages">Berndt, ER. The Practice of Econometrics. 1991. NY:Addison-Wesley</a>) which we will gather using a small function based on the <a class="reference external" href="https://scipy-lectures.org/packages/statistics/auto_examples/plot_wage_data.html">scipy tutorials</a>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">download_wages_data</span><span class="p">():</span>
+    
+    <span class="kn">import</span><span class="w"> </span><span class="nn">urllib</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+    
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;wages.txt&#39;</span><span class="p">):</span>
+        <span class="c1"># Download the file if it is not present</span>
+        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="s1">&#39;http://lib.stat.cmu.edu/datasets/CPS_85_Wages&#39;</span><span class="p">,</span>
+                           <span class="s1">&#39;wages.txt&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Give names to the columns</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;EDUCATION: Number of years of education&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;SOUTH: 1=Person lives in South, 0=Person lives elsewhere&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;SEX: 1=Female, 0=Male&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;EXPERIENCE: Number of years of work experience&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;UNION: 1=Union member, 0=Not union member&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;WAGE: Wage (dollars per hour)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;AGE: years&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;RACE: 1=Other, 2=Hispanic, 3=White&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;OCCUPATION: 1=Management, 2=Sales, 3=Clerical, 4=Service, 5=Professional, 6=Other&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;SECTOR: 0=Other, 1=Manufacturing, 2=Construction&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;MARR: 0=Unmarried,  1=Married&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="n">short_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">names</span><span class="p">]</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;wages.txt&#39;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">27</span><span class="p">,</span> <span class="n">skipfooter</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">short_names</span>
+
+    <span class="c1"># Log-transform the wages, because they typically are increased with</span>
+    <span class="c1"># multiplicative factors</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;WAGE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;WAGE&#39;</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="n">data</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">download_wages_data</span><span class="p">()</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/61/0lj9r7px3k52gv9yfyx6ky300000gn/T/ipykernel_75664/2025958034.py:30: ParserWarning: Falling back to the &#39;python&#39; engine because the &#39;c&#39; engine does not support skipfooter; you can avoid this warning by specifying engine=&#39;python&#39;.
+  data = pd.read_csv(&#39;wages.txt&#39;, skiprows=27, skipfooter=6, sep=None,
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>EDUCATION</th>
+      <th>SOUTH</th>
+      <th>SEX</th>
+      <th>EXPERIENCE</th>
+      <th>UNION</th>
+      <th>WAGE</th>
+      <th>AGE</th>
+      <th>RACE</th>
+      <th>OCCUPATION</th>
+      <th>SECTOR</th>
+      <th>MARR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>8</td>
+      <td>0</td>
+      <td>1</td>
+      <td>21</td>
+      <td>0</td>
+      <td>0.707570</td>
+      <td>35</td>
+      <td>2</td>
+      <td>6</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>9</td>
+      <td>0</td>
+      <td>1</td>
+      <td>42</td>
+      <td>0</td>
+      <td>0.694605</td>
+      <td>57</td>
+      <td>3</td>
+      <td>6</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>12</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.824126</td>
+      <td>19</td>
+      <td>3</td>
+      <td>6</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>12</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0.602060</td>
+      <td>22</td>
+      <td>3</td>
+      <td>6</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>12</td>
+      <td>0</td>
+      <td>0</td>
+      <td>17</td>
+      <td>0</td>
+      <td>0.875061</td>
+      <td>35</td>
+      <td>3</td>
+      <td>6</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="pairplot-scatter-matrices">
+<h2>Pairplot: scatter matrices<a class="headerlink" href="#pairplot-scatter-matrices" title="Link to this heading">#</a></h2>
+<p>We can easily have an intuition on the <code class="docutils literal notranslate"><span class="pre">interactions</span></code> between <code class="docutils literal notranslate"><span class="pre">continuous</span> <span class="pre">variables</span></code> using <code class="docutils literal notranslate"><span class="pre">seaborn.pairplot</span></code> to display a <code class="docutils literal notranslate"><span class="pre">scatter</span> <span class="pre">matrix</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span>
+<span class="n">seaborn</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+<span class="n">seaborn</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;WAGE&#39;</span><span class="p">,</span> <span class="s1">&#39;AGE&#39;</span><span class="p">,</span> <span class="s1">&#39;EDUCATION&#39;</span><span class="p">],</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;reg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x12eafacd0&gt;
+</pre></div>
+</div>
+<img alt="../_images/d1b40c20a5e47a97d0b2386438c03e14e31251d2826649de8bc3dad1a276ab3e.png" src="../_images/d1b40c20a5e47a97d0b2386438c03e14e31251d2826649de8bc3dad1a276ab3e.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Categorical</span> <span class="pre">variables</span></code> can be plotted as the <code class="docutils literal notranslate"><span class="pre">hue</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seaborn</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;WAGE&#39;</span><span class="p">,</span> <span class="s1">&#39;AGE&#39;</span><span class="p">,</span> <span class="s1">&#39;EDUCATION&#39;</span><span class="p">],</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;reg&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;SEX&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x12eefc950&gt;
+</pre></div>
+</div>
+<img alt="../_images/ad98892b6d253857e96cca37bc611db5d33496b2d8d7490bd12bfa0e8413bcee.png" src="../_images/ad98892b6d253857e96cca37bc611db5d33496b2d8d7490bd12bfa0e8413bcee.png" />
+</div>
+</div>
+</section>
+<section id="lmplot-plotting-a-univariate-regression">
+<h2>lmplot: plotting a univariate regression<a class="headerlink" href="#lmplot-plotting-a-univariate-regression" title="Link to this heading">#</a></h2>
+<p>A regression capturing the relation between one variable and another, e.g. wage and eduction, can be plotted using <code class="docutils literal notranslate"><span class="pre">seaborn.lmplot</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seaborn</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;WAGE&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;EDUCATION&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x12f284150&gt;
+</pre></div>
+</div>
+<img alt="../_images/7103f73a3318618cb936e29447368f293c1250eea0c56a6b78ec0ce42d41a254.png" src="../_images/7103f73a3318618cb936e29447368f293c1250eea0c56a6b78ec0ce42d41a254.png" />
+</div>
+</div>
+<section id="robust-regression">
+<h3>Robust regression<a class="headerlink" href="#robust-regression" title="Link to this heading">#</a></h3>
+<p>Given that, in the above plot, there seems to be a couple of data points that are outside of the main cloud to the right, they might be outliers, not representative of the population, but driving the regression.</p>
+<p>To compute a regression that is less sensitive to outliers, one must use a <a class="reference external" href="https://en.wikipedia.org/wiki/Robust_statistics">robust model</a>. This is done in seaborn using <code class="docutils literal notranslate"><span class="pre">robust=True</span></code> in the plotting functions, or in statsmodels by replacing the use of the OLS by a “Robust Linear Model”, <code class="docutils literal notranslate"><span class="pre">statsmodels.formula.api.rlm</span></code>.</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="testing-for-interactions">
+<h1>Testing for interactions<a class="headerlink" href="#testing-for-interactions" title="Link to this heading">#</a></h1>
+<p>Do wages increase more with education for people with dark hair than with light hair?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seaborn</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;WAGE&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;EDUCATION&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;SEX&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x12f1a4150&gt;
+</pre></div>
+</div>
+<img alt="../_images/b1c521a7e4b8a256df5bf85f0b48a78912b5a68799c18b1e4ed25e280be72b3d.png" src="../_images/b1c521a7e4b8a256df5bf85f0b48a78912b5a68799c18b1e4ed25e280be72b3d.png" />
+</div>
+</div>
+<p>The plot above is made of two different fits. We need to formulate a single model that tests for a variance of slope across the population. This is done via an <a class="reference external" href="http://statsmodels.sourceforge.net/devel/example_formulas.html#multiplicative-interactions">“interaction”</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">ols</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s1">&#39;WAGE ~ EDUCATION + SEX + EDUCATION * SEX&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                   WAGE   R-squared:                       0.198
+Model:                            OLS   Adj. R-squared:                  0.194
+Method:                 Least Squares   F-statistic:                     43.72
+Date:                Sat, 08 Feb 2025   Prob (F-statistic):           2.94e-25
+Time:                        15:18:37   Log-Likelihood:                 88.503
+No. Observations:                 534   AIC:                            -169.0
+Df Residuals:                     530   BIC:                            -151.9
+Df Model:                           3                                         
+Covariance Type:            nonrobust                                         
+=================================================================================
+                    coef    std err          t      P&gt;|t|      [0.025      0.975]
+---------------------------------------------------------------------------------
+Intercept         0.5748      0.058      9.861      0.000       0.460       0.689
+EDUCATION         0.0281      0.004      6.411      0.000       0.019       0.037
+SEX              -0.2750      0.093     -2.972      0.003      -0.457      -0.093
+EDUCATION:SEX     0.0134      0.007      1.919      0.056      -0.000       0.027
+==============================================================================
+Omnibus:                        4.838   Durbin-Watson:                   1.825
+Prob(Omnibus):                  0.089   Jarque-Bera (JB):                5.000
+Skew:                          -0.156   Prob(JB):                       0.0821
+Kurtosis:                       3.356   Cond. No.                         170.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "workshop_irtg2150"
+        },
+        kernelOptions: {
+            name: "workshop_irtg2150",
+            path: "./prerequisites"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'workshop_irtg2150'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="python_visualization.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to Visualization in python</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="python_scikit.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Introduction to scikit-learn &amp; scikit-image</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to Statistics in python</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-representation-and-interaction">Data representation and interaction</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-as-a-table">Data as a table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-pandas-data-frame">The pandas data-frame</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-dataframes-reading-data-files-or-converting-arrays">Creating dataframes: reading data files or converting arrays</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-from-a-csv-file">Reading from a CSV file</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-from-arrays">Creating from arrays</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#manipulating-data">Manipulating data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-split-apply-combine-pattern">The split-apply-combine pattern</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-data">Plotting data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter-matrices">Scatter matrices</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-content-of-a-dataset">Plot content of a dataset</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pingouin-is-an-open-source-statistical-package-written-in-python-3-and-based-mostly-on-pandas-and-numpy"><em>Pingouin is an open-source statistical package written in Python 3 and based mostly on Pandas and NumPy.</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#material-scavenged-from-10-minutes-to-pingouin-and-the-pingouin-docs">**material scavenged from 10 minutes to Pingouin and the pingouin docs</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-summary">Test summary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#before-we-calculate-testing-statistical-premises">Before we calculate:  <code class="docutils literal notranslate"><span class="pre">Testing</span> <span class="pre">statistical</span> <span class="pre">premises</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shapiro-wilk-normality-test">Shapiro Wilk normality  test</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#henze-zirkler-multivariate-normality-test">Henze-Zirkler multivariate normality test</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mauchly-test-for-sphericity">Mauchly test for sphericity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-for-homoscedasticity">Testing for homoscedasticity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-tests">Parametric tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#student-s-t-test-the-simplest-statistical-test">Student’s t-test: the simplest statistical test</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-t-test-testing-the-value-of-a-population-mean">1-sample t-test: testing the value of a population mean</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-t-test-testing-for-difference-across-populations">2-sample t-test: testing for difference across populations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-achieved-power-of-a-paired-t-test">Plot achieved power of a paired T-test</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-parametric-tests">Non parametric tests:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scipy-stats-hypothesis-testing-comparing-two-groups"><code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> - Hypothesis testing: comparing two groups</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1-sample t-test: testing the value of a population mean</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2-sample t-test: testing for difference across populations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#paired-tests-repeated-measurements-on-the-same-indivuals">Paired tests: repeated measurements on the same indivuals</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#statsmodels-use-formulas-to-specify-statistical-models-in-python"><code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> - use “formulas” to specify statistical models in Python</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-simple-linear-regression">A simple linear regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology">Terminology</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#categorical-variables-comparing-groups-or-multiple-categories">Categorical variables: comparing groups or multiple categories</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-on-specifying-model">Tips on specifying model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#link-to-t-tests-between-different-mfq-and-shaps">Link to t-tests between different MFQ and SHAPS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-regression-including-multiple-factors">Multiple Regression: including multiple factors</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-the-iris-dataset">Example: the iris dataset</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#post-hoc-hypothesis-testing-analysis-of-variance-anova">Post-hoc hypothesis testing: analysis of variance (ANOVA)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#seaborn-use-visualization-for-statistical-exploration"><code class="docutils literal notranslate"><span class="pre">seaborn</span></code> - use visualization for statistical exploration</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pairplot-scatter-matrices">Pairplot: scatter matrices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lmplot-plotting-a-univariate-regression">lmplot: plotting a univariate regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robust-regression">Robust regression</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-for-interactions">Testing for interactions</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Peer Herholz
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
