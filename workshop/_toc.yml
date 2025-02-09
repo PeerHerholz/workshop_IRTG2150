@@ -19,7 +19,8 @@ chapters:
 - file: data_handling/data
   sections:
     - file: data_handling/image_manipulation_nibabel
-    - file: data_handling/image_manipulation_nilearn    
+    - file: data_handling/image_manipulation_nilearn   
+    - file: data_handling/pybids 
 - file: advanced
   sections:
     - file: advanced/pybids
