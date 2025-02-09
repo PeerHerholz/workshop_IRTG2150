@@ -16,10 +16,10 @@ chapters:
     - file: prerequisites/python_visualization    
     - file: prerequisites/intro_statistics
     - file: prerequisites/python_scikit        
-- file: data/data
+- file: data_handling/data
   sections:
-    - file: data/image_manipulation_nibabel
-    - file: data/image_manipulation_nilearn    
+    - file: data_handling/image_manipulation_nibabel
+    - file: data_handling/image_manipulation_nilearn    
 - file: advanced
   sections:
     - file: advanced/pybids
