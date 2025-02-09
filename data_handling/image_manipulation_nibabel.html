@@ -1,0 +1,1250 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Using Python for neuroimaging data - NiBabel &#8212; MRI analysis in Python using Nipype, Nilearn and more</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'data_handling/image_manipulation_nibabel';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using Python for neuroimaging data - Nilearn" href="image_manipulation_nilearn.html" />
+    <link rel="prev" title="Basics in data handling" href="data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nipy_logo.png" class="logo__image only-light" alt="MRI analysis in Python using Nipype, Nilearn and more - Home"/>
+    <img src="../_static/nipy_logo.png" class="logo__image only-dark pst-js-only" alt="MRI analysis in Python using Nipype, Nilearn and more - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome!
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../dei.html">Diversity, Equity and Inclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Workshop overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup for the workshop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../outline.html">Outline</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../prerequisites.html">Workshop prerequisites</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/intro_to_shell.html">Introduction to the (unix) command line: bash</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/intro_to_git_and_github.html">Introduction to Git and GitHub</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/intro_jupyter.html">Introduction to the jupyter ecosystem &amp; notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/intro_python.html">Introduction to Python</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/python_numpy.html">Introduction to NumPy</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/python_scipy.html">Introduction to SciPy</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/python_visualization.html">Introduction to Visualization in python</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/intro_statistics.html">Introduction to Statistics in python</a></li>
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/python_scikit.html">Introduction to scikit-learn &amp; scikit-image</a></li>
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="data.html">Basics in data handling</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Using Python for neuroimaging data - NiBabel</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="image_manipulation_nilearn.html">Using Python for neuroimaging data - Nilearn</a></li>
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../advanced.html">Advanced and specialized analyses</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../break.html">Yoga and/or dance break</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CoC.html">Code of Conduct</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/PeerHerholz/workshop_IRTG2150/main?urlpath=tree/workshop/data_handling/image_manipulation_nibabel.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/PeerHerholz/workshop_IRTG2150" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/PeerHerholz/workshop_IRTG2150/edit/main/workshop/data_handling/image_manipulation_nibabel.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/PeerHerholz/workshop_IRTG2150/issues/new?title=Issue%20on%20page%20%2Fdata_handling/image_manipulation_nibabel.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/data_handling/image_manipulation_nibabel.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Using Python for neuroimaging data - NiBabel</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Using Python for neuroimaging data - NiBabel</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#nibabel">Nibabel</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-and-inspecting-images-in-nibabel">Loading and inspecting images in <code class="docutils literal notranslate"><span class="pre">nibabel</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#access-specific-parameters">Access specific parameters</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aside">Aside</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quirk">Quirk</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">Exercise 1:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#img-orthoview"><code class="docutils literal notranslate"><span class="pre">img.orthoview()</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sidenote-to-plotting-with-orthoview">Sidenote to plotting with <code class="docutils literal notranslate"><span class="pre">orthoview()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#affine">Affine</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#header">Header</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nib-ls"><code class="docutils literal notranslate"><span class="pre">nib-ls</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-and-saving-images">Creating and saving images</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">Conclusions</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="using-python-for-neuroimaging-data-nibabel">
+<h1>Using Python for neuroimaging data - NiBabel<a class="headerlink" href="#using-python-for-neuroimaging-data-nibabel" title="Link to this heading">#</a></h1>
+<p>The primary goal of this section is to become familiar with <code class="docutils literal notranslate"><span class="pre">loading</span></code>, <code class="docutils literal notranslate"><span class="pre">modifying</span></code>, <code class="docutils literal notranslate"><span class="pre">saving</span></code>, and <code class="docutils literal notranslate"><span class="pre">visualizing</span></code> <code class="docutils literal notranslate"><span class="pre">neuroimages</span></code> in <code class="docutils literal notranslate"><span class="pre">Python</span></code>. A secondary goal is to develop a conceptual understanding of the <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">structures</span></code> involved, to facilitate diagnosing problems in <code class="docutils literal notranslate"><span class="pre">data</span></code> or <code class="docutils literal notranslate"><span class="pre">analysis</span> <span class="pre">pipelines</span></code>.</p>
+<p>To these ends, we’ll be exploring two <code class="docutils literal notranslate"><span class="pre">libraries</span></code>: <a class="reference external" href="http://nipy.org/nibabel/">nibabel</a> and <a class="reference external" href="https://nilearn.github.io/">nilearn</a>. Each of these projects has excellent documentation. While this should get you started, it is well worth your time to look through these sites.</p>
+<p>This notebook only covers <code class="docutils literal notranslate"><span class="pre">nibabel</span></code>, see the <code class="docutils literal notranslate"><span class="pre">notebook</span></code> <a class="reference internal" href="image_manipulation_nilearn.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">image_manipulation_nilearn.ipynb</span></code></span></a> for more information about <code class="docutils literal notranslate"><span class="pre">nilearn</span></code>.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="nibabel">
+<h1>Nibabel<a class="headerlink" href="#nibabel" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">Nibabel</span></code> is a <code class="docutils literal notranslate"><span class="pre">low-level</span> <span class="pre">Python</span> <span class="pre">library</span></code> that gives access to a variety of <code class="docutils literal notranslate"><span class="pre">imaging</span> <span class="pre">formats</span></code>, with a particular focus on providing a common interface to the various <strong>volumetric</strong> formats produced by scanners and used in common <code class="docutils literal notranslate"><span class="pre">neuroimaging</span></code> toolkits.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NIfTI-1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NIfTI-2</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SPM</span> <span class="pre">Analyze</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FreeSurfer</span> <span class="pre">.mgh/.mgz</span> <span class="pre">files</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Philips</span> <span class="pre">PAR/REC</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Siemens</span> <span class="pre">ECAT</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DICOM</span></code> (limited support)</p></li>
+</ul>
+<p>It also supports <strong>surface</strong> file formats</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GIFTI</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FreeSurfer</span> <span class="pre">surfaces</span></code>, <code class="docutils literal notranslate"><span class="pre">labels</span></code> and <code class="docutils literal notranslate"><span class="pre">annotations</span></code></p></li>
+</ul>
+<p><strong>Connectivity</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CIFTI-2</span></code></p></li>
+</ul>
+<p><strong>Tractography</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TrackViz</span> <span class="pre">.trk</span></code> files</p></li>
+</ul>
+<p>And a number of related formats.</p>
+<p><strong>Note:</strong> Almost all of these can be loaded through the <code class="docutils literal notranslate"><span class="pre">nibabel.load</span></code> interface.</p>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Image settings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nilearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">plotting</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pylab</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nibabel</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nb</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="loading-and-inspecting-images-in-nibabel">
+<h2>Loading and inspecting images in <code class="docutils literal notranslate"><span class="pre">nibabel</span></code><a class="headerlink" href="#loading-and-inspecting-images-in-nibabel" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load a functional image of subject 01</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;../data/ds000114/sub-01/ses-test/func/sub-01_ses-test_task-fingerfootlips_bold.nii.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s look at the header of this file</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;nibabel.nifti1.Nifti1Image&#39;&gt;
+data shape (64, 64, 30, 184)
+affine:
+[[-3.99471426e+00 -2.04233140e-01  2.29353290e-02  1.30641693e+02]
+ [-2.05448717e-01  3.98260689e+00 -3.10890853e-01 -9.74732285e+01]
+ [ 6.95819734e-03  3.11659902e-01  3.98780894e+00 -8.06465759e+01]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+metadata:
+&lt;class &#39;nibabel.nifti1.Nifti1Header&#39;&gt; object, endian=&#39;&lt;&#39;
+sizeof_hdr      : 348
+data_type       : b&#39;&#39;
+db_name         : b&#39;?TR:2500.000 TE:50&#39;
+extents         : 0
+session_error   : 0
+regular         : b&#39;r&#39;
+dim_info        : 0
+dim             : [  4  64  64  30 184   1   1   1]
+intent_p1       : 0.0
+intent_p2       : 0.0
+intent_p3       : 0.0
+intent_code     : none
+datatype        : int16
+bitpix          : 16
+slice_start     : 0
+pixdim          : [-1.        4.        4.        3.999975  2.5       1.        1.
+  1.      ]
+vox_offset      : 0.0
+scl_slope       : nan
+scl_inter       : nan
+slice_end       : 0
+slice_code      : unknown
+xyzt_units      : 10
+cal_max         : 0.0
+cal_min         : 0.0
+slice_duration  : 0.0
+toffset         : 0.0
+glmax           : 255
+glmin           : 0
+descrip         : b&#39;&#39;
+aux_file        : b&#39;&#39;
+qform_code      : scanner
+sform_code      : scanner
+quatern_b       : 0.025633048
+quatern_c       : -0.9989105
+quatern_d       : -0.03895198
+qoffset_x       : 130.6417
+qoffset_y       : -97.47323
+qoffset_z       : -80.646576
+srow_x          : [-3.9947143e+00 -2.0423314e-01  2.2935329e-02  1.3064169e+02]
+srow_y          : [ -0.20544872   3.982607    -0.31089085 -97.47323   ]
+srow_z          : [ 6.9581973e-03  3.1165990e-01  3.9878089e+00 -8.0646576e+01]
+intent_name     : b&#39;&#39;
+magic           : b&#39;n+1&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>This data-affine-header structure is common to volumetric formats in nibabel, though the details of the header will vary from format to format.</p>
+<section id="access-specific-parameters">
+<h3>Access specific parameters<a class="headerlink" href="#access-specific-parameters" title="Link to this heading">#</a></h3>
+<p>If you’re interested in specific parameters, you can access them very easily, as the following examples show.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()</span>
+<span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(64, 64, 30, 184)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">affine</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">affine</span>
+<span class="n">affine</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-3.99471426e+00, -2.04233140e-01,  2.29353290e-02,
+         1.30641693e+02],
+       [-2.05448717e-01,  3.98260689e+00, -3.10890853e-01,
+        -9.74732285e+01],
+       [ 6.95819734e-03,  3.11659902e-01,  3.98780894e+00,
+        -8.06465759e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">header</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;pixdim&#39;</span><span class="p">]</span>
+<span class="n">header</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-1.      ,  4.      ,  4.      ,  3.999975,  2.5     ,  1.      ,
+        1.      ,  1.      ], dtype=float32)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that in the <code class="docutils literal notranslate"><span class="pre">'pixdim'</span></code> above contains the voxel resolution  (<code class="docutils literal notranslate"><span class="pre">4.,</span> <span class="pre">4.,</span> <span class="pre">3.999</span></code>), as well as the TR (<code class="docutils literal notranslate"><span class="pre">2.5</span></code>).</p>
+<section id="aside">
+<h4>Aside<a class="headerlink" href="#aside" title="Link to this heading">#</a></h4>
+<p>Why not just <code class="docutils literal notranslate"><span class="pre">img.data</span></code>? Working with neuroimages can use a lot of memory, so nibabel works hard to be memory efficient. If it can read some data while leaving the rest on disk, it will. <code class="docutils literal notranslate"><span class="pre">img.get_data()</span></code> reflects that it’s doing some work behind the scenes.</p>
+</section>
+<section id="quirk">
+<h4>Quirk<a class="headerlink" href="#quirk" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">img.get_data_dtype()</span></code> shows the type of the data on disk</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">img.get_data().dtype</span></code> shows the type of the data that you’re working with</p></li>
+</ul>
+<p>These are not always the same, and not being clear on this <a class="reference external" href="https://github.com/nipy/nibabel/issues/490">has caused problems</a>. Further, modifying one does not update the other. This is especially important to keep in mind later when saving files.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">((</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">get_data_dtype</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(dtype(&#39;float64&#39;), dtype(&#39;&lt;i2&#39;))
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="data">
+<h3>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h3>
+<p>The data is a simple numpy array. It has a shape, it can be sliced and generally manipulated as you would any array.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys_r&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(64, 64, 30, 184)
+</pre></div>
+</div>
+<img alt="../_images/9aa0ba6d79171ff0612a3d4f47c2f6055db53f0fe68db824bfb25558e1063aa8.png" src="../_images/9aa0ba6d79171ff0612a3d4f47c2f6055db53f0fe68db824bfb25558e1063aa8.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="exercise-1">
+<h2>Exercise 1:<a class="headerlink" href="#exercise-1" title="Link to this heading">#</a></h2>
+<p>Load the T1 data from subject 1. Plot the image using the same volume indexing as before. Also, print the shape of the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># t1 = nb.load(&#39;../data/ds000114/sub-01/ses-test/anat/sub-01_ses-test_T1w.nii.gz&#39;)</span>
+<span class="c1"># data = t1.get_fdata()</span>
+<span class="c1"># plt.imshow(data[:, :, data.shape[2] // 2].T, cmap=&#39;Greys_r&#39;)</span>
+<span class="c1"># print(data.shape)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Work on solution here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="img-orthoview">
+<h3><code class="docutils literal notranslate"><span class="pre">img.orthoview()</span></code><a class="headerlink" href="#img-orthoview" title="Link to this heading">#</a></h3>
+<p>Nibabel has its own viewer, which can be accessed through <strong><code class="docutils literal notranslate"><span class="pre">img.orthoview()</span></code></strong>. This viewer scales voxels to reflect their size, and labels orientations.</p>
+<p><strong>Warning:</strong> <code class="docutils literal notranslate"><span class="pre">img.orthoview()</span></code> may not work properly on OS X.</p>
+<section id="sidenote-to-plotting-with-orthoview">
+<h4>Sidenote to plotting with <code class="docutils literal notranslate"><span class="pre">orthoview()</span></code><a class="headerlink" href="#sidenote-to-plotting-with-orthoview" title="Link to this heading">#</a></h4>
+<p>As with other figures, f you initiated <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> with <code class="docutils literal notranslate"><span class="pre">%matplotlib</span> <span class="pre">inline</span></code>, the output figure will be static. If you use <code class="docutils literal notranslate"><span class="pre">orthoview()</span></code> in a normal IPython console, it will create an interactive window, and you can click to select different slices, similar to <code class="docutils literal notranslate"><span class="pre">mricron</span></code>. To get a similar experience in a jupyter notebook, use <code class="docutils literal notranslate"><span class="pre">%matplotlib</span> <span class="pre">notebook</span></code>. But don’t forget to close figures afterward again or use <code class="docutils literal notranslate"><span class="pre">%matplotlib</span> <span class="pre">inline</span></code> again, otherwise, you cannot plot any other figures.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">img</span><span class="o">.</span><span class="n">orthoview</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;OrthoSlicer3D: ../data/ds000114/sub-01/ses-test/func/sub-01_ses-test_task-fingerfootlips_bold.nii.gz (64, 64, 30, 184)&gt;
+</pre></div>
+</div>
+<img alt="../_images/63294a9c1ff78bd7057b1399859af1d72fda93a30858c4cf11e75c5d4cc9aaca.png" src="../_images/63294a9c1ff78bd7057b1399859af1d72fda93a30858c4cf11e75c5d4cc9aaca.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="affine">
+<h3>Affine<a class="headerlink" href="#affine" title="Link to this heading">#</a></h3>
+<p>The affine is a 4 x 4 numpy array. This describes the transformation from the voxel space (indices [i, j, k]) to the reference space (distance in mm (x, y, z)).</p>
+<p>It can be used, for instance, to discover the voxel that contains the origin of the image:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">affine</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Affine:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">affine</span><span class="p">)</span>
+<span class="nb">print</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Center: (</span><span class="si">{:d}</span><span class="s2">, </span><span class="si">{:d}</span><span class="s2">, </span><span class="si">{:d}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Affine:
+[[-3.99471426e+00 -2.04233140e-01  2.29353290e-02  1.30641693e+02]
+ [-2.05448717e-01  3.98260689e+00 -3.10890853e-01 -9.74732285e+01]
+ [ 6.95819734e-03  3.11659902e-01  3.98780894e+00 -8.06465759e+01]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+Center: (31, 27, 18)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The affine also encodes the axis orientation and voxel sizes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nb</span><span class="o">.</span><span class="n">aff2axcodes</span><span class="p">(</span><span class="n">affine</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;L&#39;, &#39;A&#39;, &#39;S&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nb</span><span class="o">.</span><span class="n">affines</span><span class="o">.</span><span class="n">voxel_sizes</span><span class="p">(</span><span class="n">affine</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([3.99999995, 4.00000009, 3.99997491])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nb</span><span class="o">.</span><span class="n">aff2axcodes</span><span class="p">(</span><span class="n">affine</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;L&#39;, &#39;A&#39;, &#39;S&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nb</span><span class="o">.</span><span class="n">affines</span><span class="o">.</span><span class="n">voxel_sizes</span><span class="p">(</span><span class="n">affine</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([3.99999995, 4.00000009, 3.99997491])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t1</span><span class="o">.</span><span class="n">orthoview</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;OrthoSlicer3D: ../data/ds000114/sub-01/ses-test/anat/sub-01_ses-test_T1w.nii.gz (256, 156, 256)&gt;
+</pre></div>
+</div>
+<img alt="../_images/f4b18693294099981ed8919f697c5dccc22b56d9e515d357988bfb0f0cd8e4ba.png" src="../_images/f4b18693294099981ed8919f697c5dccc22b56d9e515d357988bfb0f0cd8e4ba.png" />
+</div>
+</div>
+</section>
+<section id="header">
+<h3>Header<a class="headerlink" href="#header" title="Link to this heading">#</a></h3>
+<p>The header is a nibabel structure that stores all of the metadata of the image. You can query it directly, if necessary:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t1</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;descrip&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(b&#39;FSL5.0&#39;, dtype=&#39;|S80&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>But it also provides interfaces for the more common information, such as <code class="docutils literal notranslate"><span class="pre">get_zooms</span></code>, <code class="docutils literal notranslate"><span class="pre">get_xyzt_units</span></code>, <code class="docutils literal notranslate"><span class="pre">get_qform</span></code>, <code class="docutils literal notranslate"><span class="pre">get_sform</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t1</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">get_zooms</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.0, 1.2993759, 1.0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t1</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">get_xyzt_units</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;mm&#39;, &#39;sec&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t1</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">get_qform</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 9.99131938e-01, -5.16292391e-02,  1.25136054e-02,
+        -1.25263863e+02],
+       [ 4.07721521e-02,  1.29202043e+00, -9.81179047e-02,
+        -7.31330109e+01],
+       [-8.54416425e-03,  1.28044319e-01,  9.95096119e-01,
+        -1.77554291e+02],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t1</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">get_sform</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 9.99131918e-01, -5.16291820e-02,  1.25127016e-02,
+        -1.25263863e+02],
+       [ 4.07721959e-02,  1.29202044e+00, -9.81179178e-02,
+        -7.31330109e+01],
+       [-8.54506902e-03,  1.28044292e-01,  9.95096147e-01,
+        -1.77554291e+02],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Normally, we’re not particularly interested in the header or the affine. But it’s important to know they’re there. And especially, to remember to copy them when making new images, so that derivatives stay aligned with the original image.</p>
+</section>
+</section>
+<section id="nib-ls">
+<h2><code class="docutils literal notranslate"><span class="pre">nib-ls</span></code><a class="headerlink" href="#nib-ls" title="Link to this heading">#</a></h2>
+<p>Nibabel comes packaged with a command-line tool to print common metadata about any (volumetric) neuroimaging format nibabel supports. By default, it shows (on-disk) data type, dimensions and voxel sizes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>nib-ls<span class="w"> </span>../data/ds000114/sub-01/ses-test/func/sub-01_ses-test_task-fingerfootlips_bold.nii.gz
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>../data/ds000114/sub-01/ses-test/func/sub-01_ses-test_task-fingerfootlips_bold.nii.gz int16 [ 64,  64,  30, 184] 4.00x4.00x4.00x2.50   sform
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also inspect header fields by name, for instance, <code class="docutils literal notranslate"><span class="pre">descrip</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>nib-ls<span class="w"> </span>-H<span class="w"> </span>descrip<span class="w"> </span>../data/ds000114/sub-01/ses-test/anat/sub-01_ses-test_T1w.nii.gz
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>../data/ds000114/sub-01/ses-test/anat/sub-01_ses-test_T1w.nii.gz float32 [256, 156, 256] 1.00x1.30x1.00   b&#39;FSL5.0&#39; sform
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-and-saving-images">
+<h2>Creating and saving images<a class="headerlink" href="#creating-and-saving-images" title="Link to this heading">#</a></h2>
+<p>Suppose we want to save space by rescaling our image to a smaller datatype, such as an unsigned byte. To do this, we first need to take the data, change its datatype and save this new data in a new NIfTI image with the same header and affine as the original image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First, we need to load the image and get the data</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;../data/ds000114/sub-01/ses-test/func/sub-01_ses-test_task-fingerfootlips_bold.nii.gz&#39;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Now we force the values to be between 0 and 255</span>
+<span class="c1"># and change the datatype to unsigned 8-bit</span>
+<span class="n">rescaled</span> <span class="o">=</span> <span class="p">((</span><span class="n">data</span> <span class="o">-</span> <span class="n">data</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">*</span> <span class="mf">255.</span> <span class="o">/</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">data</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Now we can save the changed data into a new NIfTI file</span>
+<span class="n">new_img</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span><span class="n">rescaled</span><span class="p">,</span> <span class="n">affine</span><span class="o">=</span><span class="n">img</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">img</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+<span class="n">nb</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">new_img</span><span class="p">,</span> <span class="s1">&#39;/tmp/rescaled_image.nii.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s look at the datatypes of the data array, as well as of the nifti image:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">((</span><span class="n">new_img</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">new_img</span><span class="o">.</span><span class="n">get_data_dtype</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(dtype(&#39;float64&#39;), dtype(&#39;&lt;i2&#39;))
+</pre></div>
+</div>
+</div>
+</div>
+<p>That’s not optimal. Our data array has the correct type, but the on-disk format is determined by the header, so saving it with <code class="docutils literal notranslate"><span class="pre">img.header</span></code> will not do what we want. Also, let’s take a look at the size of the original and new file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">orig_filename</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_filename</span><span class="p">()</span>
+<span class="o">!</span>du<span class="w"> </span>-hL<span class="w"> </span>/tmp/rescaled_image.nii.gz<span class="w"> </span><span class="nv">$orig_filename</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 12M	/tmp/rescaled_image.nii.gz
+ 23M	../data/ds000114/sub-01/ses-test/func/sub-01_ses-test_task-fingerfootlips_bold.nii.gz
+</pre></div>
+</div>
+</div>
+</div>
+<p>So, let’s correct the header issue with the <code class="docutils literal notranslate"><span class="pre">set_data_dtype()</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span><span class="o">.</span><span class="n">set_data_dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Save image again</span>
+<span class="n">new_img</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span><span class="n">rescaled</span><span class="p">,</span> <span class="n">affine</span><span class="o">=</span><span class="n">img</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">img</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+<span class="n">nb</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">new_img</span><span class="p">,</span> <span class="s1">&#39;/tmp/rescaled_image.nii.gz&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">((</span><span class="n">new_img</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">new_img</span><span class="o">.</span><span class="n">get_data_dtype</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(dtype(&#39;float64&#39;), dtype(&#39;uint8&#39;))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Perfect! Now the data types are correct. And if we look at the size of the image we even see that it got a bit smaller.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>du<span class="w"> </span>-hL<span class="w"> </span>/tmp/rescaled_image.nii.gz
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 10M	/tmp/rescaled_image.nii.gz
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="conclusions">
+<h1>Conclusions<a class="headerlink" href="#conclusions" title="Link to this heading">#</a></h1>
+<p>In the two notebooks about <code class="docutils literal notranslate"><span class="pre">nibabel</span></code> and <code class="docutils literal notranslate"><span class="pre">nilearn</span></code>, we’ve explored loading, saving and visualizing neuroimages, as well as how both packages can make some more sophisticated manipulations easy. At this point, you should be able to inspect and plot most images you encounter, as well as make modifications while preserving the alignment.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "workshop_irtg2150"
+        },
+        kernelOptions: {
+            name: "workshop_irtg2150",
+            path: "./data_handling"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'workshop_irtg2150'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="data.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Basics in data handling</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="image_manipulation_nilearn.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Using Python for neuroimaging data - Nilearn</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Using Python for neuroimaging data - NiBabel</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#nibabel">Nibabel</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-and-inspecting-images-in-nibabel">Loading and inspecting images in <code class="docutils literal notranslate"><span class="pre">nibabel</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#access-specific-parameters">Access specific parameters</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aside">Aside</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quirk">Quirk</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">Exercise 1:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#img-orthoview"><code class="docutils literal notranslate"><span class="pre">img.orthoview()</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sidenote-to-plotting-with-orthoview">Sidenote to plotting with <code class="docutils literal notranslate"><span class="pre">orthoview()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#affine">Affine</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#header">Header</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nib-ls"><code class="docutils literal notranslate"><span class="pre">nib-ls</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-and-saving-images">Creating and saving images</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">Conclusions</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Peer Herholz
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
