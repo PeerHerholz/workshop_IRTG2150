@@ -1,0 +1,1717 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Introduction to pybids &#8212; MRI analysis in Python using Nipype, Nilearn and more</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'advanced/pybids';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Nilearn GLM: statistical analyses of MRI in Python" href="statistical_analyses_MRI.html" />
+    <link rel="prev" title="Advanced and specialized analyses" href="../advanced.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nipy_logo.png" class="logo__image only-light" alt="MRI analysis in Python using Nipype, Nilearn and more - Home"/>
+    <img src="../_static/nipy_logo.png" class="logo__image only-dark pst-js-only" alt="MRI analysis in Python using Nipype, Nilearn and more - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome!
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../dei.html">Diversity, Equity and Inclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Workshop overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup for the workshop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../outline.html">Outline</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../prerequisites.html">Workshop prerequisites</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/intro_to_shell.html">Introduction to the (unix) command line: bash</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/intro_to_git_and_github.html">Introduction to Git and GitHub</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/intro_jupyter.html">Introduction to the jupyter ecosystem &amp; notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/intro_python.html">Introduction to Python</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/python_numpy.html">Introduction to NumPy</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/python_scipy.html">Introduction to SciPy</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/python_visualization.html">Introduction to Visualization in python</a></li>
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/intro_statistics.html">Introduction to Statistics in python</a></li>
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../prerequisites/python_scikit.html">Introduction to scikit-learn &amp; scikit-image</a></li>
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_handling/data.html">Basics in data handling</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data_handling/image_manipulation_nibabel.html">Using Python for neuroimaging data - NiBabel</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../data_handling/image_manipulation_nilearn.html">Using Python for neuroimaging data - Nilearn</a></li>
+
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../advanced.html">Advanced and specialized analyses</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Introduction to <code class="docutils literal notranslate"><span class="pre">pybids</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistical_analyses_MRI.html">Nilearn GLM: statistical analyses of MRI in Python</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../break.html">Yoga and/or dance break</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CoC.html">Code of Conduct</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/PeerHerholz/workshop_IRTG2150/main?urlpath=tree/workshop/advanced/pybids.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/PeerHerholz/workshop_IRTG2150" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/PeerHerholz/workshop_IRTG2150/edit/main/workshop/advanced/pybids.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/PeerHerholz/workshop_IRTG2150/issues/new?title=Issue%20on%20page%20%2Fadvanced/pybids.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/advanced/pybids.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to pybids</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bidslayout">The <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#querying-the-bidslayout">Querying the <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-files-by-entities">Filtering files by entities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-by-metadata">Filtering by metadata</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-return-type-values">Other <code class="docutils literal notranslate"><span class="pre">return_type</span></code> values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-get-options">Other <code class="docutils literal notranslate"><span class="pre">get()</span></code> options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bidsfile">The <code class="docutils literal notranslate"><span class="pre">BIDSFile</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-utilities">Other utilities</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filename-parsing">Filename parsing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#path-construction">Path construction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exporting-a-bidslayout-to-a-pandas-dataframe">Exporting a <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code> to a pandas <code class="docutils literal notranslate"><span class="pre">Dataframe</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bidsvalidator">BIDSValidator</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#report-generation">Report generation</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-pybids">
+<h1>Introduction to <code class="docutils literal notranslate"><span class="pre">pybids</span></code><a class="headerlink" href="#introduction-to-pybids" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://github.com/bids-standard/pybids"><code class="docutils literal notranslate"><span class="pre">pybids</span></code></a> is a tool to query, summarize and manipulate data using the <a class="reference external" href="https://bids-specification.readthedocs.io/en/stable/">BIDS</a> standard. In this tutorial we will use <code class="docutils literal notranslate"><span class="pre">pybids</span></code> on a test <code class="docutils literal notranslate"><span class="pre">dataset</span></code> to illustrate some of the functionality of <code class="docutils literal notranslate"><span class="pre">pybids.layout</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">bids</span><span class="w"> </span><span class="kn">import</span> <span class="n">BIDSLayout</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bids.tests</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_test_data_path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="the-bidslayout">
+<h2>The <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code><a class="headerlink" href="#the-bidslayout" title="Link to this heading">#</a></h2>
+<p>At the core of <code class="docutils literal notranslate"><span class="pre">pybids</span></code> is the <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code> object. A <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code> is a lightweight <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">class</span></code> that represents a <code class="docutils literal notranslate"><span class="pre">BIDS</span></code> project file tree and provides a variety of helpful methods for querying and manipulating <code class="docutils literal notranslate"><span class="pre">BIDS</span></code> files. While the <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code> initializer has a large number of <code class="docutils literal notranslate"><span class="pre">arguments</span></code> you can use to control the way files are indexed and accessed, you will most commonly initialize a <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code> by passing in the <code class="docutils literal notranslate"><span class="pre">BIDS</span></code> dataset root location as a single <code class="docutils literal notranslate"><span class="pre">argument</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here we&#39;re using an example BIDS dataset that&#39;s bundled with the pybids tests</span>
+<span class="c1"># Initialize the layout</span>
+<span class="n">layout</span> <span class="o">=</span> <span class="n">BIDSLayout</span><span class="p">(</span><span class="s1">&#39;../data/pybids_7t_trt/&#39;</span><span class="p">)</span>
+
+<span class="c1"># Print some basic information about the layout</span>
+<span class="n">layout</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BIDS Layout: ...advanced/../data/pybids_7t_trt | Subjects: 10 | Sessions: 20 | Runs: 20
+</pre></div>
+</div>
+</div>
+</div>
+<section id="querying-the-bidslayout">
+<h3>Querying the <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code><a class="headerlink" href="#querying-the-bidslayout" title="Link to this heading">#</a></h3>
+<p>When we initialize a <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code>, all of the files and <code class="docutils literal notranslate"><span class="pre">metadata</span></code> found under the specified root folder are indexed. This can take a few seconds (or, for very large <code class="docutils literal notranslate"><span class="pre">datasets</span></code>, a minute or two). Once initialization is complete, we can start querying the <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code> in various ways. The workhorse method is <a class="reference external" href="https://bids-standard.github.io/pybids/generated/bids.grabbids.BIDSLayout.html#bids.grabbids.BIDSLayout.get"><code class="docutils literal notranslate"><span class="pre">.get()</span></code></a>. If we call <code class="docutils literal notranslate"><span class="pre">.get()</span></code> with no additional <code class="docutils literal notranslate"><span class="pre">arguments</span></code>, we get back a list of all the <code class="docutils literal notranslate"><span class="pre">BIDS</span></code> files in our <code class="docutils literal notranslate"><span class="pre">dataset</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_files</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;There are </span><span class="si">{}</span><span class="s2"> files in the layout.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_files</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The first 10 files are:&quot;</span><span class="p">)</span>
+
+<span class="n">all_files</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>There are 339 files in the layout.
+
+The first 10 files are:
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;BIDSJSONFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/dataset_description.json&#39;&gt;,
+ &lt;BIDSDataFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/participants.tsv&#39;&gt;,
+ &lt;BIDSFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/README&#39;&gt;,
+ &lt;BIDSImageFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/anat/sub-01_ses-1_T1map.nii.gz&#39;&gt;,
+ &lt;BIDSImageFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/anat/sub-01_ses-1_T1w.nii.gz&#39;&gt;,
+ &lt;BIDSImageFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/fmap/sub-01_ses-1_run-1_magnitude1.nii.gz&#39;&gt;,
+ &lt;BIDSImageFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/fmap/sub-01_ses-1_run-1_magnitude2.nii.gz&#39;&gt;,
+ &lt;BIDSJSONFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/fmap/sub-01_ses-1_run-1_phasediff.json&#39;&gt;,
+ &lt;BIDSImageFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/fmap/sub-01_ses-1_run-1_phasediff.nii.gz&#39;&gt;,
+ &lt;BIDSImageFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/fmap/sub-01_ses-1_run-2_magnitude1.nii.gz&#39;&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The returned object is a <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">list</span></code>. By default, each element in the <code class="docutils literal notranslate"><span class="pre">list</span></code> is a <code class="docutils literal notranslate"><span class="pre">BIDSFile</span></code> <code class="docutils literal notranslate"><span class="pre">object</span></code>. We discuss the <code class="docutils literal notranslate"><span class="pre">BIDSFile</span></code> object in much more detail below. For now, let’s simplify things and work with just filenames:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;filename&#39;</span><span class="p">)[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/dataset_description.json&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/participants.tsv&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/README&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/anat/sub-01_ses-1_T1map.nii.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/anat/sub-01_ses-1_T1w.nii.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/fmap/sub-01_ses-1_run-1_magnitude1.nii.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/fmap/sub-01_ses-1_run-1_magnitude2.nii.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/fmap/sub-01_ses-1_run-1_phasediff.json&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/fmap/sub-01_ses-1_run-1_phasediff.nii.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/fmap/sub-01_ses-1_run-2_magnitude1.nii.gz&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layout</span><span class="o">.</span><span class="n">get_subjects</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;01&#39;, &#39;02&#39;, &#39;03&#39;, &#39;04&#39;, &#39;05&#39;, &#39;06&#39;, &#39;07&#39;, &#39;08&#39;, &#39;09&#39;, &#39;10&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layout</span><span class="o">.</span><span class="n">get_tasks</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;rest&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layout</span><span class="o">.</span><span class="n">get_entities</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;subject&#39;: &lt;Entity subject (pattern=[/\\]+sub-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;session&#39;: &lt;Entity session (pattern=[_/\\]+ses-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;sample&#39;: &lt;Entity sample (pattern=[_/\\]+sample-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;task&#39;: &lt;Entity task (pattern=[_/\\]+task-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;tracksys&#39;: &lt;Entity tracksys (pattern=[_/\\]+tracksys-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;acquisition&#39;: &lt;Entity acquisition (pattern=[_/\\]+acq-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;nucleus&#39;: &lt;Entity nucleus (pattern=[_/\\]+nuc-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;volume&#39;: &lt;Entity volume (pattern=[_/\\]+voi-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;ceagent&#39;: &lt;Entity ceagent (pattern=[_/\\]+ce-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;staining&#39;: &lt;Entity staining (pattern=[_/\\]+stain-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;tracer&#39;: &lt;Entity tracer (pattern=[_/\\]+trc-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;reconstruction&#39;: &lt;Entity reconstruction (pattern=[_/\\]+rec-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;direction&#39;: &lt;Entity direction (pattern=[_/\\]+dir-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;run&#39;: &lt;Entity run (pattern=[_/\\]+run-(\d+), dtype=&lt;class &#39;bids.layout.utils.PaddedInt&#39;&gt;)&gt;,
+ &#39;proc&#39;: &lt;Entity proc (pattern=[_/\\]+proc-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;modality&#39;: &lt;Entity modality (pattern=[_/\\]+mod-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;echo&#39;: &lt;Entity echo (pattern=[_/\\]+echo-([0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;flip&#39;: &lt;Entity flip (pattern=[_/\\]+flip-([0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;inv&#39;: &lt;Entity inv (pattern=[_/\\]+inv-([0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;mt&#39;: &lt;Entity mt (pattern=[_/\\]+mt-(on|off), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;part&#39;: &lt;Entity part (pattern=[_/\\]+part-(imag|mag|phase|real), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;recording&#39;: &lt;Entity recording (pattern=[_/\\]+recording-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;space&#39;: &lt;Entity space (pattern=[_/\\]+space-([a-zA-Z0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;chunk&#39;: &lt;Entity chunk (pattern=[_/\\]+chunk-([0-9]+), dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;suffix&#39;: &lt;Entity suffix (pattern=(?:^|[_/\\])([a-zA-Z0-9]+)\.[^/\\]+$, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;scans&#39;: &lt;Entity scans (pattern=(.*\_scans.tsv)$, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;fmap&#39;: &lt;Entity fmap (pattern=(phasediff|magnitude[1-2]|phase[1-2]|fieldmap|epi)\.nii, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;datatype&#39;: &lt;Entity datatype (pattern=[/\\]+(anat|beh|dwi|eeg|fmap|func|ieeg|meg|micr|motion|mrs|nirs|perf|pet)[/\\]+, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;extension&#39;: &lt;Entity extension (pattern=[^./\\](\.[^/\\]+)$, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;EchoTime2&#39;: &lt;Entity EchoTime2 (pattern=None, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;EchoTime1&#39;: &lt;Entity EchoTime1 (pattern=None, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;IntendedFor&#39;: &lt;Entity IntendedFor (pattern=None, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;CogAtlasID&#39;: &lt;Entity CogAtlasID (pattern=None, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;EchoTime&#39;: &lt;Entity EchoTime (pattern=None, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;EffectiveEchoSpacing&#39;: &lt;Entity EffectiveEchoSpacing (pattern=None, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;MTState&#39;: &lt;Entity MTState (pattern=None, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;PhaseEncodingDirection&#39;: &lt;Entity PhaseEncodingDirection (pattern=None, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;RepetitionTime&#39;: &lt;Entity RepetitionTime (pattern=None, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;SliceEncodingDirection&#39;: &lt;Entity SliceEncodingDirection (pattern=None, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;SliceTiming&#39;: &lt;Entity SliceTiming (pattern=None, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;TaskName&#39;: &lt;Entity TaskName (pattern=None, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;StartTime&#39;: &lt;Entity StartTime (pattern=None, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;SamplingFrequency&#39;: &lt;Entity SamplingFrequency (pattern=None, dtype=&lt;class &#39;str&#39;&gt;)&gt;,
+ &#39;Columns&#39;: &lt;Entity Columns (pattern=None, dtype=&lt;class &#39;str&#39;&gt;)&gt;}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="filtering-files-by-entities">
+<h3>Filtering files by entities<a class="headerlink" href="#filtering-files-by-entities" title="Link to this heading">#</a></h3>
+<p>The utility of the <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code> would be pretty limited if all we could do was retrieve a <code class="docutils literal notranslate"><span class="pre">list</span></code> of all files in the <code class="docutils literal notranslate"><span class="pre">dataset</span></code>. Fortunately, the <code class="docutils literal notranslate"><span class="pre">.get()</span></code> method accepts all kinds of arguments that allow us to filter the result set based on specified criteria. In fact, we can pass <em>any</em> <code class="docutils literal notranslate"><span class="pre">BIDS</span></code>-defined keywords (or, as they’re called in <code class="docutils literal notranslate"><span class="pre">PyBIDS</span></code>, <em>entities</em>) as constraints. For example, here’s how we would retrieve all <code class="docutils literal notranslate"><span class="pre">BOLD</span></code> runs with <code class="docutils literal notranslate"><span class="pre">.nii.gz</span></code> extensions for <code class="docutils literal notranslate"><span class="pre">participant</span></code> ‘<code class="docutils literal notranslate"><span class="pre">01</span></code>’:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span><span class="o">=</span><span class="s1">&#39;01&#39;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;nii.gz&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;filename&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/func/sub-01_ses-1_task-rest_acq-fullbrain_run-1_bold.nii.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/func/sub-01_ses-1_task-rest_acq-fullbrain_run-2_bold.nii.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/func/sub-01_ses-1_task-rest_acq-prefrontal_bold.nii.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-2/func/sub-01_ses-2_task-rest_acq-fullbrain_run-1_bold.nii.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-2/func/sub-01_ses-2_task-rest_acq-fullbrain_run-2_bold.nii.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-2/func/sub-01_ses-2_task-rest_acq-prefrontal_bold.nii.gz&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span><span class="o">=</span><span class="s1">&#39;02&#39;</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s2">&quot;rest&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02/ses-1/func/sub-02_ses-1_task-rest_acq-fullbrain_run-1_bold.nii.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02/ses-1/func/sub-02_ses-1_task-rest_acq-fullbrain_run-1_physio.tsv.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02/ses-1/func/sub-02_ses-1_task-rest_acq-fullbrain_run-2_bold.nii.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02/ses-1/func/sub-02_ses-1_task-rest_acq-fullbrain_run-2_physio.tsv.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02/ses-1/func/sub-02_ses-1_task-rest_acq-prefrontal_bold.nii.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02/ses-1/func/sub-02_ses-1_task-rest_acq-prefrontal_physio.tsv.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02/ses-2/func/sub-02_ses-2_task-rest_acq-fullbrain_run-1_bold.nii.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02/ses-2/func/sub-02_ses-2_task-rest_acq-fullbrain_run-1_physio.tsv.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02/ses-2/func/sub-02_ses-2_task-rest_acq-fullbrain_run-2_bold.nii.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02/ses-2/func/sub-02_ses-2_task-rest_acq-fullbrain_run-2_physio.tsv.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02/ses-2/func/sub-02_ses-2_task-rest_acq-prefrontal_bold.nii.gz&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02/ses-2/func/sub-02_ses-2_task-rest_acq-prefrontal_physio.tsv.gz&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you’re wondering what entities you can pass in as filtering arguments, the answer is contained in the .json configuration files <a class="reference external" href="https://github.com/bids-standard/pybids/tree/master/bids/layout/config">housed here</a>. To save you the trouble, here are a few of the most common entities:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">suffix</span></code>: The part of a <code class="docutils literal notranslate"><span class="pre">BIDS</span></code> filename just before the extension (e.g., ‘<code class="docutils literal notranslate"><span class="pre">bold</span></code>’, ‘<code class="docutils literal notranslate"><span class="pre">events</span></code>’, ‘<code class="docutils literal notranslate"><span class="pre">physio</span></code>’, etc.).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">subject</span></code>: The <code class="docutils literal notranslate"><span class="pre">subject</span> <span class="pre">label</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">session</span></code>: The <code class="docutils literal notranslate"><span class="pre">session</span> <span class="pre">label</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">run</span></code>: The <code class="docutils literal notranslate"><span class="pre">run</span> <span class="pre">index</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">task</span></code>: The <code class="docutils literal notranslate"><span class="pre">task</span> <span class="pre">name</span></code></p></li>
+</ul>
+<p>New <code class="docutils literal notranslate"><span class="pre">entities</span></code> are continually being defined as the spec grows, and in principle (though not always in practice), <code class="docutils literal notranslate"><span class="pre">PyBIDS</span></code> should be aware of all <code class="docutils literal notranslate"><span class="pre">entities</span></code> that are defined in the <code class="docutils literal notranslate"><span class="pre">BIDS</span></code> specification.</p>
+</section>
+<section id="filtering-by-metadata">
+<h3>Filtering by metadata<a class="headerlink" href="#filtering-by-metadata" title="Link to this heading">#</a></h3>
+<p>All of the entities listed above are found in the names of <code class="docutils literal notranslate"><span class="pre">BIDS</span></code> files. But sometimes we want to search for files based not just on their names, but also based on <code class="docutils literal notranslate"><span class="pre">metadata</span></code> defined (per the <code class="docutils literal notranslate"><span class="pre">BIDS</span></code> specification) in <code class="docutils literal notranslate"><span class="pre">JSON</span></code> files. Fortunately for us, when we initialize a <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code>, all <code class="docutils literal notranslate"><span class="pre">metadata</span> <span class="pre">files</span></code> associated with <code class="docutils literal notranslate"><span class="pre">BIDS</span> <span class="pre">files</span></code> are automatically indexed. This means we can pass any key that occurs in any <code class="docutils literal notranslate"><span class="pre">JSON</span> <span class="pre">file</span></code> in our project as an argument to <code class="docutils literal notranslate"><span class="pre">.get()</span></code>. We can combine these with any number of core <code class="docutils literal notranslate"><span class="pre">BIDS</span></code> <code class="docutils literal notranslate"><span class="pre">entities</span></code> (like <code class="docutils literal notranslate"><span class="pre">subject</span></code>, <code class="docutils literal notranslate"><span class="pre">run</span></code>, etc.).</p>
+<p>For example, say we want to retrieve all files where (a)  <code class="docutils literal notranslate"><span class="pre">acquisition</span></code> type is <code class="docutils literal notranslate"><span class="pre">'prefrontal'</span></code>, and (b) the subject is <code class="docutils literal notranslate"><span class="pre">'01'</span></code> or <code class="docutils literal notranslate"><span class="pre">'02'</span></code>. Here’s how we can do that:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;01&#39;</span><span class="p">,</span> <span class="s1">&#39;02&#39;</span><span class="p">],</span> <span class="n">acquisition</span> <span class="o">=</span> <span class="s1">&#39;prefrontal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;BIDSImageFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/func/sub-01_ses-1_task-rest_acq-prefrontal_bold.nii.gz&#39;&gt;,
+ &lt;BIDSDataFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-1/func/sub-01_ses-1_task-rest_acq-prefrontal_physio.tsv.gz&#39;&gt;,
+ &lt;BIDSImageFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-2/func/sub-01_ses-2_task-rest_acq-prefrontal_bold.nii.gz&#39;&gt;,
+ &lt;BIDSDataFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01/ses-2/func/sub-01_ses-2_task-rest_acq-prefrontal_physio.tsv.gz&#39;&gt;,
+ &lt;BIDSImageFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02/ses-1/func/sub-02_ses-1_task-rest_acq-prefrontal_bold.nii.gz&#39;&gt;,
+ &lt;BIDSDataFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02/ses-1/func/sub-02_ses-1_task-rest_acq-prefrontal_physio.tsv.gz&#39;&gt;,
+ &lt;BIDSImageFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02/ses-2/func/sub-02_ses-2_task-rest_acq-prefrontal_bold.nii.gz&#39;&gt;,
+ &lt;BIDSDataFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02/ses-2/func/sub-02_ses-2_task-rest_acq-prefrontal_physio.tsv.gz&#39;&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that we passed a list in for <code class="docutils literal notranslate"><span class="pre">subject</span></code> rather than just a string. This principle applies to all filters: you can always pass in a list instead of a single value, and this will be interpreted as a logical disjunction (i.e., a file must match any one of the provided values).</p>
+</section>
+<section id="other-return-type-values">
+<h3>Other <code class="docutils literal notranslate"><span class="pre">return_type</span></code> values<a class="headerlink" href="#other-return-type-values" title="Link to this heading">#</a></h3>
+<p>While we’ll typically want to work with either <code class="docutils literal notranslate"><span class="pre">BIDSFile</span></code> objects or filenames, we can also ask <code class="docutils literal notranslate"><span class="pre">get()</span></code> to return unique values (or ids) of particular entities. For example, say we want to know which subjects have at least one <code class="docutils literal notranslate"><span class="pre">T1w</span></code> file. We can request that information by setting <code class="docutils literal notranslate"><span class="pre">return_type='id'</span></code>. When using this option, we also need to specify a target entity (or metadata keyword) called <code class="docutils literal notranslate"><span class="pre">target</span></code>. This combination tells the <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code> to return the unique values for the specified <code class="docutils literal notranslate"><span class="pre">target</span></code> entity. For example, in the next example, we ask for all of the unique subject IDs that have at least one file with a <code class="docutils literal notranslate"><span class="pre">T1w</span></code> suffix:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ask get() to return the ids of subjects that have T1w files</span>
+<span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s1">&#39;subject&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;T1w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;01&#39;, &#39;02&#39;, &#39;03&#39;, &#39;04&#39;, &#39;05&#39;, &#39;06&#39;, &#39;07&#39;, &#39;08&#39;, &#39;09&#39;, &#39;10&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>If our <code class="docutils literal notranslate"><span class="pre">target</span></code> is a <code class="docutils literal notranslate"><span class="pre">BIDS</span></code> entity that corresponds to a particular directory in the <code class="docutils literal notranslate"><span class="pre">BIDS</span></code> spec (e.g., <code class="docutils literal notranslate"><span class="pre">subject</span></code> or <code class="docutils literal notranslate"><span class="pre">session</span></code>) we can also use <code class="docutils literal notranslate"><span class="pre">return_type='dir'</span></code> to get all matching subdirectories:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;dir&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s1">&#39;subject&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-01&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-02&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-03&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-04&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-05&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-06&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-07&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-08&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-09&#39;,
+ &#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_7t_trt/sub-10&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="other-get-options">
+<h3>Other <code class="docutils literal notranslate"><span class="pre">get()</span></code> options<a class="headerlink" href="#other-get-options" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">.get()</span></code> method has a number of other useful arguments that control its behavior. We won’t discuss these in detail here, but briefly, here are a couple worth knowing about:</p>
+<ul class="simple">
+<li><p>regex_search: If you set this to <code class="docutils literal notranslate"><span class="pre">True</span></code>, string filter argument values will be interpreted as regular expressions.</p></li>
+<li><p>scope: If your BIDS dataset contains BIDS-derivatives sub-datasets, you can specify where you wa</p></li>
+</ul>
+</section>
+</section>
+<section id="the-bidsfile">
+<h2>The <code class="docutils literal notranslate"><span class="pre">BIDSFile</span></code><a class="headerlink" href="#the-bidsfile" title="Link to this heading">#</a></h2>
+<p>When you call <code class="docutils literal notranslate"><span class="pre">.get()</span></code> on a <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code>, the default returned values are objects of class <code class="docutils literal notranslate"><span class="pre">BIDSFile</span></code>. A <code class="docutils literal notranslate"><span class="pre">BIDSFile</span></code> is a lightweight container for individual files in a BIDS dataset. It provides easy access to a variety of useful attributes and methods. Let’s take a closer look. First, let’s pick a random file from our existing <code class="docutils literal notranslate"><span class="pre">layout</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layout</span> <span class="o">=</span> <span class="n">BIDSLayout</span><span class="p">(</span><span class="s1">&#39;../data/pybids_synthetic/&#39;</span><span class="p">)</span>
+
+<span class="c1"># Pick the 15th file in the dataset</span>
+<span class="n">bf</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">()[</span><span class="mi">15</span><span class="p">]</span>
+
+<span class="c1"># Print it</span>
+<span class="n">bf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;BIDSDataFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_synthetic/sub-01/ses-01/func/sub-01_ses-01_task-nback_run-01_stim.tsv.gz&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are some of the attributes and methods available to us in a <code class="docutils literal notranslate"><span class="pre">BIDSFile</span></code> (note that some of these are only available for certain subclasses of <code class="docutils literal notranslate"><span class="pre">BIDSFile</span></code>; e.g., you can’t call <code class="docutils literal notranslate"><span class="pre">get_image()</span></code> on a <code class="docutils literal notranslate"><span class="pre">BIDSFile</span></code> that doesn’t correspond to an image file!):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.path</span></code>: The full path of the associated file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.filename</span></code>: The associated file’s filename (without directory)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.dirname</span></code>: The directory containing the file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.get_entities()</span></code>: Returns information about entities associated with this <code class="docutils literal notranslate"><span class="pre">BIDSFile</span></code> (optionally including metadata)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.get_image()</span></code>: Returns the file contents as a nibabel image (only works for image files)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.get_df()</span></code>: Get file contents as a pandas DataFrame (only works for TSV files)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.get_metadata()</span></code>: Returns a dictionary of all metadata found in associated JSON files</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.get_associations()</span></code>: Returns a list of all files associated with this one in some way</p></li>
+</ul>
+<p>Let’s see some of these in action.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print all the entities associated with this file, and their values</span>
+<span class="n">bf</span><span class="o">.</span><span class="n">get_entities</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;datatype&#39;: &#39;func&#39;,
+ &#39;extension&#39;: &#39;.tsv.gz&#39;,
+ &#39;run&#39;: 01,
+ &#39;session&#39;: &#39;01&#39;,
+ &#39;subject&#39;: &#39;01&#39;,
+ &#39;suffix&#39;: &#39;stim&#39;,
+ &#39;task&#39;: &#39;nback&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print all the metadata associated with this file</span>
+<span class="n">bf</span><span class="o">.</span><span class="n">get_metadata</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Columns&#39;: [&#39;stimA&#39;, &#39;stimB&#39;], &#39;SamplingFrequency&#39;: 2.0, &#39;StartTime&#39;: 0.0}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can the union of both of the above in one shot like this</span>
+<span class="n">bf</span><span class="o">.</span><span class="n">get_entities</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Columns&#39;: [&#39;stimA&#39;, &#39;stimB&#39;],
+ &#39;SamplingFrequency&#39;: 2.0,
+ &#39;StartTime&#39;: 0.0,
+ &#39;datatype&#39;: &#39;func&#39;,
+ &#39;extension&#39;: &#39;.tsv.gz&#39;,
+ &#39;run&#39;: 01,
+ &#39;session&#39;: &#39;01&#39;,
+ &#39;subject&#39;: &#39;01&#39;,
+ &#39;suffix&#39;: &#39;stim&#39;,
+ &#39;task&#39;: &#39;nback&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are all the files associated with our target file in some way. Notice how we get back both the JSON sidecar for our target file, and the BOLD run that our target file contains physiological recordings for.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bf</span><span class="o">.</span><span class="n">get_associations</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;BIDSJSONFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_synthetic/task-nback_stim.json&#39;&gt;,
+ &lt;BIDSImageFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_synthetic/sub-01/ses-01/func/sub-01_ses-01_task-nback_run-01_bold.nii&#39;&gt;,
+ &lt;BIDSImageFile filename=&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_synthetic/sub-01/ses-01/func/sub-01_ses-01_task-nback_run-01_bold.nii.gz&#39;&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>In cases where a file has a <code class="docutils literal notranslate"><span class="pre">.tsv.gz</span></code> or <code class="docutils literal notranslate"><span class="pre">.tsv</span></code> extension, it will automatically be created as a <code class="docutils literal notranslate"><span class="pre">BIDSDataFile</span></code>, and we can easily grab the contents as a pandas <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the first physiological recording file</span>
+<span class="n">recfile</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;physio&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Get contents as a DataFrame and show the first few rows</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">recfile</span><span class="o">.</span><span class="n">get_df</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>onset</th>
+      <th>respiratory</th>
+      <th>cardiac</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>-0.714844</td>
+      <td>-0.262109</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.1</td>
+      <td>-0.757342</td>
+      <td>0.048933</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.2</td>
+      <td>-0.796851</td>
+      <td>0.355185</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.3</td>
+      <td>-0.833215</td>
+      <td>0.626669</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.4</td>
+      <td>-0.866291</td>
+      <td>0.836810</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>While it would have been easy enough to read the contents of the file ourselves with pandas’ <code class="docutils literal notranslate"><span class="pre">read_csv()</span></code> method, notice that in the above example, <code class="docutils literal notranslate"><span class="pre">get_df()</span></code> saved us the trouble of having to read the physiological recording file’s metadata, pull out the column names and sampling rate, and add timing information.</p>
+<p>Mind you, if we don’t <em>want</em> the timing information, we can ignore it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">recfile</span><span class="o">.</span><span class="n">get_df</span><span class="p">(</span><span class="n">include_timing</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>respiratory</th>
+      <th>cardiac</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.714844</td>
+      <td>-0.262109</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.757342</td>
+      <td>0.048933</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.796851</td>
+      <td>0.355185</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.833215</td>
+      <td>0.626669</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.866291</td>
+      <td>0.836810</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="other-utilities">
+<h2>Other utilities<a class="headerlink" href="#other-utilities" title="Link to this heading">#</a></h2>
+<section id="filename-parsing">
+<h3>Filename parsing<a class="headerlink" href="#filename-parsing" title="Link to this heading">#</a></h3>
+<p>Say you have a filename, and you want to manually extract BIDS entities from it. The <code class="docutils literal notranslate"><span class="pre">parse_file_entities</span></code> method provides the facility:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;/a/fake/path/to/a/BIDS/file/sub-01_run-1_T2w.nii.gz&quot;</span>
+<span class="n">layout</span><span class="o">.</span><span class="n">parse_file_entities</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;subject&#39;: &#39;01&#39;, &#39;run&#39;: 1, &#39;suffix&#39;: &#39;T2w&#39;, &#39;extension&#39;: &#39;.nii.gz&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="path-construction">
+<h3>Path construction<a class="headerlink" href="#path-construction" title="Link to this heading">#</a></h3>
+<p>You may want to create valid BIDS filenames for files that are new or hypothetical that would sit within your BIDS project. This is useful when you know what entity values you need to write out to, but don’t want to deal with looking up the precise BIDS file-naming syntax. In the example below, imagine we’ve created a new file containing stimulus presentation information, and we want to save it to a <code class="docutils literal notranslate"><span class="pre">.tsv.gz</span></code> file, per the BIDS naming conventions. All we need to do is define a dictionary with the name components, and <code class="docutils literal notranslate"><span class="pre">build_path</span></code> takes care of the rest (including injecting sub-directories!):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">entities</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;subject&#39;</span><span class="p">:</span> <span class="s1">&#39;01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;run&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;nback&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;suffix&#39;</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span>
+<span class="p">}</span>
+
+<span class="n">layout</span><span class="o">.</span><span class="n">build_path</span><span class="p">(</span><span class="n">entities</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_synthetic/sub-01/func/sub-01_task-nback_run-2_bold.nii.gz&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can also use <code class="docutils literal notranslate"><span class="pre">build_path</span></code> in more sophisticated ways—for example, by defining your own set of matching templates that cover cases not supported by BIDS out of the box. For example, suppose you want to create a template for naming a new z-stat file. You could do something like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># NBVAL_SKIP</span>
+<span class="c1"># Define the pattern to build out of the components passed in the dictionary</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="s2">&quot;sub-</span><span class="si">{subject}</span><span class="s2">[_ses-</span><span class="si">{session}</span><span class="s2">]_task-</span><span class="si">{task}</span><span class="s2">[_acq-</span><span class="si">{acquisition}</span><span class="s2">][_rec-</span><span class="si">{reconstruction}</span><span class="s2">][_run-</span><span class="si">{run}</span><span class="s2">][_echo-</span><span class="si">{echo}</span><span class="s2">]_{suffix&lt;z&gt;}.nii.gz&quot;</span><span class="p">,</span>
+
+<span class="n">entities</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;subject&#39;</span><span class="p">:</span> <span class="s1">&#39;01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;run&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;n-back&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;suffix&#39;</span><span class="p">:</span> <span class="s1">&#39;z&#39;</span>
+<span class="p">}</span>
+
+<span class="c1"># Notice we pass the new pattern as the second argument</span>
+<span class="n">layout</span><span class="o">.</span><span class="n">build_path</span><span class="p">(</span><span class="n">entities</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;/Users/peerherholz/google_drive/GitHub/workshop_IRTG2150/workshop/advanced/../data/pybids_synthetic/sub-01_task-n-back_run-2_z.nii.gz&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exporting-a-bidslayout-to-a-pandas-dataframe">
+<h3>Exporting a <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code> to a pandas <code class="docutils literal notranslate"><span class="pre">Dataframe</span></code><a class="headerlink" href="#exporting-a-bidslayout-to-a-pandas-dataframe" title="Link to this heading">#</a></h3>
+<p>If you want a summary of all the files in your <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code>, but don’t want to have to iterate <code class="docutils literal notranslate"><span class="pre">BIDSFile</span></code> objects and extract their entities, you can get a nice bird’s-eye view of your dataset using the <code class="docutils literal notranslate"><span class="pre">to_df()</span></code> method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert the layout to a pandas dataframe</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>entity</th>
+      <th>path</th>
+      <th>datatype</th>
+      <th>extension</th>
+      <th>fmap</th>
+      <th>run</th>
+      <th>scans</th>
+      <th>session</th>
+      <th>subject</th>
+      <th>suffix</th>
+      <th>task</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>/Users/peerherholz/google_drive/GitHub/worksho...</td>
+      <td>NaN</td>
+      <td>.json</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>T1w</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>/Users/peerherholz/google_drive/GitHub/worksho...</td>
+      <td>NaN</td>
+      <td>.json</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>description</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>/Users/peerherholz/google_drive/GitHub/worksho...</td>
+      <td>NaN</td>
+      <td>.json</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>dwi</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>/Users/peerherholz/google_drive/GitHub/worksho...</td>
+      <td>NaN</td>
+      <td>.tsv</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>participants</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>/Users/peerherholz/google_drive/GitHub/worksho...</td>
+      <td>anat</td>
+      <td>.nii</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>01</td>
+      <td>01</td>
+      <td>T1w</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can also include metadata in the result if we like (which may blow up our <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> if we have a large dataset). Note that in this case, most of our cells will have missing values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layout</span><span class="o">.</span><span class="n">to_df</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>entity</th>
+      <th>path</th>
+      <th>Columns</th>
+      <th>EchoTime</th>
+      <th>EchoTime1</th>
+      <th>EchoTime2</th>
+      <th>EffectiveEchoSpacing</th>
+      <th>FlipAngle</th>
+      <th>IntendedFor</th>
+      <th>PhaseEncodingDirection</th>
+      <th>RepetitionTime</th>
+      <th>...</th>
+      <th>TotalReadoutTime</th>
+      <th>datatype</th>
+      <th>extension</th>
+      <th>fmap</th>
+      <th>run</th>
+      <th>scans</th>
+      <th>session</th>
+      <th>subject</th>
+      <th>suffix</th>
+      <th>task</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>/Users/peerherholz/google_drive/GitHub/worksho...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>.json</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>T1w</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>/Users/peerherholz/google_drive/GitHub/worksho...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>.json</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>description</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>/Users/peerherholz/google_drive/GitHub/worksho...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>.json</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>dwi</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>/Users/peerherholz/google_drive/GitHub/worksho...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>.tsv</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>participants</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>/Users/peerherholz/google_drive/GitHub/worksho...</td>
+      <td>NaN</td>
+      <td>0.0029</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>8</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.5</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>anat</td>
+      <td>.nii</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>01</td>
+      <td>01</td>
+      <td>T1w</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 24 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="bidsvalidator">
+<h2>BIDSValidator<a class="headerlink" href="#bidsvalidator" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pybids</span></code> implicitly imports a <code class="docutils literal notranslate"><span class="pre">BIDSValidator</span></code> class from the separate <a class="reference external" href="https://github.com/bids-standard/bids-validator"><code class="docutils literal notranslate"><span class="pre">bids-validator</span></code></a> package. You can use the <code class="docutils literal notranslate"><span class="pre">BIDSValidator</span></code> to determine whether a filepath is a valid BIDS filepath, as well as answering questions about what kind of data it represents. Note, however, that this implementation of the BIDS validator is <em>not</em> necessarily up-to-date with the JavaScript version available online. Moreover, the Python validator only tests individual files, and is currently unable to validate entire BIDS datasets. For that, you should use the <a class="reference external" href="https://bids-standard.github.io/bids-validator/">online BIDS validator</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">bids</span><span class="w"> </span><span class="kn">import</span> <span class="n">BIDSValidator</span>
+
+<span class="c1"># Note that when using the bids validator, the filepath MUST be relative to the top level bids directory</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="n">BIDSValidator</span><span class="p">()</span>
+<span class="n">validator</span><span class="o">.</span><span class="n">is_bids</span><span class="p">(</span><span class="s1">&#39;/sub-01/ses-test/anat/sub-01_ses-test_T1w.nii.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Can decide if a filepath represents a file part of the specification</span>
+<span class="n">validator</span><span class="o">.</span><span class="n">is_file</span><span class="p">(</span><span class="s1">&#39;/sub-01/ses-test/anat/sub-01_ses-test_T1w.nii.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Can check if file a dataset top</span>
+<span class="n">validator</span><span class="o">.</span><span class="n">is_top_level</span><span class="p">(</span><span class="s1">&#39;/dataset_description.json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># or subject (or session) level</span>
+<span class="n">validator</span><span class="o">.</span><span class="n">is_subject_level</span><span class="p">(</span><span class="s1">&#39;/dataset_description.json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">validator</span><span class="o">.</span><span class="n">is_session_level</span><span class="p">(</span><span class="s1">&#39;/sub-01/ses-test/anat/sub-01_ses-test_T1w.json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Can decide if a filepath represents phenotypic data</span>
+<span class="n">validator</span><span class="o">.</span><span class="n">is_phenotypic</span><span class="p">(</span><span class="s1">&#39;/sub-01/ses-test/anat/sub-01_ses-test_T1w.nii.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="report-generation">
+<h2>Report generation<a class="headerlink" href="#report-generation" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">PyBIDS</span></code> also allows you to automatically create data acquisition reports based on the available <code class="docutils literal notranslate"><span class="pre">image</span></code> and <code class="docutils literal notranslate"><span class="pre">meta-data</span></code> information. Comparable to functionality in e.g. <a class="reference external" href="https://fmriprep.org/en/stable/citing.html?highlight=boilerplate">fMRIPrep</a> this enables a new level of standardization and subsequent advancements (transparency, FAIR-ness, meta-analyses, etc.). Let’s import the <code class="docutils literal notranslate"><span class="pre">BIDSReport</span></code> function from the <code class="docutils literal notranslate"><span class="pre">reports</span></code> submodule and initiate a <code class="docutils literal notranslate"><span class="pre">BIDS</span></code> dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">bids.reports</span><span class="w"> </span><span class="kn">import</span> <span class="n">BIDSReport</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Great, now we only need to apply the <code class="docutils literal notranslate"><span class="pre">BIDSReport</span></code> function to our <code class="docutils literal notranslate"><span class="pre">layout</span></code> and generate our report. (We’ll get some warnings as the example data set is missing some parts).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="n">report</span> <span class="o">=</span> <span class="n">BIDSReport</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+
+<span class="n">counter</span> <span class="o">=</span> <span class="n">report</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of patterns detected: 1
+Remember to double-check everything and to replace &lt;deg&gt; with a degree symbol.
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we can see, one pattern was detected and we can evaluate the actual corresponding information, that is our <code class="docutils literal notranslate"><span class="pre">report</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">main_report</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">most_common</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">main_report</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In session 01, MR data were acquired using a UNKNOWN-Tesla MANUFACTURER MODEL MRI scanner.
+	One run of T1-weighted   single-echo structural MRI data were collected (256 slices; repetition time, TR=2500ms; echo time, TE=2.9ms; flip angle, FA=8&lt;deg&gt;; field of view, FOV=256x256mm; matrix size=256x256; voxel size=1x1x1mm).
+	One run of T1-weighted   single-echo structural MRI data were collected (256 slices; repetition time, TR=2500ms; echo time, TE=2.9ms; flip angle, FA=8&lt;deg&gt;; field of view, FOV=256x256mm; matrix size=256x256; voxel size=1x1x1mm).
+	One run of   diffusion-weighted (dMRI) data were collected (repetition time, TR=8400ms; echo time, TE=90ms; flip angle, FA=90&lt;deg&gt;; field of view, FOV=128x128mm; voxel size=2x2x2mm; matrix size=64x64; b-values of 0 and 1000 acquired; 64 diffusion directions).
+	A   field map (phase encoding: anterior to posterior; 256 slices; repetition time, TR=400ms; echo time 1 / 2, TE1/2=5190007.65ms; flip angle, FA=60.0&lt;deg&gt;; field of view, FOV=256x256mm; matrix size=256x256; voxel size=1x1x1mm) was acquired for the first and second runs of the N-Back BOLD scan.
+	Two runs of N-Back   single-echo fMRI data were collected (64 slices; repetition time, TR=2500ms; echo time, TE=30ms; flip angle, FA=UNKNOWN&lt;deg&gt;; field of view, FOV=128x128mm; matrix size=64x64; voxel size=2x2x2mm). Run duration was 2:40 minutes, during which 64 volumes were acquired.
+	Two runs of N-Back   single-echo fMRI data were collected (64 slices; repetition time, TR=2500ms; echo time, TE=30ms; flip angle, FA=UNKNOWN&lt;deg&gt;; field of view, FOV=128x128mm; matrix size=64x64; voxel size=2x2x2mm). Run duration was 2:40 minutes, during which 64 volumes were acquired.
+	One run of Rest   single-echo fMRI data were collected (64 slices; repetition time, TR=2500ms; echo time, TE=30ms; flip angle, FA=UNKNOWN&lt;deg&gt;; field of view, FOV=128x128mm; matrix size=64x64; voxel size=2x2x2mm). Run duration was 2:40 minutes, during which 64 volumes were acquired.
+	One run of Rest   single-echo fMRI data were collected (64 slices; repetition time, TR=2500ms; echo time, TE=30ms; flip angle, FA=UNKNOWN&lt;deg&gt;; field of view, FOV=128x128mm; matrix size=64x64; voxel size=2x2x2mm). Run duration was 2:40 minutes, during which 64 volumes were acquired.
+	One run of T1-weighted   single-echo structural MRI data were collected (256 slices; repetition time, TR=2500ms; echo time, TE=2.9ms; flip angle, FA=8&lt;deg&gt;; field of view, FOV=256x256mm; matrix size=256x256; voxel size=1x1x1mm).
+	One run of T1-weighted   single-echo structural MRI data were collected (256 slices; repetition time, TR=2500ms; echo time, TE=2.9ms; flip angle, FA=8&lt;deg&gt;; field of view, FOV=256x256mm; matrix size=256x256; voxel size=1x1x1mm).
+	Two runs of N-Back   single-echo fMRI data were collected (64 slices; repetition time, TR=2500ms; echo time, TE=30ms; flip angle, FA=UNKNOWN&lt;deg&gt;; field of view, FOV=128x128mm; matrix size=64x64; voxel size=2x2x2mm). Run duration was 2:40 minutes, during which 64 volumes were acquired.
+	Two runs of N-Back   single-echo fMRI data were collected (64 slices; repetition time, TR=2500ms; echo time, TE=30ms; flip angle, FA=UNKNOWN&lt;deg&gt;; field of view, FOV=128x128mm; matrix size=64x64; voxel size=2x2x2mm). Run duration was 2:40 minutes, during which 64 volumes were acquired.
+	One run of Rest   single-echo fMRI data were collected (64 slices; repetition time, TR=2500ms; echo time, TE=30ms; flip angle, FA=UNKNOWN&lt;deg&gt;; field of view, FOV=128x128mm; matrix size=64x64; voxel size=2x2x2mm). Run duration was 2:40 minutes, during which 64 volumes were acquired.
+	One run of Rest   single-echo fMRI data were collected (64 slices; repetition time, TR=2500ms; echo time, TE=30ms; flip angle, FA=UNKNOWN&lt;deg&gt;; field of view, FOV=128x128mm; matrix size=64x64; voxel size=2x2x2mm). Run duration was 2:40 minutes, during which 64 volumes were acquired.
+	In session 02, MR data were acquired using a UNKNOWN-Tesla MANUFACTURER MODEL MRI scanner.
+	One run of T1-weighted   single-echo structural MRI data were collected (256 slices; repetition time, TR=2500ms; echo time, TE=2.9ms; flip angle, FA=8&lt;deg&gt;; field of view, FOV=256x256mm; matrix size=256x256; voxel size=1x1x1mm).
+	One run of T1-weighted   single-echo structural MRI data were collected (256 slices; repetition time, TR=2500ms; echo time, TE=2.9ms; flip angle, FA=8&lt;deg&gt;; field of view, FOV=256x256mm; matrix size=256x256; voxel size=1x1x1mm).
+	One run of   diffusion-weighted (dMRI) data were collected (repetition time, TR=8400ms; echo time, TE=90ms; flip angle, FA=90&lt;deg&gt;; field of view, FOV=128x128mm; voxel size=2x2x2mm; matrix size=64x64; b-values of 0 and 1000 acquired; 64 diffusion directions).
+	A   field map (phase encoding: anterior to posterior; 256 slices; repetition time, TR=400ms; echo time 1 / 2, TE1/2=5190007.65ms; flip angle, FA=60.0&lt;deg&gt;; field of view, FOV=256x256mm; matrix size=256x256; voxel size=1x1x1mm) was acquired for the first and second runs of the N-Back BOLD scan.
+	Two runs of N-Back   single-echo fMRI data were collected (64 slices; repetition time, TR=2500ms; echo time, TE=30ms; flip angle, FA=UNKNOWN&lt;deg&gt;; field of view, FOV=128x128mm; matrix size=64x64; voxel size=2x2x2mm). Run duration was 2:40 minutes, during which 64 volumes were acquired.
+	Two runs of N-Back   single-echo fMRI data were collected (64 slices; repetition time, TR=2500ms; echo time, TE=30ms; flip angle, FA=UNKNOWN&lt;deg&gt;; field of view, FOV=128x128mm; matrix size=64x64; voxel size=2x2x2mm). Run duration was 2:40 minutes, during which 64 volumes were acquired.
+	One run of Rest   single-echo fMRI data were collected (64 slices; repetition time, TR=2500ms; echo time, TE=30ms; flip angle, FA=UNKNOWN&lt;deg&gt;; field of view, FOV=128x128mm; matrix size=64x64; voxel size=2x2x2mm). Run duration was 2:40 minutes, during which 64 volumes were acquired.
+	One run of Rest   single-echo fMRI data were collected (64 slices; repetition time, TR=2500ms; echo time, TE=30ms; flip angle, FA=UNKNOWN&lt;deg&gt;; field of view, FOV=128x128mm; matrix size=64x64; voxel size=2x2x2mm). Run duration was 2:40 minutes, during which 64 volumes were acquired.
+	One run of T1-weighted   single-echo structural MRI data were collected (256 slices; repetition time, TR=2500ms; echo time, TE=2.9ms; flip angle, FA=8&lt;deg&gt;; field of view, FOV=256x256mm; matrix size=256x256; voxel size=1x1x1mm).
+	One run of T1-weighted   single-echo structural MRI data were collected (256 slices; repetition time, TR=2500ms; echo time, TE=2.9ms; flip angle, FA=8&lt;deg&gt;; field of view, FOV=256x256mm; matrix size=256x256; voxel size=1x1x1mm).
+	Two runs of N-Back   single-echo fMRI data were collected (64 slices; repetition time, TR=2500ms; echo time, TE=30ms; flip angle, FA=UNKNOWN&lt;deg&gt;; field of view, FOV=128x128mm; matrix size=64x64; voxel size=2x2x2mm). Run duration was 2:40 minutes, during which 64 volumes were acquired.
+	Two runs of N-Back   single-echo fMRI data were collected (64 slices; repetition time, TR=2500ms; echo time, TE=30ms; flip angle, FA=UNKNOWN&lt;deg&gt;; field of view, FOV=128x128mm; matrix size=64x64; voxel size=2x2x2mm). Run duration was 2:40 minutes, during which 64 volumes were acquired.
+	One run of Rest   single-echo fMRI data were collected (64 slices; repetition time, TR=2500ms; echo time, TE=30ms; flip angle, FA=UNKNOWN&lt;deg&gt;; field of view, FOV=128x128mm; matrix size=64x64; voxel size=2x2x2mm). Run duration was 2:40 minutes, during which 64 volumes were acquired.
+	One run of Rest   single-echo fMRI data were collected (64 slices; repetition time, TR=2500ms; echo time, TE=30ms; flip angle, FA=UNKNOWN&lt;deg&gt;; field of view, FOV=128x128mm; matrix size=64x64; voxel size=2x2x2mm). Run duration was 2:40 minutes, during which 64 volumes were acquired.
+
+Dicoms were converted to NIfTI-1 format. This section was (in part) generated automatically using pybids (0.18.1).
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./advanced"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../advanced.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Advanced and specialized analyses</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="statistical_analyses_MRI.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Nilearn GLM: statistical analyses of MRI in Python</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bidslayout">The <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#querying-the-bidslayout">Querying the <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-files-by-entities">Filtering files by entities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-by-metadata">Filtering by metadata</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-return-type-values">Other <code class="docutils literal notranslate"><span class="pre">return_type</span></code> values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-get-options">Other <code class="docutils literal notranslate"><span class="pre">get()</span></code> options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bidsfile">The <code class="docutils literal notranslate"><span class="pre">BIDSFile</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-utilities">Other utilities</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filename-parsing">Filename parsing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#path-construction">Path construction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exporting-a-bidslayout-to-a-pandas-dataframe">Exporting a <code class="docutils literal notranslate"><span class="pre">BIDSLayout</span></code> to a pandas <code class="docutils literal notranslate"><span class="pre">Dataframe</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bidsvalidator">BIDSValidator</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#report-generation">Report generation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Peer Herholz
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
