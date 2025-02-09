@@ -253,10 +253,10 @@
 
 <li class="toctree-l2"><a class="reference internal" href="image_manipulation_nilearn.html">Using Python for neuroimaging data - Nilearn</a></li>
 
+<li class="toctree-l2"><a class="reference internal" href="pybids.html">Introduction to <code class="docutils literal notranslate"><span class="pre">pybids</span></code></a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../advanced.html">Advanced and specialized analyses</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../advanced/pybids.html">Introduction to <code class="docutils literal notranslate"><span class="pre">pybids</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced/statistical_analyses_MRI.html">Nilearn GLM: statistical analyses of MRI in Python</a></li>
 
 
@@ -450,7 +450,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -466,6 +468,16 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nibabel">Nibabel</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilearn">Nilearn</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pybids">Pybids</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -478,13 +490,23 @@
   <section class="tex2jax_ignore mathjax_ignore" id="basics-in-data-handling">
 <h1>Basics in data handling<a class="headerlink" href="#basics-in-data-handling" title="Link to this heading">#</a></h1>
 <p><a class="reference external" href="https://nipy.org/nibabel/">Nibabel</a> and <a class="reference external" href="https://nilearn.github.io/stable/index.html">Nilearn</a> are two <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">packages</span></code> that help to <code class="docutils literal notranslate"><span class="pre">load</span></code>, <code class="docutils literal notranslate"><span class="pre">modify</span></code>, <code class="docutils literal notranslate"><span class="pre">save</span></code> and <code class="docutils literal notranslate"><span class="pre">visualize</span> <span class="pre">neuroimaging</span> <span class="pre">data</span></code>.
-The two software packages together allow you to do almost anything with your <code class="docutils literal notranslate"><span class="pre">MRI</span> <span class="pre">data</span></code> that you want. In order to provide a quick
-introduction and overview of their functionality and capabilities we prepared two short notebooks that will showcase that. You can find
-both in the <code class="docutils literal notranslate"><span class="pre">ToC</span></code> on the left.</p>
+The two software packages together allow you to do almost anything with your <code class="docutils literal notranslate"><span class="pre">MRI</span> <span class="pre">data</span></code> that you want. In order to provide a quick introduction and overview of their functionality and capabilities we prepared two short notebooks that will showcase that.</p>
+<p>Additionally, we will have a look at how we can query and extract information from <a class="reference external" href="https://bids-specification.readthedocs.io/en/stable/">BIDS</a> <code class="docutils literal notranslate"><span class="pre">datasets</span></code> using the <a class="reference external" href="https://bids-standard.github.io/pybids/index.html">pybids</a> package.</p>
+<p>You can find all sections in the <code class="docutils literal notranslate"><span class="pre">ToC</span></code> on the left.</p>
+<section id="nibabel">
+<h2>Nibabel<a class="headerlink" href="#nibabel" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Nibabel</span></code>’s main focus is on <code class="docutils literal notranslate"><span class="pre">loading</span></code> and <code class="docutils literal notranslate"><span class="pre">saving</span></code> any kind of <code class="docutils literal notranslate"><span class="pre">neuroimaging</span> <span class="pre">data</span></code>.</p>
 <img src="https://nipy.org/nibabel/_static/nibabel-logo.svg" alt="workshop logo" width="200" style="margin:0 0 0 0"/>
+</section>
+<section id="nilearn">
+<h2>Nilearn<a class="headerlink" href="#nilearn" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Nilearn</span></code>’s main focus is on <code class="docutils literal notranslate"><span class="pre">statistical</span> <span class="pre">learning</span></code> (based on <a class="reference internal" href="#"><span class="xref myst">scikit-learn</span></a>) but is also very good in <code class="docutils literal notranslate"><span class="pre">manipulation</span></code> and <code class="docutils literal notranslate"><span class="pre">visualizing</span> <span class="pre">neuroimaging</span> <span class="pre">data</span></code>.</p>
 <img src="https://nilearn.github.io/stable/_static/nilearn-transparent.png" alt="workshop logo" width="200" style="margin:0 0 0 0"/>
+</section>
+<section id="pybids">
+<h2>Pybids<a class="headerlink" href="#pybids" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Pybids</span></code> is a <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">package</span></code> that allows you to <code class="docutils literal notranslate"><span class="pre">query</span></code> and <code class="docutils literal notranslate"><span class="pre">extract</span></code> information from <code class="docutils literal notranslate"><span class="pre">BIDS</span> <span class="pre">datasets</span></code>.</p>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -543,6 +565,24 @@ both in the <code class="docutils literal notranslate"><span class="pre">ToC</sp
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nibabel">Nibabel</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilearn">Nilearn</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pybids">Pybids</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
