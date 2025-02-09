@@ -120,7 +120,7 @@ Explore this section {fas}`arrow-right`
 :margin: 3
 :class-body: text-center
 :class-header: bg-light text-center
-:link: https://peerherholz.github.io/workshop_IRTG2150/data.html
+:link: https://peerherholz.github.io/workshop_IRTG2150/data_handling/data.html
 **Neuroimaging data basics**
 ^^^
 ```{image} 
