@@ -2,7 +2,7 @@
 
 There are four ways how you can follow this workshop:
 
-1. Via `Conda` (`Python`): Almost full workshop experience, interactive, with only `Python` based software dependencies.
+1. Via `Conda` (`Python`): Full workshop experience, interactive, with only `Python` based software dependencies.
 2. Via `Mybinder`: Full workshop experience, interactive and online, with restricted computational power.
 3. Via `Jupyter NBViewer`: Only visual exploration of the workshop content, no interactive aspect.
 
