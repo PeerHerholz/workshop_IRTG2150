@@ -44,12 +44,12 @@ If you foresee any of these being a problem please reach out to one of the instr
 
 <div style="text-align: justify;">
 
-If you are having trouble installing the software, we will be holding virtual installation office hours on the following dates:
+If you are having trouble installing the software, we will be holding virtual installation office hours on the following date: Monday, 24.02.2025, 9 - 10 AM (CET). You will get the `zoom link` via Email from the organizers.
 
 </div>
 
 <div style="text-align: justify;">
-If you would like to attend one of these office hours, please reach out to Peer Herholz (herholz dot peer at gmail dot com) to get an invite for the `zoom` meeting.
+If you can't attend the office hour, please reach out to Peer Herholz (herholz dot peer at gmail dot com) to get an invite a 1-1 `zoom` meeting.
 
 </div>
 
