@@ -2,14 +2,13 @@
 
 There are four ways how you can follow this workshop:
 
-1. Via `Docker` (recommended): Full workshop experience, interactive, with all software dependencies.
-2. Via `Conda` (Python): Almost full workshop experience, interactive, with only `Python` based software dependencies.
-3. Via `Mybinder`: Full workshop experience, interactive and online, with restricted computational power.
-4. Via `Jupyter NBViewer`: Only visual exploration of the workshop content, no interactive aspect.
+1. Via `Conda` (`Python`): Almost full workshop experience, interactive, with only `Python` based software dependencies.
+2. Via `Mybinder`: Full workshop experience, interactive and online, with restricted computational power.
+3. Via `Jupyter NBViewer`: Only visual exploration of the workshop content, no interactive aspect.
 
 <div style="text-align: justify;">
 
-While option 3. is nice and easy to follow in an interactive manner and option 4. might work for a quick overview, we don't recommended either of them as getting `Docker` and `Python` to work
+While option 3. is nice and easy to follow in an interactive manner and option 4. might work for a quick overview, we don't recommended either of them as getting `Python` to work
 reliably on your machine is going to be very beneficial. This holds true for the workshop and especially beyond. Via installing these tools, you will be equipped to basically continue right
 away and start using them and thus ML/DL on your everyday research workflow. Having that in mind and integrating other tools/resources focusing open and reproducible (neuro-/data) science, we
 generated a rather comprehensive set of install instructions below. While not all of them might be totally necessary for the workshop, they all will help you a great deal going further and 
@@ -63,7 +62,6 @@ To get the most out of our course, we ask that you arrive with the following sof
 - A version control system: `Git`
 - A remote-capable text editor: `VSCode`
 - Python 3 via `Miniconda`
-- A virtualization system: `Docker`
 - A modern browser
 
 <div style="text-align: justify;">
@@ -140,7 +138,6 @@ You already have it, now that you’ve installed the WSL!
    Search for each of the following extensions and press `Install` for the first entry that appears. (The author listed for all of these extensions should be "Microsoft".)
       - Python (n.b., you will need to reload VSCode after installing this)
       - Live Share (n.b., you may need to press "Ctrl/Cmd+Shift+P" and type "install extensions" again after installing this)
-      - Docker
       - Remote - WSL
 
 **Python**
@@ -173,93 +170,6 @@ Open a terminal and type the following commands:
         conda config --append channels conda-forge
         conda config --set channel_priority strict
         conda install -y flake8 ipython jupyter jupyterlab matplotlib nibabel nilearn numpy pandas scipy seaborn
-
-**Docker**
-
-Unfortunately, Docker for Windows is a bit of a mess.
-The recommended version of Docker to install varies dramatically depending not only on which version of Windows you have installed (e.g., Windows 10 Home versus Professional/Enterprise/Education), but also which _build_ of Windows you have.
-As such, developing a comprehensive set of instructions for installing Docker is rather difficult.
-
-For this course, you will need to install either [Docker Toolbox for Windows](https://docs.docker.com/toolbox/toolbox_install_windows/) or [Docker for Windows Desktop](https://docs.docker.com/docker-for-windows/install/).
-Which you install will depend on your OS.
-**PLEASE NOTE** that installing Docker for Windows Desktop will disable VirtualBox on your computer.
-If you actively use VirtualBox we recommend you install Docker Toolbox.
-
-(Note: the below instructions assume you are installing Docker Toolbox.
-Because there are fewer requirements for Docker Toolbox, it is likely that you will be able to install this more easily.)
-
-1. Download the latest [Docker Toolbox installer](https://github.com/docker/toolbox/releases/download/v19.03.1/DockerToolbox-19.03.1.exe) (note: that link will automatically download the file)
-1. Run the downloaded `.exe` file and leave all the defaults during the installation procedure.
-   Click `Yes`on the prompt that appears asking if the application can make changes to your computer.
-1. Search for and open the newly-installed "Docker Quickstart" application.
-   Again, click `Yes`on the prompt that appears asking if the application can make changes to your computer.
-   The application will do a number of things to finish installing and setting up Docker.
-1. Once you see a `$` prompt type `docker run hello-world`.
-   A brief introductory message should be printed to the screen.
-1. Close the "Docker Quickstart" application and open a terminal (i.e., the Ubuntu application).
-1. Copy-paste the following commands.
-   You will be prompted to enter your password once.
-
-        # Update the apt package list.
-        sudo apt-get update -y
-        # Install Docker's package dependencies.
-        sudo apt-get install -y \
-            apt-transport-https \
-            ca-certificates \
-            curl \
-            software-properties-common
-        # Download and add Docker's official public PGP key.
-        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-        # Verify the fingerprint.
-        sudo apt-key fingerprint 0EBFCD88
-        # Add the `stable` channel's Docker upstream repository.
-        sudo add-apt-repository \
-            "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-            $(lsb_release -cs) \
-            stable"
-        # Update the apt package list (for the new apt repo).
-        sudo apt-get update -y
-        # Install the latest version of Docker CE.
-        sudo apt-get install -y docker-ce
-        # Allow your user to access the Docker CLI without needing root access.
-        sudo usermod -aG docker $USER
-
-1. Close and re-open the terminal.
-1. Type `pip install docker-compose`.
-1. Type `powershell.exe "docker-machine config"`.
-   You should get output similar to the following:
-
-        --tlsverify
-        --tlscacert="C:\\Users\\<YOUR_USERNAME>\\.docker\\machine\\machines\\default\\ca.pem"
-        --tlscert="C:\\Users\\<YOUR_USERNAME>\\.docker\\machine\\machines\\default\\cert.pem"
-        --tlskey="C:\\Users\\<YOUR_USERNAME>\\.docker\\machine\\machines\\default\\key.pem"
-        -H=tcp://xxx.xxx.xx.xxx:xxxx
-
-
-   where `<YOUR_USERNAME>` will have an actual value (likely your Windows username), and `tcp=xxx.xxx.xx.xxx:xxx` will be a series of numbers.
-   If you don't get this output then something has gone wrong.
-   Please make sure you were able to run the `docker run hello-world` command, above.
-   If you were and you still don't receive this output, please contact one of the instructors on the #help-installation channel on Discord.
-
-1. You will use the the outputs of the above command to modify the commands below before running them in the terminal.
-   First, take the numbers printed in place of the `x`s on the output of the line `-H=tcp://xxx.xxx.xx.xxx:xxxx` from above and replace the placeholder `xxx.xxx.xx.xxx:xxxx` on the first command below (`export DOCKER_HOST`).
-   Second, take whatever value is printed in place of `<YOUR_USERNAME>` above and replace the `<YOUR_USERNAME>` placeholder on the second command below (`export DOCKER_CERT_PATH`).
-   Once you have updated the commands appropriately, copy and paste them into the terminal:
-
-        echo "export DOCKER_HOST=tcp://xxx.xxx.xx.xxx:xxxx" >> $HOME/.bashrc
-        echo "export DOCKER_CERT_PATH=/mnt/c/Users/<YOUR_USERNAME>/.docker/machine/certs" >> $HOME/.bashrc
-        echo "export DOCKER_TLS_VERIFY=1" >> $HOME/.bashrc
-        
-
-1. Close and re-open a terminal (i.e., the Ubuntu application).
-   Type `docker run hello-world`.
-   The same brief introductory message you saw before should be printed to the screen.
-
-**Note**: If you restart your computer (or somehow otherwise shut down the Docker VM) you will need to re-open the "Docker Quickstart" application and wait until you see the `$` prompt again before your `docker` commands will work again!
-If you are having problems running `docker` commands in the terminal, try re-opening the "Docker Quickstart" application.
-
-(The above step-by-step instructions are distilled from [here](https://docs.docker.com/toolbox/toolbox_install_windows/) and [here](https://medium.com/@joaoh82/setting-up-docker-toolbox-for-windows-home-10-and-wsl-to-work-perfectly-2fd34ed41d51).
-If you have questions during the installation procedure please check those links for potential answers!)
 ```
 
 ```{tab-item} Linux
@@ -293,7 +203,6 @@ If you are prompted to install it follow the instructions on-screen to do so.
    Search for each of the following extensions and press `Install` for the first entry that appears. (The author listed for all of these extensions should be "Microsoft".)
       - Python (n.b., you will need to reload VSCode after installing this)
       - Live Share (n.b., you may need to press "Ctrl/Cmd+Shift+P" and type "install extensions" again after installing this)
-      - Docker
 
 **Python**
 
@@ -325,16 +234,6 @@ Open a terminal and type the following commands:
         conda config --append channels conda-forge
         conda config --set channel_priority strict
         conda install -y flake8 ipython jupyter jupyterlab matplotlib nibabel nilearn numpy pandas scipy seaborn
-
-
-**Docker**
-
-1. You will be following different instructions depending on your distro ([Ubuntu](https://docs.docker.com/engine/install/ubuntu/), [Debian](https://docs.docker.com/engine/install/debian/), [Fedora](https://docs.docker.com/engine/install/fedora/), [CentOS](https://docs.docker.com/engine/install/centos/)).
-   Make sure to follow the “Install using the repository” method!
-1. Once you’ve installed Docker make sure to follow the [post-install instructions](https://docs.docker.com/engine/install/linux-postinstall/) as well.
-   You only need to do the “Manage Docker as a non-root user” and “Configure Docker to start on boot” steps.
-1. Open a new terminal and type `docker run hello-world`.
-   A brief introductory message should be printed to the screen.
 ```
 
 ```{tab-item} MacOs
@@ -377,7 +276,6 @@ If you do not see something like “git version X.XX.X” printed out, then foll
    Search for each of the following extensions and press `Install` for the first entry that appears. (The author listed for all of these extensions should be "Microsoft".)
       - Python (n.b., you will need to reload VSCode after installing this)
       - Live Share (n.b., you may need to press "Ctrl/Cmd+Shift+P" and type "install extensions" again after installing this)
-      - Docker
 
 **Python**
 
@@ -410,20 +308,6 @@ Open a terminal and type the following commands:
         conda config --append channels conda-forge
         conda config --set channel_priority strict
         conda install -y flake8 ipython jupyter jupyterlab matplotlib nibabel nilearn numpy pandas scipy seaborn
-
-
-**Docker**
-
-1. Go to https://hub.docker.com/editions/community/docker-ce-desktop-mac/ and press “Get Docker”.
-1. Open the “Docker.dmg” file that is downloaded and drag and drop the icon to the Applications folder
-1. Open the Docker application and enter your password.
-   An icon will appear in the status bar in the top-left of the screen.
-   Wait until it reads “Docker Desktop is now up and running!”
-1. Open a new terminal and type `docker run hello-world`.
-   A brief introductory message should be printed to the screen.
-
-(The above step-by-step Docker instructions are distilled from [here](https://docs.docker.com/docker-for-mac/install/).
-If you have questions during the installation procedure please check that link for potential answers!)
 ```
 ````
 
@@ -457,95 +341,8 @@ Yeah, you did! Great job!
 Now that you have installed the required software (or not) to follow the workshop, it's time to gather the respective
 materials. Please use the `tab` matching your setup.
 
-````{tab-set} 
-```{tab-item} Docker
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/7/79/Docker_%28container_engine%29_logo.png" alt="docker logo" width="300"/>\
-<sub><sup><sub><sup>https://upload.wikimedia.org/wikipedia/commons/7/79/Docker_%28container_engine%29_logo.png</sup></sub></sup></sub>
-
-Once Docker Desktop is set up, open a (docker) terminal and run the following command to verify if everything is good to go:
-
-    docker run hello-world
-
-**Download workshop content**
-
-Now, the only thing that's still missing is the actual workshop content. Do get this, use again a (docker) terminal and run the following command
-
-    docker pull peerherholz/workshop_IRTG2150
-
-Given that the whole workshop content is a bit heavy, the download of this container image might take a while.
-
-**Access workshop content via Jupyter Notebooks**
-
-Once the container is pulled and on your system, you're all good to go. To access the workshop and open the Jupyter Notebook environment, please follow these steps:
-
-1. Open a (docker) terminal and run the following command:
-
-        docker run -p 8888:8888 -it --rm peerherholz/workshop_IRTG2150
-
-2. Open [http://127.0.0.1:8888/?token=workshop_IRTG2150](http://127.0.0.1:8888/?token=workshop_IRTG2150) or [http://localhost:8888/?token=workshop_IRTG2150](http://localhost:8888/?token=workshop_IRTG2150) in your web browser to access the workshop content.
-3. Once Jupyter Notebook is open, double click on the `Jupyter Notebook` called `workshop_IRTG2150_overview.ipynb` - et voilà.
-
-**Note**: Should you by any chance encounter the following "Password or token" needed message, use the token `workshop_IRTG2150` to login.
-
-**Important notes**
-
-***Don't loose your progress/notes***
-
-Everything you do within this docker container will be reset the moment you terminate the `docker run ...` command in step one (or you close this terminal). This means, any output file created within the docker container will be deleted. Similarly, any notes and changes within the notebooks will be lost. To prevent this from happening, either (1) manually download the changed notebooks (i.e. File > Download As > Notebook (.ipynb)) or (2) create a common folder within the container and on your system and allow a direct transition of data by adding the `-v` flag to the `docker run ...` command.
-
-For example, something like `docker run -p 8888:8888 -it --rm -v /path/to/your/output_folder:/output peerherholz/workshop_IRTG2150`, where `/path/to/your/output_folder` should be an empty folder on your system, such as `/User/neuro/Desktop/output`.
-
-Here's a more detailed explanation of this full command:
-
-    docker run \                    #  start up a container already built or pulled
-        -p 8888:8888  \             #  port used, <local port>:<container port>
-        -it  \                      #  run Docker interactively
-        --rm  \                     #  remove the container when it exits
-        -v ~/local_folder:/output   #  use local files <local path>:<container path>
-        peerherholz/workshop_IRTG2150    #  use specified user/project:version container
-
-
- **Note**: The path to the folder `/path/to/your/output_folder` needs to be an absolut path (i.e. it cannot be relate). So if you're corrently in the folder `/User/neuro/Desktop/workshop/` and want to give access to a subfolder called `results`. You cannot use `-v results:/output` or `-v ./results:/output`. You either need to use `-v /User/neuro/Desktop/workshop/results:/output` or `-v ~/Desktop/workshop/results:/output`.
-
-**Memory issues during workshop**
-
-It is possible that you might run into some `MemoryError` messages during the workshop, or that you don't have enough CPUs for parallel process. This has most likely nothing to do with your system, and probably is due to Docker Desktop and it's resource management. By default, Docker Desktop only uses 2 CPUs and 2 GB of RAM. You can change this default setting by opening Docker Desktop, go to Settings/Preferences > Resources. For a more detailed description see here for [Mac](https://docs.docker.com/docker-for-mac/#resources) and for [Windows](https://docs.docker.com/docker-for-windows/#resources).
-
-**Docker is messy, clean up space afterwards**
-
-Docker is a great tool to quickly provide a out-of-the-box running computer environment. However, if you're not carefully, it can quickly create a lot of unwanted files on your machine. To better understand these footprints and to clean out unwanted files after the workshop, please consider the following commands (run from within a (docker) terminal).
-
-    # Show all installed Docker images
-    docker images
-
-    # Remove a docker image
-    docker rmi -f $IMAGE_ID
-
-    # Remove all unused docker objects
-    docker system prune
-
-    # Remove everything (including images you might still need)
-    docker system prune -a
-
-
-And should you chose to remove the `--rm` string in the `docker run ...` command, you can use the following commands to explore which containers are still open and potentially can be accessed once more (with their changes and additional outputs still present). Our advice is against such an approach as it can clutter your machine even quicker.
-
-
-    # Show running containers
-    docker ps
-
-    # Show all (also stopped) containers
-    docker ps -a
-
-    # Start a stopped container & attach to it
-    docker start -ia $CONTAINER_ID
-
-    # Remove a container
-    docker rm $CONTAINER_ID
-```
- 
-```{tab-item} Conda
+````{tab-set}  
+```{tab-item} Conda (Recommended)
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Conda_logo.svg" alt="conda logo" width="300"/>\
 <sub><sup><sub><sup>https://upload.wikimedia.org/wikipedia/commons/e/ea/Conda_logo.svg</sup></sub></sup></sub>
@@ -558,8 +355,8 @@ To get things up and running, please follow these steps:
 
 1. Download the [`environment.yml`](https://raw.githubusercontent.com/peerherholz/workshop_IRTG2150/main/environment.yml) file (e.g. with right mouse click -> Save As). Make sure that the file ends with `.yml` and not `.txt`.
 2. Open up a conda terminal (or any other terminal), and create a new conda environment with the following command: `conda env create -f /path/to/file/environment.yml` - For example ``conda env create -f ~/Downloads/environment.yml`
-3. Download the notebooks in this repository via [this link](https://github.com/PeerHerholz/workshop_IRTG2150/archive/refs/heads/main.zip)) and unzip them to your preferred location, e.g. `Desktop/workshop_IRTG2150`.
-4. Download the three datasets [ds000114](https://www.dropbox.com/sh/940edqy5s7ztrem/AACFkiN3XjZJWjblWYQ-6N_Xa?dl=1), [ds000228](https://www.dropbox.com/sh/p25mxdxvh6queom/AACgoYuzr8Til-fim0wcwHwEa?dl=1) and [dataset_ML.nii.gz](https://github.com/miykael/workshop_pybrain/raw/master/workshop/notebooks/data/dataset_ML.nii.gz) and put them into the workshop folder as well, e.g. at `Desktop/workshop_IRTG2150/ds000114` and `Desktop/workshop_IRTG2150/ds000228`. Please do the same for [this example file](https://github.com/miykael/workshop_pybrain/raw/master/workshop/notebooks/data/sub-01_rest-EC.nii.gz) we are going to use in the [machine learning preparation part](https://peerherholz.github.io/workshop_IRTG2150/advanced/machine_learning_preparation.html#).
+3. Download the notebooks in this repository via [this link](https://github.com/PeerHerholz/workshop_IRTG2150/archive/refs/heads/main.zip) and unzip them to your preferred location, e.g. `Desktop/workshop_IRTG2150`.
+4. Download the three datasets [ds000114](https://drive.google.com/drive/folders/1mvHQ4n0HijuKO6Pzr15elBnRKPJdfxKr?usp=sharing), [ds000228](https://drive.google.com/drive/folders/131BjdPhXL7qm38s62aCrRcoYW1uxqlms?usp=sharing), [pybids_7t_trt](https://drive.google.com/drive/folders/1mvHQ4n0HijuKO6Pzr15elBnRKPJdfxKr?usp=sharing) and [pybids_synthetic](https://drive.google.com/drive/folders/1xY4HqW3LA5eBkw9mD8FLQePn0-AfANvO?usp=sharing) and put them into the workshop folder as well, e.g. at `Desktop/workshop_IRTG2150/ds000114` and `Desktop/workshop_IRTG2150/ds000228`.
 5. Next, open up a `conda terminal` (or any other `terminal`), activate the `conda environment` with `conda activate workshop_IRTG2150` (or on older `conda environment` with `source activate workshop_IRTG2150` for `mac` and `linux` and `activate workshop_IRTG2150` for `windows`).
 6. Finally, via the `terminal`, move to the folder where you've put all the unzipped content of this workshop, e.g. with the command `cd ~/Desktop/workshop_IRTG2150` and run the command `jupyter notebook` from the folder that contains the `workshop_IRTG2150_overview.ipynb` notebook.
 ```
@@ -572,7 +369,7 @@ To get things up and running, please follow these steps:
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PeerHerholz/workshop_IRTG2150/HEAD)
 
-[MyBinder.org](https://mybinder.org/) is a great service that allows you to run Jupyter notebooks in a Docker or Python environment, directly online and for free. However, this service comes of course with a restricted computational environment (1-2GB of RAM). This means, many notebooks might be very slow and some might even crash, due to not enough memory.
+[MyBinder.org](https://mybinder.org/) is a great service that allows you to run Jupyter notebooks in a `Docker` or `Python` environment, directly online and for free. However, this service comes of course with a restricted computational environment (1-2GB of RAM). This means, many notebooks might be very slow and some might even crash, due to not enough memory.
 
 You can use this approach to run and test most of the notebooks and to explore the slides. To access the MyBinder instance, use [this link](https://mybinder.org/v2/gh/peerherholz/mybinder_workshop_IRTG2150/HEAD).
 ```
