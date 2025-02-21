@@ -138,7 +138,7 @@ You already have it, now that you’ve installed the WSL!
    Search for each of the following extensions and press `Install` for the first entry that appears. (The author listed for all of these extensions should be "Microsoft".)
       - Python (n.b., you will need to reload VSCode after installing this)
       - Live Share (n.b., you may need to press "Ctrl/Cmd+Shift+P" and type "install extensions" again after installing this)
-      - Remote - WSL
+      - WSL
 
 **Python**
 
