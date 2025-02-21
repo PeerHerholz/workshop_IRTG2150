@@ -139,6 +139,7 @@ You already have it, now that you’ve installed the WSL!
       - Python (n.b., you will need to reload VSCode after installing this)
       - Live Share (n.b., you may need to press "Ctrl/Cmd+Shift+P" and type "install extensions" again after installing this)
       - WSL
+      - Remote Development
 
 **Python**
 
