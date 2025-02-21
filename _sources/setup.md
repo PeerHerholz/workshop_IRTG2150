@@ -4,15 +4,15 @@ There are four ways how you can follow this workshop:
 
 1. Via `Conda` (`Python`): Full workshop experience, interactive, with only `Python` based software dependencies.
 2. Via `Mybinder`: Full workshop experience, interactive and online, with restricted computational power.
-3. Via `Jupyter NBViewer`: Only visual exploration of the workshop content, no interactive aspect.
+3. Via `JupyterBook`: Only visual exploration of the workshop content, no interactive aspect.
 
 <div style="text-align: justify;">
 
-While option 3. is nice and easy to follow in an interactive manner and option 4. might work for a quick overview, we don't recommended either of them as getting `Python` to work
+While option 2. is nice and easy to follow in an interactive manner and option 3. might work for a quick overview, we don't recommended either of them as getting `Python` to work
 reliably on your machine is going to be very beneficial. This holds true for the workshop and especially beyond. Via installing these tools, you will be equipped to basically continue right
 away and start using them and thus ML/DL on your everyday research workflow. Having that in mind and integrating other tools/resources focusing open and reproducible (neuro-/data) science, we
 generated a rather comprehensive set of install instructions below. While not all of them might be totally necessary for the workshop, they all will help you a great deal going further and 
-are especially useful/needed if we have to hold the workshop virtually due to the COVID-19 pandemic.  
+are especially useful/needed if we have to hold the workshop virtually or if you can only attend virtually.  
 
 Don't worry, you got this!
 
@@ -374,12 +374,12 @@ To get things up and running, please follow these steps:
 You can use this approach to run and test most of the notebooks and to explore the slides. To access the MyBinder instance, use [this link](https://mybinder.org/v2/gh/peerherholz/mybinder_workshop_IRTG2150/HEAD).
 ```
 
-```{tab-item} Jupyter NBViewer
-<img src="https://nbviewer.jupyter.org/static/img/nav_logo.svg" alt="conda logo" width="300"/>\
-<sub><sup><sub><sup>https://nbviewer.jupyter.org/static/img/nav_logo.svg</sup></sub></sup></sub>
+```{tab-item} JupyterBook
+<img src="https://jupyterbook.org/en/stable/_static/logo-wide.svg" alt="jupyter book logo" width="300"/>\
+<sub><sup><sub><sup>https://jupyterbook.org/en/stable/_static/logo-wide.svg</sup></sub></sup></sub>
 
 
-If you want to go through the content of this workshop without installing anything on your machine, you should chose this approach. To see all the notebooks and slides from this workshop, please use this [Jupyter NBviewer link](https://nbviewer.jupyter.org/github/peerherholz/workshop_IRTG2150/blob/main/workshop/workshop_IRTG2150_overview.ipynb).
+If you want to go through the content of this workshop without installing anything on your machine, you should chose this approach. To see all the notebooks and slides from this workshop, you can simply navigate through the sections of this website, ie `JupyterBook`.
 ```
 ````
 
