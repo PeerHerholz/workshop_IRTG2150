@@ -153,7 +153,7 @@ You already have it, now that you’ve installed the WSL!
    Type `yes` and then press `Enter`
 1. The installation script will inform you that it is going to install into a default directory (e.g., `/home/$USER/miniconda3`).
    Leave this default and press `Enter`.
-1. When you are asked "Do you wish the installer to initialize Miniconda3 by running conda init? [yes|no]," type `yes` and press `Enter`.
+1. When you are asked "You can undo this by running `conda init --reverse $SHELL`? [yes|no]" type `no` and press `Enter`.
    Exit the terminal once the installation has finished.
 1. Re-open the Ubuntu application.
    Type `which python` into the terminal and it should return a path (e.g., `/home/$USER/miniconda3/bin/python`).
@@ -218,7 +218,7 @@ If you are prompted to install it follow the instructions on-screen to do so.
    Type `yes` and then press `Enter`
 1. The installation script will inform you that it is going to install into a default directory (e.g., `/home/$USER/miniconda3`).
    Leave this default and press `Enter`.
-1. When you are asked "Do you wish the installer to initialize Miniconda3 by running conda init? [yes|no]," type `yes` and press `Enter`.
+1. When you are asked "You can undo this by running `conda init --reverse $SHELL`? [yes|no]" type `yes` and press `Enter`.
    Exit the terminal once the installation has finished.
 1. Re-open a new terminal.
    Type `which python` into the terminal and it should return a path (e.g., `/home/$USER/miniconda3/bin/python`).
@@ -291,7 +291,7 @@ If you do not see something like “git version X.XX.X” printed out, then foll
    Type `yes` and then press `Enter`
 1. The installation script will inform you that it is going to install into a default directory (e.g., `/home/$USER/miniconda3`).
    Leave this default and press `Enter`.
-1. When you are asked "Do you wish the installer to initialize Miniconda3 by running conda init? [yes|no]," type `yes` and press `Enter`.
+1. When you are asked "You can undo this by running `conda init --reverse $SHELL`? [yes|no]" type `yes` and press `Enter`.
    Exit the terminal once the installation has finished.
 1. Re-open a terminal.
    Type `which python` into the terminal and it should return a path (e.g., `/home/$USER/miniconda3/bin/python`).
