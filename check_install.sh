@@ -42,11 +42,8 @@ curr_os=$( get_os )
 
 # expected VSCode extensions
 extensions=(
-    ms-azuretools.vscode-docker
     ms-python.python
     ms-vsliveshare.vsliveshare
-    ms-vsliveshare.vsliveshare-audio
-    ms-vsliveshare.vsliveshare-pack
 )
 if [ "${curr_os}" == "windows" ]; then
     extensions+=(ms-vscode-remote.remote-wsl)
@@ -72,7 +69,6 @@ check_installed git
 check_installed conda
 check_installed python
 check_installed code
-check_installed docker
 
 # check vscode extensions
 
@@ -112,7 +108,7 @@ if [ -z ${missing} ]; then
     else
         printf "\n"
     fi
-    printf "Congratulations, you're all ready for the course!\n"
+    printf "Congratulations, you're all ready for the workshop!\n"
 fi
 
 exit 0
