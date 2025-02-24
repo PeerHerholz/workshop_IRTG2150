@@ -8,7 +8,7 @@ titlesonly: true
 ```
 <img src="https://nipy.org/img/nipy.svg" alt="workshop logo" width="300" style="margin:0 0 0 0"/>
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/peerherholz/mybinder_workshop_IRTG2150/HEAD)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PeerHerholz/workshop_IRTG2150/HEAD)
 [![GitHub size](https://img.shields.io/github/repo-size/peerherholz/workshop_IRTG2150.svg)](https://github.com/peerherholz/workshop_IRTG2150/archive/main.zip)
 [![Docker Hub](https://img.shields.io/docker/pulls/peerherholz/workshop_IRTG2150)](https://hub.docker.com/r/peerherholz/workshop_IRTG2150/)
 [![License](https://img.shields.io/github/license/peerherholz/workshop_IRTG2150)](https://github.com/PeerHerholz/workshop_IRTG2150)
