@@ -174,7 +174,7 @@
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Workshop overview</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Setup for the workshop</a></li>
 <li class="toctree-l1"><a class="reference internal" href="outline.html">Outline</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="prerequisites.html">Workshop prerequisites</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="prerequisites.html">Workshop prerequisites</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="prerequisites/intro_to_shell.html">Introduction to the (unix) command line: bash</a></li>
 
 
@@ -245,22 +245,22 @@
 
 
 
-</ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="data_handling/data.html">Basics in data handling</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="data_handling/data.html">Basics in data handling</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="data_handling/image_manipulation_nibabel.html">Using Python for neuroimaging data - NiBabel</a></li>
 
 
 <li class="toctree-l2"><a class="reference internal" href="data_handling/image_manipulation_nilearn.html">Using Python for neuroimaging data - Nilearn</a></li>
 
 <li class="toctree-l2"><a class="reference internal" href="data_handling/pybids.html">Introduction to <code class="docutils literal notranslate"><span class="pre">pybids</span></code></a></li>
-</ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="advanced.html">Advanced and specialized analyses</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="advanced.html">Advanced and specialized analyses</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="advanced/statistical_analyses_MRI.html">Nilearn GLM: statistical analyses of MRI in Python</a></li>
 
 
-</ul>
+</ul><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="break.html">Yoga and/or dance break</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CoC.html">Code of Conduct</a></li>
@@ -849,7 +849,7 @@ Conda (Recommended)</label><div class="sd-tab-content docutils">
 <li><p>Download the <a class="reference external" href="https://raw.githubusercontent.com/peerherholz/workshop_IRTG2150/main/environment.yml"><code class="docutils literal notranslate"><span class="pre">environment.yml</span></code></a> file (e.g. with right mouse click -&gt; Save As). Make sure that the file ends with <code class="docutils literal notranslate"><span class="pre">.yml</span></code> and not <code class="docutils literal notranslate"><span class="pre">.txt</span></code>.</p></li>
 <li><p>Open up a conda terminal (or any other terminal), and create a new conda environment with the following command: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">create</span> <span class="pre">-f</span> <span class="pre">/path/to/file/environment.yml</span></code> - For example <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">create</span> <span class="pre">-f</span> <span class="pre">~/Downloads/environment.yml</span></code></p></li>
 <li><p>Download the notebooks in this repository via <a class="reference external" href="https://github.com/PeerHerholz/workshop_IRTG2150/archive/refs/heads/main.zip">this link</a> and unzip them to your preferred location, e.g. <code class="docutils literal notranslate"><span class="pre">Desktop/workshop_IRTG2150</span></code>.</p></li>
-<li><p>Download the three datasets <a class="reference external" href="https://drive.google.com/drive/folders/1mvHQ4n0HijuKO6Pzr15elBnRKPJdfxKr?usp=sharing">ds000114</a>, <a class="reference external" href="https://drive.google.com/drive/folders/131BjdPhXL7qm38s62aCrRcoYW1uxqlms?usp=sharing">ds000228</a>, <a class="reference external" href="https://drive.google.com/drive/folders/1mvHQ4n0HijuKO6Pzr15elBnRKPJdfxKr?usp=sharing">pybids_7t_trt</a> and <a class="reference external" href="https://drive.google.com/drive/folders/1xY4HqW3LA5eBkw9mD8FLQePn0-AfANvO?usp=sharing">pybids_synthetic</a> and put them into the workshop folder as well, e.g. at <code class="docutils literal notranslate"><span class="pre">Desktop/workshop_IRTG2150/ds000114</span></code> and <code class="docutils literal notranslate"><span class="pre">Desktop/workshop_IRTG2150/ds000228</span></code>.</p></li>
+<li><p>Download the three datasets <a class="reference external" href="https://drive.google.com/drive/folders/1mvHQ4n0HijuKO6Pzr15elBnRKPJdfxKr?usp=sharing">ds000114</a>, <a class="reference external" href="https://drive.google.com/drive/folders/131BjdPhXL7qm38s62aCrRcoYW1uxqlms?usp=sharing">ds000228</a>, <a class="reference external" href="https://drive.google.com/drive/folders/1_sKBMt95EbkbDMX_GYjmZTkth3wDfMV2?usp=sharing">pybids_7t_trt</a> and <a class="reference external" href="https://drive.google.com/drive/folders/1xY4HqW3LA5eBkw9mD8FLQePn0-AfANvO?usp=sharing">pybids_synthetic</a> and put them into the workshop folder as well, e.g. at <code class="docutils literal notranslate"><span class="pre">Desktop/workshop_IRTG2150/ds000114</span></code> and <code class="docutils literal notranslate"><span class="pre">Desktop/workshop_IRTG2150/ds000228</span></code>.</p></li>
 <li><p>Next, open up a <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">terminal</span></code> (or any other <code class="docutils literal notranslate"><span class="pre">terminal</span></code>), activate the <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">environment</span></code> with <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">workshop_IRTG2150</span></code> (or on older <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">environment</span></code> with <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">activate</span> <span class="pre">workshop_IRTG2150</span></code> for <code class="docutils literal notranslate"><span class="pre">mac</span></code> and <code class="docutils literal notranslate"><span class="pre">linux</span></code> and <code class="docutils literal notranslate"><span class="pre">activate</span> <span class="pre">workshop_IRTG2150</span></code> for <code class="docutils literal notranslate"><span class="pre">windows</span></code>).</p></li>
 <li><p>Almost done. We need to make the <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">environment</span></code> available within <code class="docutils literal notranslate"><span class="pre">jupyter</span></code>. To do so, run the following command: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">ipykernel</span> <span class="pre">install</span> <span class="pre">--user</span> <span class="pre">--name=workshop_IRTG2150</span></code>.</p></li>
 <li><p>Finally, via the <code class="docutils literal notranslate"><span class="pre">terminal</span></code>, move to the folder where you’ve put all the unzipped content of this workshop, e.g. with the command <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">~/Desktop/workshop_IRTG2150</span></code> and run the command <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span></code>. This should open a new tab in your browser running <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span></code> and you should be able to see all the content of this workshop. If it does not open automatically, you can copy the link you should see in the <code class="docutils literal notranslate"><span class="pre">terminal</span></code> and paste it into your browser.</p></li>
