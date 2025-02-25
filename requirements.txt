@@ -38,7 +38,7 @@ h5py==3.12.1
 idna==3.10
 imagesize==1.4.1
 importlib_metadata==8.6.1
-importlib-resources==5.10.0
+importlib-resources
 ipykernel==6.29.5
 ipython==8.6.0
 ipython-genutils==0.2.0
