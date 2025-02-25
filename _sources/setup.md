@@ -158,7 +158,6 @@ You already have it, now that you’ve installed the WSL!
 1. Re-open the Ubuntu application.
    Type `which python` into the terminal and it should return a path (e.g., `/home/$USER/miniconda3/bin/python`).
    - If you do not see a path like this then please try typing `conda init`, closing your terminal, and repeating this step.
-     If your issue is still not resolved skip the following step and contact an instructor on the #help-installation channel on the BHS Slack.
 1. Type the following to remove the installation script that was downloaded:
 
         rm ./Miniconda3-latest-Linux-x86_64.sh
@@ -223,7 +222,6 @@ If you are prompted to install it follow the instructions on-screen to do so.
 1. Re-open a new terminal.
    Type `which python` into the terminal and it should return a path (e.g., `/home/$USER/miniconda3/bin/python`).
    - If you do not see a path like this then please try typing `conda init`, closing your terminal, and repeating this step.
-     If your issue is still not resolved skip the following step and contact an instructor on the #help-installation channel of the BHS Slack.
 1. Type the following to remove the installation script that was downloaded:
 
         rm ./Miniconda3-latest-Linux-x86_64.sh
@@ -296,7 +294,6 @@ If you do not see something like “git version X.XX.X” printed out, then foll
 1. Re-open a terminal.
    Type `which python` into the terminal and it should return a path (e.g., `/home/$USER/miniconda3/bin/python`).
    - If you do not see a path like this then please try typing `conda init`, closing your terminal, and repeating this step.
-     If your issue is still not resolved skip the following step and contact an instructor on the #help-installation channel of the BHS Slack.
 1. Type the following to remove the installation script that was downloaded:
 
         rm ./Miniconda3-latest-MacOSX-x86_64.sh
