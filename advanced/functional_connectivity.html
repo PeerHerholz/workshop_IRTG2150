@@ -517,7 +517,10 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#atlases-brain-parcellations">Atlases &amp; brain parcellations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extracting-time-series">Extracting time-series</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-and-display-the-correlation-matrix">Compute and display the correlation matrix</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-importance-of-including-confounds">The importance of including confounds</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-importance-of-including-confounds">The importance of including confounds</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confound-strategies">Confound strategies</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#changing-parameters-atlases-maskers">Changing parameters - atlases &amp; maskers</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#changing-parameters-connectivity-measures">Changing parameters - connectivity measures</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-analyzes-and-outputs">Statistical analyzes and Outputs</a></li>
@@ -617,7 +620,7 @@
 </div>
 <p>As you can see, we have <code class="docutils literal notranslate"><span class="pre">pre-processed</span> <span class="pre">functional</span> <span class="pre">images</span></code> (<code class="docutils literal notranslate"><span class="pre">func</span></code>), <code class="docutils literal notranslate"><span class="pre">confound</span> <span class="pre">regressors</span></code> (<code class="docutils literal notranslate"><span class="pre">confounds</span></code>), <code class="docutils literal notranslate"><span class="pre">demographic</span> <span class="pre">information</span></code> (<code class="docutils literal notranslate"><span class="pre">phenotypic</span></code>) and a <code class="docutils literal notranslate"><span class="pre">description</span></code> of the <code class="docutils literal notranslate"><span class="pre">dataset</span></code>. For now, we will focus on the <code class="docutils literal notranslate"><span class="pre">func</span></code> and <code class="docutils literal notranslate"><span class="pre">confounds</span></code>.</p>
 <p>At first, we will use <code class="docutils literal notranslate"><span class="pre">nibabel</span></code>’s <code class="docutils literal notranslate"><span class="pre">nib-ls</span></code> to get a quick overview of the <code class="docutils literal notranslate"><span class="pre">pre-processed</span> <span class="pre">functional</span> <span class="pre">images</span></code>:</p>
-<div class="cell docutils container">
+<div class="cell tag_&quot;scroll-output&quot; docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>nib-ls<span class="w"> </span>/Users/peerherholz/nilearn_data/development_fmri/*/*.nii.gz
 </pre></div>
@@ -1068,7 +1071,7 @@ Please note that we will use the default version but one can also specify the <c
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_&quot;scroll-output&quot; docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">atlas_ho</span><span class="o">.</span><span class="n">labels</span>
 </pre></div>
@@ -1202,7 +1205,7 @@ Please note that we will use the default version but one can also specify the <c
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">functional</span> <span class="pre">image</span></code> can then be turned into a <code class="docutils literal notranslate"><span class="pre">time-series</span></code> by calling the <code class="docutils literal notranslate"><span class="pre">NiftiLabelsMasker</span></code> <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> method, that takes either <code class="docutils literal notranslate"><span class="pre">filenames</span></code> or <code class="docutils literal notranslate"><span class="pre">loaded</span> <span class="pre">NiftiImage</span> <span class="pre">objects</span></code>.</p>
 <p>Let’s do this now for the first, ie the example, <code class="docutils literal notranslate"><span class="pre">participant</span></code>. Please note, that we’re providing the <code class="docutils literal notranslate"><span class="pre">confound</span> <span class="pre">regressors</span></code> too:</p>
-<div class="cell docutils container">
+<div class="cell tag_&quot;scroll-output&quot; docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">time_series</span> <span class="o">=</span> <span class="n">masker</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">development_dataset</span><span class="o">.</span><span class="n">func</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> 
                                    <span class="n">confounds</span><span class="o">=</span><span class="n">development_dataset</span><span class="o">.</span><span class="n">confounds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -1343,7 +1346,7 @@ _______________________________________________filter_and_extract - 3.2s, 0.1min
 <p>In order to showcase that and get some practice, why don’t <code class="docutils literal notranslate"><span class="pre">compute</span></code> a <code class="docutils literal notranslate"><span class="pre">functional</span> <span class="pre">connectome</span></code> for the <code class="docutils literal notranslate"><span class="pre">2nd</span> <span class="pre">participant</span></code>, using the <a class="reference external" href="https://nilearn.github.io/stable/modules/description/msdl_atlas.html">MSDL atlas</a>?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## provide your solution here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## please provide your solution here</span>
 </pre></div>
 </div>
 </div>
@@ -1352,7 +1355,7 @@ _______________________________________________filter_and_extract - 3.2s, 0.1min
 <section id="the-importance-of-including-confounds">
 <h2>The importance of including confounds<a class="headerlink" href="#the-importance-of-including-confounds" title="Link to this heading">#</a></h2>
 <p>Let’s re-run the same steps as before, but this time without using the <code class="docutils literal notranslate"><span class="pre">confounds</span></code> as we would like to stress their importance.</p>
-<div class="cell docutils container">
+<div class="cell tag_&quot;scroll-output&quot; docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract the signal from the regions</span>
 <span class="n">time_series_bad</span> <span class="o">=</span> <span class="n">masker</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">development_dataset</span><span class="o">.</span><span class="n">func</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># Note that we haven&#39;t specify confounds here</span>
@@ -1436,7 +1439,258 @@ _______________________________________________filter_and_extract - 3.1s, 0.1min
 <img alt="../_images/a612525fa551eaa33c74aad964d51c8b096ac537367338ce3cbb35d97c13ddf7.png" src="../_images/a612525fa551eaa33c74aad964d51c8b096ac537367338ce3cbb35d97c13ddf7.png" />
 </div>
 </div>
-<p>As you can see, without any <code class="docutils literal notranslate"><span class="pre">confounds</span></code>, bascially all regions are connected to each other! One reference that discusses the importance of confounds is <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/S1053811913003340">Varoquaux &amp; Craddock 2013</a>.</p>
+<p>As you can see, without any <code class="docutils literal notranslate"><span class="pre">confounds</span></code>, basically all regions are connected to each other! One reference that discusses the importance of confounds is <a class="reference external" href="http://www.sciencedirect.com/science/article/pii/S1053811913003340">Varoquaux &amp; Craddock 2013</a>.</p>
+<section id="confound-strategies">
+<h3>Confound strategies<a class="headerlink" href="#confound-strategies" title="Link to this heading">#</a></h3>
+<p>If you have <code class="docutils literal notranslate"><span class="pre">pre-processed</span></code> your <code class="docutils literal notranslate"><span class="pre">data</span></code> with <a class="reference external" href="https://fmriprep.org/en/stable/">fmriprep</a> (clear recommendation for most <code class="docutils literal notranslate"><span class="pre">datasets</span></code>), you can also benefit from the respective <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">standardization</span></code> with regard to including <code class="docutils literal notranslate"><span class="pre">confounds</span></code> in your <code class="docutils literal notranslate"><span class="pre">functional</span> <span class="pre">connectome</span></code> pipeline.</p>
+<p>The <a class="reference external" href="https://nilearn.github.io/stable/modules/generated/nilearn.interfaces.fmriprep.load_confounds.html#nilearn.interfaces.fmriprep.load_confounds">load_confounds</a> function provides flexible <code class="docutils literal notranslate"><span class="pre">parameters</span></code> to retrieve the relevant <code class="docutils literal notranslate"><span class="pre">columns</span></code> from the <a class="reference external" href="https://fmriprep.org/en/stable/outputs.html#confounds"><code class="docutils literal notranslate"><span class="pre">TSV</span></code> file generated by fMRIPrep</a>.<br />
+<code class="docutils literal notranslate"><span class="pre">load_confounds</span></code> ensures two things:</p>
+<ul class="simple">
+<li><p>the correct <code class="docutils literal notranslate"><span class="pre">regressors</span></code> are selected with a provided strategy, and</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">volumes</span></code> such as <code class="docutils literal notranslate"><span class="pre">non-steady-state</span></code> and/or <code class="docutils literal notranslate"><span class="pre">high</span> <span class="pre">motion</span> <span class="pre">volumes</span></code> are <code class="docutils literal notranslate"><span class="pre">masked</span></code> out correctly</p></li>
+</ul>
+<p>Let’s try a simple strategy removing <code class="docutils literal notranslate"><span class="pre">motion</span></code>, <code class="docutils literal notranslate"><span class="pre">white</span> <span class="pre">matter</span> <span class="pre">signal</span></code>, <code class="docutils literal notranslate"><span class="pre">cerebrospinal</span> <span class="pre">fluid</span> <span class="pre">signal</span></code> with <code class="docutils literal notranslate"><span class="pre">high-pass</span> <span class="pre">filtering</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nilearn.interfaces.fmriprep</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_confounds</span>
+
+<span class="n">confounds_simple</span><span class="p">,</span> <span class="n">sample_mask</span> <span class="o">=</span> <span class="n">load_confounds</span><span class="p">(</span>
+    <span class="n">development_dataset</span><span class="o">.</span><span class="n">func</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">strategy</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;high_pass&quot;</span><span class="p">,</span> <span class="s2">&quot;motion&quot;</span><span class="p">,</span> <span class="s2">&quot;wm_csf&quot;</span><span class="p">],</span>
+    <span class="n">motion</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
+    <span class="n">wm_csf</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The selected <code class="docutils literal notranslate"><span class="pre">regressors</span></code> and <code class="docutils literal notranslate"><span class="pre">computed</span></code> <code class="docutils literal notranslate"><span class="pre">mask</span></code> can now be used in the <code class="docutils literal notranslate"><span class="pre">masker</span></code> <code class="docutils literal notranslate"><span class="pre">setup</span></code>:</p>
+<div class="cell tag_&quot;scroll-output&quot; docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">time_series</span> <span class="o">=</span> <span class="n">masker</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span>
+    <span class="n">development_dataset</span><span class="o">.</span><span class="n">func</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">confounds</span><span class="o">=</span><span class="n">confounds_simple</span><span class="p">,</span> <span class="n">sample_mask</span><span class="o">=</span><span class="n">sample_mask</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">NiftiLabelsMasker.wrapped</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> loading data from <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">Nifti1Image</span><span style="font-weight: bold">(</span>
+<span style="color: #808000; text-decoration-color: #808000">shape</span>=<span style="font-weight: bold">(</span><span style="color: #008080; text-decoration-color: #008080; font-weight: bold">91</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">109</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">91</span><span style="font-weight: bold">)</span>,
+<span style="color: #808000; text-decoration-color: #808000">affine</span>=<span style="color: #800080; text-decoration-color: #800080; font-weight: bold">array</span><span style="font-weight: bold">([[</span>   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-90</span>.<span style="font-weight: bold">]</span>,
+       <span style="font-weight: bold">[</span>   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>., <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-126</span>.<span style="font-weight: bold">]</span>,
+       <span style="font-weight: bold">[</span>   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>.,  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-72</span>.<span style="font-weight: bold">]</span>,
+       <span style="font-weight: bold">[</span>   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>.<span style="font-weight: bold">]])</span>
+<span style="font-weight: bold">)</span>
+</pre>
+</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>________________________________________________________________________________
+[Memory] Calling nilearn.maskers.base_masker._filter_and_extract...
+_filter_and_extract(&#39;/Users/peerherholz/nilearn_data/development_fmri/development_fmri/sub-pixar123_task-pixar_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz&#39;, 
+&lt;nilearn.maskers.nifti_labels_masker._ExtractionFunctor object at 0x12f743e90&gt;, { &#39;background_label&#39;: 0,
+  &#39;clean_kwargs&#39;: {},
+  &#39;detrend&#39;: False,
+  &#39;dtype&#39;: None,
+  &#39;high_pass&#39;: None,
+  &#39;high_variance_confounds&#39;: False,
+  &#39;keep_masked_labels&#39;: True,
+  &#39;labels&#39;: None,
+  &#39;labels_img&#39;: &lt;nibabel.nifti1.Nifti1Image object at 0x12c9bda10&gt;,
+  &#39;low_pass&#39;: None,
+  &#39;mask_img&#39;: None,
+  &#39;reports&#39;: True,
+  &#39;smoothing_fwhm&#39;: None,
+  &#39;standardize&#39;: True,
+  &#39;standardize_confounds&#39;: True,
+  &#39;strategy&#39;: &#39;mean&#39;,
+  &#39;t_r&#39;: None,
+  &#39;target_affine&#39;: None,
+  &#39;target_shape&#39;: None}, confounds=[      cosine00  cosine01  cosine02  cosine03       csf     rot_x     rot_y  \
+0    0.109104  0.109090  0.109066  0.109033 -2.675004  0.000304  0.000583   
+1    0.109066  0.108937  0.108723  0.108423 -2.902773 -0.000316  0.000418   
+2    0.108990  0.108632  0.108038  0.107207 -2.629915 -0.000285  0.000595   
+3    0.108875  0.108176  0.107012  0.105391 -1.601793 -0.000226  0.001049   
+4    0.108723  0.107567  0.105651  0.102986 -2.258970 -0.000245  0.000779   
+..        ...       ...       ...       ...       ...       ...       ...   
+163 -0.108723  0.107567 -0.105651  0.102986  2.445759 -0.000299 -0.000335   
+164 -0.108875  0.108176 -0.107012  0.105391  2.244003  0.000406 -0.000279   
+165 -..., sample_mask=None, dtype=None, memory=Memory(location=nilearn_cache/joblib), memory_level=2, verbose=1)
+</pre></div>
+</div>
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">NiftiLabelsMasker.wrapped</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> Loading data from 
+<span style="color: #800080; text-decoration-color: #800080">/Users/peerherholz/nilearn_data/development_fmri/development_fmri/</span><span style="color: #ff00ff; text-decoration-color: #ff00ff">sub-pixar123_task-pixar_space-MNI152NLin2009cAsym</span>
+<span style="color: #ff00ff; text-decoration-color: #ff00ff">_desc-preproc_bold.nii.gz</span>
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">NiftiLabelsMasker.wrapped</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> Extracting region signals
+</pre>
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/peerherholz/anaconda3/envs/workshop_IRTG2150/lib/python3.11/site-packages/joblib/memory.py:577: JobLibCollisionWarning: Cannot detect name collisions for function &#39;nifti_labels_masker_extractor&#39;
+  return self._cached_call(args, kwargs, shelving=False)[0]
+[MemorizedFunc(func=&lt;nilearn.maskers.nifti_labels_masker._ExtractionFunctor object at 0x12f743e90&gt;, location=nilearn_cache/joblib)]: Clearing function cache identified by nilearn/maskers/nifti_labels_masker/nifti_labels_masker_extractor
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>________________________________________________________________________________
+[Memory] Calling nilearn.maskers.nifti_labels_masker.nifti_labels_masker_extractor...
+nifti_labels_masker_extractor(&lt;nibabel.nifti1.Nifti1Image object at 0x133714410&gt;)
+____________________________________nifti_labels_masker_extractor - 4.5s, 0.1min
+</pre></div>
+</div>
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">NiftiLabelsMasker.wrapped</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> Cleaning extracted signals
+</pre>
+</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>________________________________________________________________________________
+[Memory] Calling nilearn.signal.clean...
+clean(array([[635.218164, ..., 681.952471],
+       ...,
+       [637.854236, ..., 687.685689]]), detrend=False, standardize=True, standardize_confounds=True, t_r=None, low_pass=None, high_pass=None, confounds=[      cosine00  cosine01  cosine02  cosine03       csf     rot_x     rot_y  \
+0    0.109104  0.109090  0.109066  0.109033 -2.675004  0.000304  0.000583   
+1    0.109066  0.108937  0.108723  0.108423 -2.902773 -0.000316  0.000418   
+2    0.108990  0.108632  0.108038  0.107207 -2.629915 -0.000285  0.000595   
+3    0.108875  0.108176  0.107012  0.105391 -1.601793 -0.000226  0.001049   
+4    0.108723  0.107567  0.105651  0.102986 -2.258970 -0.000245  0.000779   
+..        ...       ...       ...       ...       ...       ...       ...   
+163 -0.108723  0.107567 -0.105651  0.102986  2.445759 -0.000299 -0.000335   
+164 -0.108875  0.108176 -0.107012  0.105391  2.244003  0.000406 -0.000279   
+165 -..., sample_mask=None, runs=None)
+____________________________________________________________clean - 0.2s, 0.0min
+_______________________________________________filter_and_extract - 5.8s, 0.1min
+</pre></div>
+</div>
+</div>
+</div>
+<p>As before, we can now <code class="docutils literal notranslate"><span class="pre">compute</span></code> the <code class="docutils literal notranslate"><span class="pre">correlation</span> <span class="pre">matrix</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correlation_matrix</span> <span class="o">=</span> <span class="n">correlation_measure</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">([</span><span class="n">time_series</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>and subsequentely plot it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">plotting</span><span class="o">.</span><span class="n">plot_matrix</span><span class="p">(</span>
+    <span class="n">correlation_matrix</span><span class="p">,</span>
+    <span class="n">figure</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+    <span class="n">vmax</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">vmin</span><span class="o">=-</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Motion, WM, CSF&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x133a07bd0&gt;
+</pre></div>
+</div>
+<img alt="../_images/2f347aedf45c5b9788d465824aaa183ffbef2ae870b9abdefef64a9544ca22f1.png" src="../_images/2f347aedf45c5b9788d465824aaa183ffbef2ae870b9abdefef64a9544ca22f1.png" />
+</div>
+</div>
+<p>Antother important aspect in <code class="docutils literal notranslate"><span class="pre">functional</span> <span class="pre">connectivity</span></code> analyzes is the <code class="docutils literal notranslate"><span class="pre">Global</span> <span class="pre">signal</span></code> or <code class="docutils literal notranslate"><span class="pre">GS</span></code>. If included as a <code class="docutils literal notranslate"><span class="pre">confound</span> <span class="pre">regressor</span></code>, it removes the <code class="docutils literal notranslate"><span class="pre">grand</span> <span class="pre">mean</span></code> from your <code class="docutils literal notranslate"><span class="pre">signal</span></code>. The benefit is that it can remove impacts of <code class="docutils literal notranslate"><span class="pre">physiological</span> <span class="pre">artifacts</span></code> with minimal impact on the <code class="docutils literal notranslate"><span class="pre">degrees</span> <span class="pre">of</span> <span class="pre">freedom</span></code>. The downside is that one cannot get insight into <code class="docutils literal notranslate"><span class="pre">variance</span> <span class="pre">explained</span></code> by certain sources of <code class="docutils literal notranslate"><span class="pre">noise</span></code>. Now let’s add <code class="docutils literal notranslate"><span class="pre">global</span> <span class="pre">signal</span></code> to the simple <code class="docutils literal notranslate"><span class="pre">strategy</span></code> and see its impact.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">confounds_minimal_no_gsr</span><span class="p">,</span> <span class="n">sample_mask</span> <span class="o">=</span> <span class="n">load_confounds</span><span class="p">(</span>
+    <span class="n">development_dataset</span><span class="o">.</span><span class="n">func</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">strategy</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;high_pass&quot;</span><span class="p">,</span> <span class="s2">&quot;motion&quot;</span><span class="p">,</span> <span class="s2">&quot;wm_csf&quot;</span><span class="p">,</span> <span class="s2">&quot;global_signal&quot;</span><span class="p">],</span>
+    <span class="n">motion</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
+    <span class="n">wm_csf</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
+    <span class="n">global_signal</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The remaining steps can run as before:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">time_series</span> <span class="o">=</span> <span class="n">masker</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span>
+    <span class="n">development_dataset</span><span class="o">.</span><span class="n">func</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">confounds</span><span class="o">=</span><span class="n">confounds_minimal_no_gsr</span><span class="p">,</span> <span class="n">sample_mask</span><span class="o">=</span><span class="n">sample_mask</span>
+<span class="p">)</span>
+
+<span class="n">correlation_matrix</span> <span class="o">=</span> <span class="n">correlation_measure</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">([</span><span class="n">time_series</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">plotting</span><span class="o">.</span><span class="n">plot_matrix</span><span class="p">(</span>
+    <span class="n">correlation_matrix</span><span class="p">,</span>
+    <span class="n">figure</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+    <span class="n">vmax</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">vmin</span><span class="o">=-</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Motion, WM, CSF, GSR&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">NiftiLabelsMasker.wrapped</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> loading data from <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">Nifti1Image</span><span style="font-weight: bold">(</span>
+<span style="color: #808000; text-decoration-color: #808000">shape</span>=<span style="font-weight: bold">(</span><span style="color: #008080; text-decoration-color: #008080; font-weight: bold">91</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">109</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">91</span><span style="font-weight: bold">)</span>,
+<span style="color: #808000; text-decoration-color: #808000">affine</span>=<span style="color: #800080; text-decoration-color: #800080; font-weight: bold">array</span><span style="font-weight: bold">([[</span>   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-90</span>.<span style="font-weight: bold">]</span>,
+       <span style="font-weight: bold">[</span>   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>., <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-126</span>.<span style="font-weight: bold">]</span>,
+       <span style="font-weight: bold">[</span>   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>.,  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-72</span>.<span style="font-weight: bold">]</span>,
+       <span style="font-weight: bold">[</span>   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>.<span style="font-weight: bold">]])</span>
+<span style="font-weight: bold">)</span>
+</pre>
+</div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x12f7c8690&gt;
+</pre></div>
+</div>
+<img alt="../_images/3f81a7cf5de4b97c154c2a3927867a459d34565bcca4a3e0a6d4c89e802018cf.png" src="../_images/3f81a7cf5de4b97c154c2a3927867a459d34565bcca4a3e0a6d4c89e802018cf.png" />
+</div>
+</div>
+<p>Instead of customizing the <code class="docutils literal notranslate"><span class="pre">strategy</span></code> through <code class="docutils literal notranslate"><span class="pre">load_confounds</span></code>, one can use a <code class="docutils literal notranslate"><span class="pre">predefined</span> <span class="pre">strategy</span></code> with <a class="reference external" href="https://nilearn.github.io/stable/modules/generated/nilearn.interfaces.fmriprep.load_confounds_strategy.html#nilearn.interfaces.fmriprep.load_confounds_strategy">load_confounds_strategy</a>. Based on the <code class="docutils literal notranslate"><span class="pre">confound</span> <span class="pre">regressors</span></code> generated through <code class="docutils literal notranslate"><span class="pre">fMRIPrep</span></code>, and past benchmarks studies (<a class="reference external" href="https://doi.org/10.1016/j.neuroimage.2017.03.020">Ciric et al.</a>, <a class="reference external" href="https://doi.org/10.1016/j.neuroimage.2017.12.073">Parkes et al.</a>): <code class="docutils literal notranslate"><span class="pre">simple</span></code>, <code class="docutils literal notranslate"><span class="pre">scrubbing</span></code>, <code class="docutils literal notranslate"><span class="pre">compcor</span></code>, <code class="docutils literal notranslate"><span class="pre">ica_aroma</span></code>. The following examples shows how to use the <code class="docutils literal notranslate"><span class="pre">simple</span> <span class="pre">strategy</span></code> and overwrite the <code class="docutils literal notranslate"><span class="pre">motion</span></code> default to <code class="docutils literal notranslate"><span class="pre">basic</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nilearn.interfaces.fmriprep</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_confounds_strategy</span>
+
+<span class="n">confounds</span><span class="p">,</span> <span class="n">sample_mask</span> <span class="o">=</span> <span class="n">load_confounds_strategy</span><span class="p">(</span>
+    <span class="n">development_dataset</span><span class="o">.</span><span class="n">func</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">denoise_strategy</span><span class="o">=</span><span class="s2">&quot;simple&quot;</span><span class="p">,</span> <span class="n">motion</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see the outcome!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">time_series</span> <span class="o">=</span> <span class="n">masker</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span>
+    <span class="n">development_dataset</span><span class="o">.</span><span class="n">func</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">confounds</span><span class="o">=</span><span class="n">confounds</span><span class="p">,</span> <span class="n">sample_mask</span><span class="o">=</span><span class="n">sample_mask</span>
+<span class="p">)</span>
+
+<span class="n">correlation_matrix</span> <span class="o">=</span> <span class="n">correlation_measure</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">([</span><span class="n">time_series</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">plotting</span><span class="o">.</span><span class="n">plot_matrix</span><span class="p">(</span>
+    <span class="n">correlation_matrix</span><span class="p">,</span>
+    <span class="n">figure</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+    <span class="n">vmax</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">vmin</span><span class="o">=-</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;simple&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">NiftiLabelsMasker.wrapped</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> loading data from <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">Nifti1Image</span><span style="font-weight: bold">(</span>
+<span style="color: #808000; text-decoration-color: #808000">shape</span>=<span style="font-weight: bold">(</span><span style="color: #008080; text-decoration-color: #008080; font-weight: bold">91</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">109</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">91</span><span style="font-weight: bold">)</span>,
+<span style="color: #808000; text-decoration-color: #808000">affine</span>=<span style="color: #800080; text-decoration-color: #800080; font-weight: bold">array</span><span style="font-weight: bold">([[</span>   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-90</span>.<span style="font-weight: bold">]</span>,
+       <span style="font-weight: bold">[</span>   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>., <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-126</span>.<span style="font-weight: bold">]</span>,
+       <span style="font-weight: bold">[</span>   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>.,  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-72</span>.<span style="font-weight: bold">]</span>,
+       <span style="font-weight: bold">[</span>   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>.,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>.<span style="font-weight: bold">]])</span>
+<span style="font-weight: bold">)</span>
+</pre>
+</div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x1320194d0&gt;
+</pre></div>
+</div>
+<img alt="../_images/bda6dc76d9a0ed4ce520ef8f6a814814fda2ea2693ea8f7188f3e84c615dfe67.png" src="../_images/bda6dc76d9a0ed4ce520ef8f6a814814fda2ea2693ea8f7188f3e84c615dfe67.png" />
+</div>
+</div>
+<p>Cool! In order to get some practice: could you use <a class="reference external" href="https://nilearn.github.io/stable/modules/generated/nilearn.interfaces.fmriprep.load_confounds_strategy.html#nilearn.interfaces.fmriprep.load_confounds_strategy">load_confounds_strategy</a> again and add <code class="docutils literal notranslate"><span class="pre">global</span> <span class="pre">signal</span></code> back in?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## please provide your solution here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="changing-parameters-atlases-maskers">
 <h2>Changing parameters - atlases &amp; maskers<a class="headerlink" href="#changing-parameters-atlases-maskers" title="Link to this heading">#</a></h2>
@@ -1492,7 +1746,7 @@ _______________________________________________filter_and_extract - 3.1s, 0.1min
 </div>
 </div>
 <p>Now, as before, we apply it to the <code class="docutils literal notranslate"><span class="pre">pre-processed</span></code> <code class="docutils literal notranslate"><span class="pre">functional</span> <span class="pre">images</span></code> and include the <code class="docutils literal notranslate"><span class="pre">confound</span> <span class="pre">regressors</span></code>:</p>
-<div class="cell docutils container">
+<div class="cell tag_&quot;scroll-output&quot; docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract the signal from the regions</span>
 <span class="n">time_series</span> <span class="o">=</span> <span class="n">masker</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">development_dataset</span><span class="o">.</span><span class="n">func</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">confounds</span><span class="o">=</span><span class="n">development_dataset</span><span class="o">.</span><span class="n">confounds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -2388,7 +2642,7 @@ End pure-button class definition from pure-min.css
 <p>Now, you might ask: what’s with the <code class="docutils literal notranslate"><span class="pre">tangent</span></code> <code class="docutils literal notranslate"><span class="pre">measure</span></code>? We specifically left it out before because it’s a special kind of <code class="docutils literal notranslate"><span class="pre">measure</span></code>. In contrast to the other <code class="docutils literal notranslate"><span class="pre">measure</span></code>s, the <code class="docutils literal notranslate"><span class="pre">tangent</span> <span class="pre">space</span> <span class="pre">embedding</span></code> uses both <code class="docutils literal notranslate"><span class="pre">correlations</span></code> and <code class="docutils literal notranslate"><span class="pre">partial</span> <span class="pre">correlations</span></code> to capture reproducible <code class="docutils literal notranslate"><span class="pre">connectivity</span> <span class="pre">patterns</span></code> at the <code class="docutils literal notranslate"><span class="pre">group-level</span></code>.</p>
 <p>It thus needs the <code class="docutils literal notranslate"><span class="pre">time-series</span></code> of all <code class="docutils literal notranslate"><span class="pre">participants</span></code> you would like to include. Therefore, we need to extract the <code class="docutils literal notranslate"><span class="pre">time-series</span></code> for all <code class="docutils literal notranslate"><span class="pre">participants</span></code>. Luckily, <code class="docutils literal notranslate"><span class="pre">python</span></code> and <code class="docutils literal notranslate"><span class="pre">nilearn</span></code> make this rather easy and with a little bit of <code class="docutils literal notranslate"><span class="pre">code</span></code> we can achieve not only that but also get <code class="docutils literal notranslate"><span class="pre">group-specific</span> <span class="pre">time-series</span></code> (remember our <code class="docutils literal notranslate"><span class="pre">dataset</span></code> has different <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">groups</span></code>) which would allow us to run some <code class="docutils literal notranslate"><span class="pre">group</span> <span class="pre">comparisons</span></code> later.</p>
 <p>Depending on your machine, this might take a couple of minutes.</p>
-<div class="cell docutils container">
+<div class="cell tag_&quot;scroll-output&quot; docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">children</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># children time-series</span>
 <span class="n">adults</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># adults time-series</span>
@@ -10459,7 +10713,7 @@ function decodeHemisphere(surfaceInfo, surface, hemisphere){
 </div>
 </div>
 <p>Now we’re ready to extract the <code class="docutils literal notranslate"><span class="pre">mean</span></code> <code class="docutils literal notranslate"><span class="pre">time-series</span></code> within the <code class="docutils literal notranslate"><span class="pre">seed</span> <span class="pre">region</span></code> or <code class="docutils literal notranslate"><span class="pre">ROI</span></code>, while also <code class="docutils literal notranslate"><span class="pre">regressing</span></code> out the <code class="docutils literal notranslate"><span class="pre">confounds</span></code>.</p>
-<div class="cell docutils container">
+<div class="cell tag_&quot;scroll-output&quot; docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seed_time_series</span> <span class="o">=</span> <span class="n">seed_masker</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">development_dataset</span><span class="o">.</span><span class="n">func</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">confounds</span><span class="o">=</span><span class="n">development_dataset</span><span class="o">.</span><span class="n">confounds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
@@ -10528,7 +10782,7 @@ _______________________________________________filter_and_extract - 6.2s, 0.1min
 </div>
 </div>
 <p>Now we can <code class="docutils literal notranslate"><span class="pre">extract</span></code> the <code class="docutils literal notranslate"><span class="pre">time-series</span></code> for every <code class="docutils literal notranslate"><span class="pre">voxel</span></code> while <code class="docutils literal notranslate"><span class="pre">regressing</span></code> out the <code class="docutils literal notranslate"><span class="pre">confounds</span></code>:</p>
-<div class="cell docutils container">
+<div class="cell tag_&quot;scroll-output&quot; docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">brain_time_series</span> <span class="o">=</span> <span class="n">brain_masker</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">development_dataset</span><span class="o">.</span><span class="n">func</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">confounds</span><span class="o">=</span><span class="n">development_dataset</span><span class="o">.</span><span class="n">confounds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
@@ -10682,7 +10936,7 @@ ___________________________________________________________unmask - 0.9s, 0.0min
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_&quot;scroll-output&quot; docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract average signal in spheres with masker object</span>
 <span class="n">time_series</span> <span class="o">=</span> <span class="n">masker</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">development_dataset</span><span class="o">.</span><span class="n">func</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">confounds</span><span class="o">=</span><span class="n">development_dataset</span><span class="o">.</span><span class="n">confounds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -11220,7 +11474,7 @@ There are many different options to do this but we will have a look at a few com
 </div>
 </div>
 <p>As with every object in <code class="docutils literal notranslate"><span class="pre">nilearn</span></code>, we give its <code class="docutils literal notranslate"><span class="pre">parameters</span></code> at <code class="docutils literal notranslate"><span class="pre">setup</span></code>, and then <code class="docutils literal notranslate"><span class="pre">fit</span></code> it on the <code class="docutils literal notranslate"><span class="pre">data</span></code>. As this is a quite heavy <code class="docutils literal notranslate"><span class="pre">computation</span></code>, we will only use roughly half of the dataset for time-purposes.</p>
-<div class="cell docutils container">
+<div class="cell tag_&quot;scroll-output&quot; docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">canica</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">development_dataset</span><span class="o">.</span><span class="n">func</span><span class="p">[:</span><span class="mi">50</span><span class="p">])</span>
 </pre></div>
@@ -12130,7 +12384,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>If you would like to get a better look at each <code class="docutils literal notranslate"><span class="pre">component</span></code>, we can of course also <code class="docutils literal notranslate"><span class="pre">plot</span></code> them separately using the <code class="docutils literal notranslate"><span class="pre">plot_stat_map</span></code> and <code class="docutils literal notranslate"><span class="pre">iter_img</span></code> functions. Let’s have a look at them:</p>
-<div class="cell docutils container">
+<div class="cell tag_&quot;scroll-output&quot; docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nilearn.image</span><span class="w"> </span><span class="kn">import</span> <span class="n">iter_img</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">nilearn.plotting</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_stat_map</span><span class="p">,</span> <span class="n">show</span>
@@ -12186,7 +12440,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>Now we’re ready and can apply the <code class="docutils literal notranslate"><span class="pre">dictionary</span> <span class="pre">learning</span></code> <code class="docutils literal notranslate"><span class="pre">object</span></code> on the <code class="docutils literal notranslate"><span class="pre">functional</span> <span class="pre">data</span></code>. As before, we will only use roughly half of the <code class="docutils literal notranslate"><span class="pre">dataset</span></code> for time reasons:</p>
-<div class="cell docutils container">
+<div class="cell tag_&quot;scroll-output&quot; docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fit to the data</span>
 <span class="n">dict_learning</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">development_dataset</span><span class="o">.</span><span class="n">func</span><span class="p">[:</span><span class="mi">50</span><span class="p">])</span>
@@ -13125,7 +13379,7 @@ __________________________________________________________fastica - 0.7s, 0.0min
 </div>
 </div>
 <p>or <code class="docutils literal notranslate"><span class="pre">plot</span></code> them separately for more detail.</p>
-<div class="cell docutils container">
+<div class="cell tag_&quot;scroll-output&quot; docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cur_img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iter_img</span><span class="p">(</span><span class="n">components_img_dict</span><span class="o">.</span><span class="n">slicer</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">4</span><span class="p">])):</span>
     <span class="n">plot_stat_map</span><span class="p">(</span>
@@ -13302,7 +13556,10 @@ _____________________________________________explained_variance - 141.3s, 2.4min
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#atlases-brain-parcellations">Atlases &amp; brain parcellations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extracting-time-series">Extracting time-series</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-and-display-the-correlation-matrix">Compute and display the correlation matrix</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-importance-of-including-confounds">The importance of including confounds</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-importance-of-including-confounds">The importance of including confounds</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confound-strategies">Confound strategies</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#changing-parameters-atlases-maskers">Changing parameters - atlases &amp; maskers</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#changing-parameters-connectivity-measures">Changing parameters - connectivity measures</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-analyzes-and-outputs">Statistical analyzes and Outputs</a></li>
