@@ -10,17 +10,20 @@ The [overview](https://peerherholz.github.io/workshop_IRTG2150/overview.html) al
 
 | Time slot         | Topic | 
 |--------------|:-----:|
-| 10 AM - 11 AM |  [General introduction]() |
-| 10:30 AM - 12 PM |  [Explore MRI data with Nibabel and Nilearn]() |
-| 1 PM - 2:30 PM |  [PyBIDS and statistical analysis of fMRI data]() |
-| 2:30 PM - 3 PM |  [Q&A session]() |
+| 10 AM - 10:15 AM |  [General introduction](https://peerherholz.github.io/workshop_IRTG2150/overview.html) |
+| 10:15 AM - 12 PM |  [Explore MRI data with Nibabel and Nilearn](https://peerherholz.github.io/workshop_IRTG2150/data_handling/data.html) |
+| 12 PM - 1 PM |  Lunch break |
+| 1 PM - 1:30 PM |  [PyBIDS](https://peerherholz.github.io/workshop_IRTG2150/data_handling/pybids.html) |
+| 1:30 PM - 3 PM |  [Statistical analyzes of fMRI data](https://peerherholz.github.io/workshop_IRTG2150/advanced/statistical_analyses_MRI.html) |
+| 3 PM - 5 PM |  `Q&A` session and `Bring-your-own-data` |
 
 
 ## Session 2 - 06/03/2025
 
 | Time slot         | Topic | 
 |--------------|:-----:|
-| 10 AM - 11 AM |  [Functional connectivity]() |
-| 11 AM - 12 PM |   [Machine learning - using fMRI to predict demographics]() |
-| 1 PM - 2 PM |  [Machine learning - fMRI]() |
-| 2:30 PM - 3 PM | [The python-neuroimaging ecosystem]() |
+| 10 AM - 12 PM |  [Functional connectivity](https://peerherholz.github.io/workshop_IRTG2150/advanced/functional_connectivity.html) |
+| 12 PM - 1 PM |   Lunch break |
+| 1 PM - 3 PM |   [Machine learning - using fMRI to predict demographics]() |
+| 3 PM - 3:15 PM | [The python-neuroimaging ecosystem]() |
+| 3:15 PM - 3:30 PM | `Q&A` session |
