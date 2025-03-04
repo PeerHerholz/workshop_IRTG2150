@@ -58,12 +58,6 @@ To provide a holistic introduction into the topic of `neuroimaging analyses in p
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/">
-        <img src="https://avatars.githubusercontent.com/u/" width="100px;" alt=""/>
-        <br /><sub><b>instructor_1</b></sub>
-      </a>
-    </td>
-    <td align="center">
       <a href="https://github.com/PeerHerholz">
         <img src="https://avatars.githubusercontent.com/u/20129524?s=96&v=4" width="100px;" alt=""/>
         <br /><sub><b>Peer Herholz (he/him)</b></sub>
