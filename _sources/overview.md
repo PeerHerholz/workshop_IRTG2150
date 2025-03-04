@@ -88,7 +88,8 @@ The contact information of the instructors are as follows:
 ### When and where
 
 <div style="text-align: justify;">
-We’ll meet for `two sessions`, one on `March 5th` and one on `March 6th`. Each will be roughly `4 hours` in length with a lunch break in the middle.
+We will meet for two sessions, one on March 5th and one on March 6th.  
+Each will be roughly 4 hours in length with a lunch break in the middle.
 
 For both `sessions`, we will meet at `Seminarraum 4/5, building MTI 1, Wendlingweg 2, 52074 Aachen`.
 
