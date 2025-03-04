@@ -10902,6 +10902,15 @@ ___________________________________________________________unmask - 0.9s, 0.0min
 </div>
 </div>
 <p>To summarize: the <code class="docutils literal notranslate"><span class="pre">map</span></code> above depicts the <code class="docutils literal notranslate"><span class="pre">temporal</span> <span class="pre">correlation</span></code> of a <strong>seed region</strong> with the <strong>rest of the brain</strong>. For a similar example but on the <code class="docutils literal notranslate"><span class="pre">cortical</span> <span class="pre">surface</span></code>, see <a class="reference external" href="http://nilearn.github.io/auto_examples/01_plotting/plot_surf_stat_map.html#seed-based-connectivity-on-the-surface">this example</a>.</p>
+<p>On another related note: this of course only includes one <code class="docutils literal notranslate"><span class="pre">participant</span></code> and no further <code class="docutils literal notranslate"><span class="pre">statistical</span> <span class="pre">analyzes</span></code>. However, you could use a simple <code class="docutils literal notranslate"><span class="pre">for-loop</span></code> to run the same steps across all <code class="docutils literal notranslate"><span class="pre">participants</span></code> and then use <a class="reference external" href="https://nilearn.github.io/stable/modules/generated/nilearn.glm.second_level.SecondLevelModel.html#nilearn.glm.second_level.SecondLevelModel">nilearn’s SecondLevelModel</a> to <code class="docutils literal notranslate"><span class="pre">fit</span></code> a <code class="docutils literal notranslate"><span class="pre">SecondLevelModel</span></code> and get some <code class="docutils literal notranslate"><span class="pre">stats</span></code>, <code class="docutils literal notranslate"><span class="pre">compute</span> <span class="pre">thresholds</span></code> and so forth.</p>
+<p>As a practice, why don’t you try to implement these below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## please provide your solution here</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="single-subject-maps-of-seed-to-seed-correlation">
