@@ -810,7 +810,7 @@ magic           : b&#39;n+1&#39;
 <div class="dropdown admonition">
 <p class="admonition-title">Solution</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>t1 = nb.load(&#39;/data/ds000114/sub-01/ses-test/anat/sub-01_ses-test_T1w.nii.gz&#39;)
-data = t1.get_data()
+data = t1.get_fdata()
 plt.imshow(data[:, :, data.shape[2] // 2].T, cmap=&#39;Greys_r&#39;)
 print(data.shape)
 </pre></div>

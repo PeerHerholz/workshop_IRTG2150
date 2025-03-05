@@ -733,7 +733,7 @@ Let’s see…</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.ZSlicer at 0x1229e5d50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.ZSlicer at 0x12a8cd210&gt;
 </pre></div>
 </div>
 <img alt="../_images/ddacdde8097a696fd7911ea2baded19e3911ce8344cf56e3690ee90fad0b06bf.png" src="../_images/ddacdde8097a696fd7911ea2baded19e3911ce8344cf56e3690ee90fad0b06bf.png" />
@@ -1068,7 +1068,7 @@ Let’s see…</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x12415dd50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x12ad6ab10&gt;
 </pre></div>
 </div>
 <img alt="../_images/bd6b4956dba0bfb1356c0ba9faa9b878d7a369bbcf316844bb28e3399b274af8.png" src="../_images/bd6b4956dba0bfb1356c0ba9faa9b878d7a369bbcf316844bb28e3399b274af8.png" />
@@ -1178,60 +1178,23 @@ Let’s see…</p>
 </pre>
 </div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">CanICA.fit</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> Computing the mask
 </pre>
-</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">CanICA.fit</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> EPI mask computation
-</pre>
 </div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">CanICA.fit</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> Resampling mask
 </pre>
 </div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">CanICA.fit</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> Finished fit
 </pre>
 </div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">CanICA.fit</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> Loading data
 </pre>
-</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[NiftiMasker.wrapped] Loading data from Nifti1Image(
-shape=(64, 64, 30, 179),
-affine=array([[-3.99471426e+00, -2.04233140e-01,  2.29353290e-02,
-         1.30641693e+02],
-       [-2.05448717e-01,  3.98260689e+00, -3.10890853e-01,
-        -9.74732285e+01],
-       [ 6.95819734e-03,  3.11659902e-01,  3.98780894e+00,
-        -8.06465759e+01],
-       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
-         1.00000000e+00]])
-)
-[NiftiMasker.wrapped] Smoothing images
-[NiftiMasker.wrapped] Extracting region signals
-[NiftiMasker.wrapped] Cleaning extracted signals
-________________________________________________________________________________
-[Memory] Calling sklearn.utils.extmath.randomized_svd...
-randomized_svd(array([[-0.004331, ...,  0.001822],
-       ...,
-       [ 0.006247, ..., -0.022585]], dtype=float32), n_components=5, transpose=True, random_state=0, n_iter=3)
-___________________________________________________randomized_svd - 0.0s, 0.0min
+</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Memory]0.0s, 0.0min    : Loading randomized_svd from nilearn_cache/joblib/sklearn/utils/extmath/randomized_svd/faef13f989a5da92e2446a4ec3fa3132
+______________________________________randomized_svd cache loaded - 0.0s, 0.0min
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Parallel(n_jobs=-1)]: Using backend LokyBackend with 8 concurrent workers.
-/Users/peerherholz/anaconda3/envs/workshop_IRTG2150/lib/python3.11/site-packages/sklearn/decomposition/_fastica.py:127: ConvergenceWarning: FastICA did not converge. Consider increasing tolerance or the maximum number of iterations.
-  warnings.warn(
-/Users/peerherholz/anaconda3/envs/workshop_IRTG2150/lib/python3.11/site-packages/sklearn/decomposition/_fastica.py:127: ConvergenceWarning: FastICA did not converge. Consider increasing tolerance or the maximum number of iterations.
-  warnings.warn(
-[Parallel(n_jobs=-1)]: Done   3 out of  10 | elapsed:    3.0s remaining:    6.9s
-/Users/peerherholz/anaconda3/envs/workshop_IRTG2150/lib/python3.11/site-packages/sklearn/decomposition/_fastica.py:127: ConvergenceWarning: FastICA did not converge. Consider increasing tolerance or the maximum number of iterations.
-  warnings.warn(
-/Users/peerherholz/anaconda3/envs/workshop_IRTG2150/lib/python3.11/site-packages/sklearn/decomposition/_fastica.py:127: ConvergenceWarning: FastICA did not converge. Consider increasing tolerance or the maximum number of iterations.
-  warnings.warn(
-/Users/peerherholz/anaconda3/envs/workshop_IRTG2150/lib/python3.11/site-packages/sklearn/decomposition/_fastica.py:127: ConvergenceWarning: FastICA did not converge. Consider increasing tolerance or the maximum number of iterations.
-  warnings.warn(
-[Parallel(n_jobs=-1)]: Done   5 out of  10 | elapsed:    3.7s remaining:    3.7s
-/Users/peerherholz/anaconda3/envs/workshop_IRTG2150/lib/python3.11/site-packages/sklearn/decomposition/_fastica.py:127: ConvergenceWarning: FastICA did not converge. Consider increasing tolerance or the maximum number of iterations.
-  warnings.warn(
-[Parallel(n_jobs=-1)]: Done   7 out of  10 | elapsed:    3.7s remaining:    1.6s
-/Users/peerherholz/anaconda3/envs/workshop_IRTG2150/lib/python3.11/site-packages/sklearn/decomposition/_fastica.py:127: ConvergenceWarning: FastICA did not converge. Consider increasing tolerance or the maximum number of iterations.
-  warnings.warn(
-/Users/peerherholz/anaconda3/envs/workshop_IRTG2150/lib/python3.11/site-packages/sklearn/decomposition/_fastica.py:127: ConvergenceWarning: FastICA did not converge. Consider increasing tolerance or the maximum number of iterations.
-  warnings.warn(
-/Users/peerherholz/anaconda3/envs/workshop_IRTG2150/lib/python3.11/site-packages/sklearn/decomposition/_fastica.py:127: ConvergenceWarning: FastICA did not converge. Consider increasing tolerance or the maximum number of iterations.
-  warnings.warn(
-[Parallel(n_jobs=-1)]: Done  10 out of  10 | elapsed:    4.1s finished
-/var/folders/61/0lj9r7px3k52gv9yfyx6ky300000gn/T/ipykernel_54725/3309825605.py:2: FutureWarning: The nifti_maps_masker_ attribute is deprecated andwill be removed in Nilearn 0.11.3. Please use maps_masker_ instead.
+[Parallel(n_jobs=-1)]: Batch computation too fast (0.034329891204833984s.) Setting batch_size=2.
+[Parallel(n_jobs=-1)]: Done   3 out of  10 | elapsed:    0.1s remaining:    0.2s
+[Parallel(n_jobs=-1)]: Done   5 out of  10 | elapsed:    2.4s remaining:    2.4s
+[Parallel(n_jobs=-1)]: Done   7 out of  10 | elapsed:    2.4s remaining:    1.0s
+[Parallel(n_jobs=-1)]: Done  10 out of  10 | elapsed:    2.4s finished
+/var/folders/61/0lj9r7px3k52gv9yfyx6ky300000gn/T/ipykernel_58869/3309825605.py:2: FutureWarning: The nifti_maps_masker_ attribute is deprecated andwill be removed in Nilearn 0.11.3. Please use maps_masker_ instead.
   canica.fit(bold)
 </pre></div>
 </div>
@@ -1770,34 +1733,9 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 <div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">DictLearning.fit</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> Computing initial loadings
 </pre>
-</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>________________________________________________________________________________
-[Memory] Calling nilearn.decomposition.dict_learning._compute_loadings...
-_compute_loadings(array([[-0.008427, ...,  0.024756],
-       ...,
-       [ 0.010773, ..., -0.002011]], dtype=float32), 
-array([[-3.780136, ...,  5.452174],
-       ...,
-       [ 0.668592, ..., -8.287223]], dtype=float32))
-_________________________________________________compute_loadings - 0.0s, 0.0min
-</pre></div>
-</div>
-<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">DictLearning.fit</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span>  Learning dictionary
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">DictLearning.fit</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span>  Learning dictionary
 </pre>
-</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>________________________________________________________________________________
-[Memory] Calling sklearn.decomposition._dict_learning.dict_learning_online...
-dict_learning_online(array([[-3.780136, ...,  0.668592],
-       ...,
-       [ 5.452174, ..., -8.287223]], dtype=float32), 
-5, alpha=1.0, batch_size=20, method=&#39;cd&#39;, dict_init=array([[-0.036952, -0.468645,  0.020445, -0.171469, -0.863545],
-       [-0.586146,  0.061761, -0.165798, -0.298258,  0.184604],
-       [ 0.332837,  0.524922, -0.792058, -0.146377, -0.277877],
-       [-0.105842, -0.512024, -0.568138,  0.738857,  0.154473],
-       [-0.730126,  0.488718,  0.148179,  0.56063 , -0.345159]],
-      dtype=float32), verbose=0, random_state=0, return_code=True, shuffle=True, n_jobs=1, max_iter=862)
-_____________________________________________dict_learning_online - 0.7s, 0.0min
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/61/0lj9r7px3k52gv9yfyx6ky300000gn/T/ipykernel_54725/2835129756.py:2: FutureWarning: The nifti_maps_masker_ attribute is deprecated andwill be removed in Nilearn 0.11.3. Please use maps_masker_ instead.
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/61/0lj9r7px3k52gv9yfyx6ky300000gn/T/ipykernel_58869/2835129756.py:2: FutureWarning: The nifti_maps_masker_ attribute is deprecated andwill be removed in Nilearn 0.11.3. Please use maps_masker_ instead.
   dict_learning.fit(bold)
 </pre></div>
 </div>
@@ -2307,7 +2245,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._projectors.LYRZProjector at 0x1292fbf90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._projectors.LYRZProjector at 0x12bb79790&gt;
 </pre></div>
 </div>
 <img alt="../_images/875f2ba274af625efb563565a4f24d92c4163b73ce53ca39c83ac774ccad3f2f.png" src="../_images/875f2ba274af625efb563565a4f24d92c4163b73ce53ca39c83ac774ccad3f2f.png" />
@@ -2326,7 +2264,7 @@ The <code class="docutils literal notranslate"><span class="pre">coordinates</sp
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.ZSlicer at 0x1286b9c50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.ZSlicer at 0x12b447690&gt;
 </pre></div>
 </div>
 <img alt="../_images/93814e787836efbd30653d81c5d69acb977cd58a965209e69eeefed0cfa4447d.png" src="../_images/93814e787836efbd30653d81c5d69acb977cd58a965209e69eeefed0cfa4447d.png" />
@@ -2341,7 +2279,7 @@ The <code class="docutils literal notranslate"><span class="pre">coordinates</sp
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x128d83390&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x12b697950&gt;
 </pre></div>
 </div>
 <img alt="../_images/ffda2d6e8f19b2d8ed585bb8ff40859329c45487d9e6b4ad10ebdbcc00642c61.png" src="../_images/ffda2d6e8f19b2d8ed585bb8ff40859329c45487d9e6b4ad10ebdbcc00642c61.png" />
@@ -2366,7 +2304,7 @@ The <code class="docutils literal notranslate"><span class="pre">coordinates</sp
 </pre>
 </div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">get_dataset_dir</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> Dataset found in <span style="color: #800080; text-decoration-color: #800080">/Users/peerherholz/nilearn_data/</span><span style="color: #ff00ff; text-decoration-color: #ff00ff">fsl</span>
 </pre>
-</div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x129a6f010&gt;
+</div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x12bebec90&gt;
 </pre></div>
 </div>
 <img alt="../_images/9d4105fc1f622d13c2bf5892a6a0ce841d2f8551231c77b8f02c08debf857a73.png" src="../_images/9d4105fc1f622d13c2bf5892a6a0ce841d2f8551231c77b8f02c08debf857a73.png" />
@@ -2427,10 +2365,6 @@ The <code class="docutils literal notranslate"><span class="pre">coordinates</sp
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/peerherholz/anaconda3/envs/workshop_IRTG2150/lib/python3.11/site-packages/nilearn/plotting/html_stat_map.py:414: UserWarning: Non-finite values detected. These values will be replaced with zeros.
-  bg_data = safe_get_data(bg_img, ensure_finite=True).astype(float)
-</pre></div>
-</div>
 <div class="output text_html"><iframe srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
@@ -2498,20 +2432,7 @@ The <code class="docutils literal notranslate"><span class="pre">coordinates</sp
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">get_dataset_dir</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> Dataset created in <span style="color: #800080; text-decoration-color: #800080">/Users/peerherholz/nilearn_data/</span><span style="color: #ff00ff; text-decoration-color: #ff00ff">fsaverage6</span>
-</pre>
-</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">fetch_single_file</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> Downloading data from <span style="color: #0000ff; text-decoration-color: #0000ff; text-decoration: underline">https://osf.io/jzxyr/download</span> <span style="color: #808000; text-decoration-color: #808000">...</span>
-</pre>
-</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">_chunk_report_</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> Downloaded <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3932160</span> of <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">8456534</span> bytes <span style="font-weight: bold">(</span><span style="color: #008080; text-decoration-color: #008080; font-weight: bold">46.5</span>%%,    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1.</span>2s remaining<span style="font-weight: bold">)</span>
-</pre>
-</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">fetch_single_file</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span>  <span style="color: #808000; text-decoration-color: #808000">...</span>done. <span style="font-weight: bold">(</span><span style="color: #008080; text-decoration-color: #008080; font-weight: bold">4</span> seconds, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span> min<span style="font-weight: bold">)</span>
-
-</pre>
-</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">uncompress_file</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> Extracting data from 
-<span style="color: #800080; text-decoration-color: #800080">/Users/peerherholz/nilearn_data/fsaverage6/18247b5dc31f58a90fcbddb5d0911cea/</span><span style="color: #ff00ff; text-decoration-color: #ff00ff">download...</span>
-</pre>
-</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">uncompress_file</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> .. done.
-
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">[</span><span style="color: #000080; text-decoration-color: #000080">get_dataset_dir</span><span style="color: #000080; text-decoration-color: #000080; font-weight: bold">]</span> Dataset found in <span style="color: #800080; text-decoration-color: #800080">/Users/peerherholz/nilearn_data/</span><span style="color: #ff00ff; text-decoration-color: #ff00ff">fsaverage6</span>
 </pre>
 </div></div>
 </div>
@@ -2876,7 +2797,29 @@ function decodeHemisphere(surfaceInfo, surface, hemisphere){
     &lt;/select&gt;
   &lt;/body&gt;
 &lt;/html&gt;
-" width="600" height="400" frameBorder="0"></iframe></div></div>
+" width="600" height="400" frameBorder="0"></iframe></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Memory]: Loading fastica from nilearn_cache/joblib/sklearn/decomposition/_fastica/fastica/189245a47fe61463a5a76a97d0e5b57c
+_____________________________________________fastica cache loaded - 0.0s, 0.0min
+[Memory]: Loading fastica from nilearn_cache/joblib/sklearn/decomposition/_fastica/fastica/0e26f5a472a773180f1ed6de60edf6e5
+_____________________________________________fastica cache loaded - 0.0s, 0.0min
+[Memory]: Loading fastica from nilearn_cache/joblib/sklearn/decomposition/_fastica/fastica/a6dc89630ffb834b820bacefb279e9ae
+_____________________________________________fastica cache loaded - 0.0s, 0.0min
+[Memory]: Loading fastica from nilearn_cache/joblib/sklearn/decomposition/_fastica/fastica/41b8bc7ae2e36890686005bf9a29d77d
+_____________________________________________fastica cache loaded - 0.0s, 0.0min
+[Memory]: Loading fastica from nilearn_cache/joblib/sklearn/decomposition/_fastica/fastica/c40231b66af6a980416012a03637fe6d
+_____________________________________________fastica cache loaded - 0.0s, 0.0min
+[Memory]: Loading fastica from nilearn_cache/joblib/sklearn/decomposition/_fastica/fastica/366b2ab5844f0b9567feb5ab42939a47
+_____________________________________________fastica cache loaded - 0.0s, 0.0min
+[Memory]: Loading fastica from nilearn_cache/joblib/sklearn/decomposition/_fastica/fastica/78ee54eb63e2148fe22ea5c00822023e
+_____________________________________________fastica cache loaded - 0.0s, 0.0min
+[Memory]: Loading fastica from nilearn_cache/joblib/sklearn/decomposition/_fastica/fastica/bf17c5c1482cb7e098f58751ca006ae4
+_____________________________________________fastica cache loaded - 0.0s, 0.0min
+[Memory]: Loading fastica from nilearn_cache/joblib/sklearn/decomposition/_fastica/fastica/2ff1d72e86e5f882dba10d71e914e0ce
+_____________________________________________fastica cache loaded - 0.0s, 0.0min
+[Memory]: Loading fastica from nilearn_cache/joblib/sklearn/decomposition/_fastica/fastica/df3089135ce9a13de4ba225ce8162c28
+_____________________________________________fastica cache loaded - 0.0s, 0.0min
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 </section>
@@ -2891,16 +2834,16 @@ function decodeHemisphere(surfaceInfo, surface, hemisphere){
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "workshop_irtg2150"
         },
         kernelOptions: {
-            name: "python3",
+            name: "workshop_irtg2150",
             path: "./data_handling"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'workshop_irtg2150'</script>
 
                 </article>
               
