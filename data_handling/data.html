@@ -492,7 +492,7 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nibabel">Nibabel</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilearn">Nilearn</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pybids">Pybids</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pybids-standardization-data-management">Pybids, standardization &amp; data management</a></li>
 </ul>
             </nav>
         </div>
@@ -508,7 +508,7 @@
 <h1>Basics in data handling<a class="headerlink" href="#basics-in-data-handling" title="Link to this heading">#</a></h1>
 <p><a class="reference external" href="https://nipy.org/nibabel/">Nibabel</a> and <a class="reference external" href="https://nilearn.github.io/stable/index.html">Nilearn</a> are two <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">packages</span></code> that help to <code class="docutils literal notranslate"><span class="pre">load</span></code>, <code class="docutils literal notranslate"><span class="pre">modify</span></code>, <code class="docutils literal notranslate"><span class="pre">save</span></code> and <code class="docutils literal notranslate"><span class="pre">visualize</span> <span class="pre">neuroimaging</span> <span class="pre">data</span></code>.
 The two software packages together allow you to do almost anything with your <code class="docutils literal notranslate"><span class="pre">MRI</span> <span class="pre">data</span></code> that you want. In order to provide a quick introduction and overview of their functionality and capabilities we prepared two short notebooks that will showcase that.</p>
-<p>Additionally, we will have a look at how we can query and extract information from <a class="reference external" href="https://bids-specification.readthedocs.io/en/stable/">BIDS</a> <code class="docutils literal notranslate"><span class="pre">datasets</span></code> using the <a class="reference external" href="https://bids-standard.github.io/pybids/index.html">pybids</a> package.</p>
+<p>Additionally, we will have a look at how we can query and extract information from <a class="reference external" href="https://bids-specification.readthedocs.io/en/stable/">BIDS</a> <code class="docutils literal notranslate"><span class="pre">datasets</span></code> using the <a class="reference external" href="https://bids-standard.github.io/pybids/index.html">pybids</a> package and outine important aspects of <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">management</span></code>.</p>
 <p>You can find all sections in the <code class="docutils literal notranslate"><span class="pre">ToC</span></code> on the left.</p>
 <section id="nibabel">
 <h2>Nibabel<a class="headerlink" href="#nibabel" title="Link to this heading">#</a></h2>
@@ -520,9 +520,10 @@ The two software packages together allow you to do almost anything with your <co
 <p><code class="docutils literal notranslate"><span class="pre">Nilearn</span></code>’s main focus is on <code class="docutils literal notranslate"><span class="pre">statistical</span> <span class="pre">learning</span></code> (based on <a class="reference internal" href="#"><span class="xref myst">scikit-learn</span></a>) but is also very good in <code class="docutils literal notranslate"><span class="pre">manipulation</span></code> and <code class="docutils literal notranslate"><span class="pre">visualizing</span> <span class="pre">neuroimaging</span> <span class="pre">data</span></code>.</p>
 <img src="https://nilearn.github.io/stable/_static/nilearn-transparent.png" alt="workshop logo" width="200" style="margin:0 0 0 0"/>
 </section>
-<section id="pybids">
-<h2>Pybids<a class="headerlink" href="#pybids" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">Pybids</span></code> is a <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">package</span></code> that allows you to <code class="docutils literal notranslate"><span class="pre">query</span></code> and <code class="docutils literal notranslate"><span class="pre">extract</span></code> information from <code class="docutils literal notranslate"><span class="pre">BIDS</span> <span class="pre">datasets</span></code>.</p>
+<section id="pybids-standardization-data-management">
+<h2>Pybids, standardization &amp; data management<a class="headerlink" href="#pybids-standardization-data-management" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Pybids</span></code> is a <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">package</span></code> that allows you to <code class="docutils literal notranslate"><span class="pre">query</span></code> and <code class="docutils literal notranslate"><span class="pre">extract</span></code> information from <code class="docutils literal notranslate"><span class="pre">BIDS</span> <span class="pre">datasets</span></code>. The tutorial showcases its functionality based on a couple of example datasets. Speaking of <code class="docutils literal notranslate"><span class="pre">BIDS</span></code>, to provide a more hollistic view while also introducing important concepts and providing a rationale, we will talk about <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">management</span></code> and <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">organization</span></code> in the context of <code class="docutils literal notranslate"><span class="pre">neuroimaging</span></code>. You can find this content in the <code class="docutils literal notranslate"><span class="pre">slide</span> <span class="pre">deck</span></code> below.</p>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTx_4omqcaJv2VqBSz2lKAdReSJkyFnm1o-I2dL62DU--_yBRh8bkTXtfzOuuwjNvlYw0sC2zDjzQ_N/embed?start=false&loop=false&delayms=3000" frameborder="0" width="700" height="430" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -595,7 +596,7 @@ The two software packages together allow you to do almost anything with your <co
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nibabel">Nibabel</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilearn">Nilearn</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pybids">Pybids</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pybids-standardization-data-management">Pybids, standardization &amp; data management</a></li>
 </ul>
   </nav></div>
 
